@@ -13,6 +13,8 @@ Static personal website for private pages and section catalogues.
       index.html
   /interviews/
     index.html
+    /pagaya-ai-lead/
+      index.html
   /assets/
     styles.css
 ```

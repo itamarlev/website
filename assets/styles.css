@@ -257,15 +257,25 @@ p {
   padding: var(--space-lg);
 }
 
-.prep-card:nth-child(2) {
+.prep-card .card-action {
+  margin-top: var(--space-md);
+}
+
+.prep-card#pagaya-ai-lead {
+  background:
+    linear-gradient(135deg, oklch(99% 0.004 215), color-mix(in oklch, var(--surface) 74%, var(--gold-soft))),
+    var(--surface);
+}
+
+.prep-card#system-design {
   background: color-mix(in oklch, var(--surface) 86%, var(--blue-soft));
 }
 
-.prep-card:nth-child(3) {
+.prep-card#behavioral {
   background: color-mix(in oklch, var(--surface) 88%, var(--green-soft));
 }
 
-.prep-card:nth-child(4) {
+.prep-card#company-specific {
   background: color-mix(in oklch, var(--surface) 88%, var(--gold-soft));
 }
 

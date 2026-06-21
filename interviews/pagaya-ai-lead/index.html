@@ -1,0 +1,1348 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pagaya AI Lead Interview Prep</title>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <style>
+    :root {
+      --bg: oklch(96.5% 0.012 178);
+      --surface: oklch(99% 0.006 178);
+      --surface-strong: oklch(94.5% 0.018 178);
+      --ink: oklch(21% 0.025 218);
+      --muted: oklch(46% 0.025 218);
+      --faint: oklch(72% 0.023 196);
+      --line: oklch(84% 0.022 184);
+      --green: oklch(43% 0.09 166);
+      --green-soft: oklch(91% 0.04 166);
+      --wine: oklch(42% 0.12 18);
+      --wine-soft: oklch(92% 0.035 18);
+      --amber: oklch(69% 0.13 78);
+      --blue: oklch(45% 0.08 238);
+      --shadow: 0 22px 60px oklch(25% 0.03 218 / 0.10);
+      --radius: 8px;
+      --space-2xs: 4px;
+      --space-xs: 8px;
+      --space-sm: 12px;
+      --space-md: 16px;
+      --space-lg: 24px;
+      --space-xl: 32px;
+      --space-2xl: 48px;
+      --space-3xl: 64px;
+      color-scheme: light;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        linear-gradient(90deg, oklch(92% 0.018 178) 1px, transparent 1px),
+        linear-gradient(180deg, oklch(92% 0.018 178) 1px, transparent 1px),
+        var(--bg);
+      background-size: 48px 48px;
+      color: var(--ink);
+      font-family: "Avenir Next", "Aptos", "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+    }
+
+    a {
+      color: var(--blue);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    button,
+    input,
+    textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--surface);
+      color: var(--ink);
+      cursor: pointer;
+      min-height: 40px;
+      padding: 8px 12px;
+      transition: transform 140ms ease, background 140ms ease, border-color 140ms ease;
+    }
+
+    button:hover {
+      background: var(--surface-strong);
+      border-color: var(--faint);
+    }
+
+    button:active {
+      transform: translateY(1px);
+    }
+
+    button:focus-visible,
+    input:focus-visible,
+    textarea:focus-visible {
+      outline: 3px solid oklch(78% 0.09 166 / 0.55);
+      outline-offset: 2px;
+    }
+
+    .shell {
+      min-height: 100vh;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: oklch(98% 0.009 178 / 0.92);
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar-inner {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-md);
+      align-items: center;
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: var(--space-sm) var(--space-lg);
+    }
+
+    .brand {
+      display: flex;
+      align-items: baseline;
+      gap: var(--space-sm);
+      min-width: 0;
+    }
+
+    .brand h1 {
+      margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.25rem;
+      line-height: 1.1;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .brand span {
+      color: var(--muted);
+      font-size: 0.86rem;
+      white-space: nowrap;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+      justify-content: end;
+    }
+
+    .tab-button[aria-selected="true"] {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: var(--surface);
+    }
+
+    .main {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: var(--space-xl) var(--space-lg) var(--space-3xl);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(300px, 0.6fr);
+      gap: var(--space-xl);
+      align-items: stretch;
+      margin-bottom: var(--space-xl);
+    }
+
+    .hero-copy {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: var(--shadow);
+      padding: var(--space-xl);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-xs);
+      color: var(--green);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    .hero h2 {
+      max-width: 16ch;
+      margin: var(--space-md) 0 var(--space-md);
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 3rem;
+      line-height: 0.98;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    .thesis {
+      max-width: 68ch;
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.02rem;
+    }
+
+    .hero-meta {
+      display: grid;
+      gap: var(--space-md);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: var(--space-lg);
+    }
+
+    .meter {
+      display: grid;
+      gap: var(--space-sm);
+    }
+
+    .meter-row {
+      display: flex;
+      justify-content: space-between;
+      gap: var(--space-md);
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    .progress-track {
+      height: 12px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: oklch(92% 0.013 178);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: var(--green);
+      transition: width 220ms ease;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: var(--space-sm);
+    }
+
+    .stat {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface-strong);
+      padding: var(--space-sm);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.25rem;
+      line-height: 1;
+      margin-bottom: var(--space-2xs);
+    }
+
+    .stat span {
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 250px minmax(0, 1fr);
+      gap: var(--space-xl);
+      align-items: start;
+    }
+
+    .side {
+      position: sticky;
+      top: 78px;
+      display: grid;
+      gap: var(--space-md);
+    }
+
+    .navbox,
+    .sidebox {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: var(--space-md);
+    }
+
+    .navbox h3,
+    .sidebox h3 {
+      margin: 0 0 var(--space-sm);
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .navbox a {
+      display: block;
+      padding: 7px 0;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 0.92rem;
+    }
+
+    .navbox a:hover {
+      color: var(--green);
+    }
+
+    .track-list {
+      display: grid;
+      gap: var(--space-xs);
+    }
+
+    .checkline {
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr);
+      gap: var(--space-xs);
+      align-items: start;
+      color: var(--ink);
+      font-size: 0.91rem;
+    }
+
+    .checkline input {
+      margin-top: 4px;
+      accent-color: var(--green);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .section {
+      scroll-margin-top: 96px;
+      padding: var(--space-xl) 0;
+      margin-bottom: var(--space-lg);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section:first-child {
+      padding-top: 0;
+    }
+
+    .section h2 {
+      margin: 0 0 var(--space-md);
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.85rem;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    .section h3 {
+      margin: var(--space-xl) 0 var(--space-sm);
+      font-size: 1.08rem;
+      letter-spacing: 0;
+    }
+
+    .section p {
+      max-width: 76ch;
+      margin: 0 0 var(--space-md);
+      color: var(--muted);
+    }
+
+    .quote {
+      margin: var(--space-md) 0;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--green-soft);
+      padding: var(--space-md);
+      color: var(--ink);
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 1.08rem;
+      line-height: 1.45;
+    }
+
+    .matrix {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: var(--space-md);
+      font-size: 0.92rem;
+    }
+
+    .matrix th,
+    .matrix td {
+      border: 1px solid var(--line);
+      padding: var(--space-sm);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    .matrix th {
+      background: var(--surface-strong);
+      font-size: 0.78rem;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .story-grid,
+    .qa-grid,
+    .question-grid,
+    .source-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    .item {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: oklch(98% 0.008 178);
+      padding: var(--space-md);
+    }
+
+    .item h3,
+    .item h4 {
+      margin: 0 0 var(--space-sm);
+      font-size: 1rem;
+    }
+
+    .item p,
+    .item li {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .item ul,
+    .section ul,
+    .section ol {
+      padding-left: 1.15rem;
+      margin: var(--space-sm) 0 0;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-top: var(--space-sm);
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--surface);
+      padding: 3px 9px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    details {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: oklch(98% 0.008 178);
+      padding: var(--space-md);
+    }
+
+    details + details {
+      margin-top: var(--space-sm);
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: 700;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-md);
+      margin-top: var(--space-md);
+    }
+
+    .day {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: var(--space-md);
+      background: oklch(98% 0.008 178);
+    }
+
+    .day h3 {
+      margin-top: 0;
+    }
+
+    .flashcard {
+      min-height: 260px;
+      display: grid;
+      align-content: center;
+      gap: var(--space-lg);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      padding: var(--space-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .flashcard-label {
+      color: var(--green);
+      font-weight: 700;
+      font-size: 0.78rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .flashcard-question {
+      margin: 0;
+      font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+      font-size: 2rem;
+      line-height: 1.15;
+      letter-spacing: 0;
+    }
+
+    .flashcard-answer {
+      display: none;
+      color: var(--muted);
+      max-width: 78ch;
+    }
+
+    .flashcard.answering .flashcard-answer {
+      display: block;
+    }
+
+    .drill-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-xs);
+      margin-top: var(--space-md);
+    }
+
+    .notes {
+      width: 100%;
+      min-height: 320px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      color: var(--ink);
+      padding: var(--space-md);
+      line-height: 1.55;
+    }
+
+    .compact {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .warn {
+      background: var(--wine-soft);
+      border-color: oklch(80% 0.05 18);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 980px) {
+      .hero,
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .side {
+        position: static;
+      }
+
+      .navbox {
+        display: none;
+      }
+
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .topbar-inner {
+        grid-template-columns: 1fr;
+      }
+
+      .top-actions {
+        justify-content: start;
+      }
+
+      .main {
+        padding: var(--space-lg) var(--space-md) var(--space-2xl);
+      }
+
+      .hero h2 {
+        font-size: 2.25rem;
+      }
+
+      .hero-copy,
+      .hero-meta,
+      .flashcard {
+        padding: var(--space-md);
+      }
+
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .matrix {
+        display: block;
+        overflow-x: auto;
+      }
+    }
+
+    @media print {
+      .topbar,
+      .side,
+      .drill-controls,
+      .notes-actions {
+        display: none;
+      }
+
+      body {
+        background: var(--surface);
+      }
+
+      .main {
+        max-width: none;
+        padding: 0;
+      }
+
+      .hero,
+      .layout {
+        display: block;
+      }
+
+      .hero-copy,
+      .hero-meta {
+        break-inside: avoid;
+        box-shadow: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div class="topbar-inner">
+        <div class="brand">
+          <h1>Pagaya AI Lead Prep</h1>
+          <span>2026-06-21</span>
+        </div>
+        <div class="top-actions" role="tablist" aria-label="Study views">
+          <button class="tab-button" data-tab="learn" aria-selected="true">Learn</button>
+          <button class="tab-button" data-tab="drill" aria-selected="false">Drill</button>
+          <button class="tab-button" data-tab="plan" aria-selected="false">Plan</button>
+          <button class="tab-button" data-tab="notes" aria-selected="false">Notes</button>
+          <button id="printButton" type="button">Print</button>
+        </div>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="hero" aria-label="Prep summary">
+        <div class="hero-copy">
+          <span class="eyebrow">Best positioning</span>
+          <h2>Enterprise AI transformation lead</h2>
+          <p class="thesis">
+            Build the interview around one claim: you turn messy operational workflows into governed,
+            measurable AI systems that people adopt. Your strongest edge is the combination of manager,
+            hands-on builder, process designer, and security-aware operator.
+          </p>
+        </div>
+        <aside class="hero-meta" aria-label="Progress summary">
+          <div class="meter">
+            <div class="meter-row">
+              <strong>Study progress</strong>
+              <span id="progressText">0%</span>
+            </div>
+            <div class="progress-track" aria-hidden="true">
+              <div class="progress-fill" id="progressFill"></div>
+            </div>
+          </div>
+          <div class="stat-grid">
+            <div class="stat">
+              <strong>2,054</strong>
+              <span>incidents classified</span>
+            </div>
+            <div class="stat">
+              <strong>93.8%</strong>
+              <span>high confidence</span>
+            </div>
+            <div class="stat">
+              <strong>30+</strong>
+              <span>Pagaya lending partners</span>
+            </div>
+            <div class="stat">
+              <strong>$3.7T+</strong>
+              <span>applications evaluated</span>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section id="learn" class="tab-panel active">
+        <div class="layout">
+          <aside class="side">
+            <nav class="navbox" aria-label="Prep sections">
+              <h3>Sections</h3>
+              <a href="#role">Role read</a>
+              <a href="#company">Company</a>
+              <a href="#interviewer">Interviewer</a>
+              <a href="#fit">Fit matrix</a>
+              <a href="#narrative">Narrative</a>
+              <a href="#stories">Stories</a>
+              <a href="#roadmap">30/60/90</a>
+              <a href="#qa">Q&A</a>
+              <a href="#ask">Ask Maor</a>
+              <a href="#landmines">Landmines</a>
+              <a href="#sources">Sources</a>
+            </nav>
+
+            <div class="sidebox">
+              <h3>Must rehearse</h3>
+              <div class="track-list">
+                <label class="checkline"><input type="checkbox" data-track="rehearse-narrative"><span>60-90 second narrative</span></label>
+                <label class="checkline"><input type="checkbox" data-track="rehearse-sers"><span>SERS story</span></label>
+                <label class="checkline"><input type="checkbox" data-track="rehearse-taxonomy"><span>ERP taxonomy story</span></label>
+                <label class="checkline"><input type="checkbox" data-track="rehearse-roadmap"><span>30/60/90 plan</span></label>
+                <label class="checkline"><input type="checkbox" data-track="rehearse-questions"><span>Questions for Maor</span></label>
+              </div>
+            </div>
+          </aside>
+
+          <div>
+            <section class="section" id="role">
+              <h2>Role Read</h2>
+              <p>
+                The AI Lead posting frames the job as enterprise AI transformation in IT & Cyber,
+                not as a pure credit-modeling or research role.
+              </p>
+              <table class="matrix">
+                <thead>
+                  <tr>
+                    <th>Signal</th>
+                    <th>What it means for you</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Reports to CIO, works with CTO org</td>
+                    <td>Ask how the CIO/CTO/IT/Security boundary works. Do not assume the org chart.</td>
+                  </tr>
+                  <tr>
+                    <td>Leads specialized AI Squad</td>
+                    <td>Position yourself as the person who can build operating model, people, tooling, and delivery rhythm.</td>
+                  </tr>
+                  <tr>
+                    <td>Partners with HR, Finance, Legal, Ops, IT, Security, Engineering, Research, Product</td>
+                    <td>Talk about workflows across departments, not only developer productivity.</td>
+                  </tr>
+                  <tr>
+                    <td>Evaluates tools, LLMs, automation frameworks</td>
+                    <td>Show build-vs-buy judgment. Include OpenAI, Anthropic, vector DBs, orchestration, Cursor, Workato-like tools.</td>
+                  </tr>
+                  <tr>
+                    <td>Prioritizes by ROI, feasibility, long-term impact</td>
+                    <td>Lead with measurable business impact, safe rollout, and adoption.</td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="quote">
+                Say: "I build AI operating systems inside complex organizations, not isolated demos."
+              </div>
+              <label class="checkline"><input type="checkbox" data-track="read-role"><span>I can explain why this is enterprise AI transformation, not pure ML research.</span></label>
+            </section>
+
+            <section class="section" id="company">
+              <h2>Company Brief</h2>
+              <p>
+                Pagaya is a public fintech/AI company operating an AI lending network. It integrates through
+                partner origination APIs, uses AI-powered real-time review, and connects lenders with capital markets.
+              </p>
+              <div class="story-grid">
+                <div class="item">
+                  <h3>Scale</h3>
+                  <ul>
+                    <li>30+ lending partners.</li>
+                    <li>165 institutional investors.</li>
+                    <li>More than $3.7T in applications evaluated.</li>
+                    <li>$43B in new credit generated.</li>
+                  </ul>
+                </div>
+                <div class="item">
+                  <h3>Q1 2026</h3>
+                  <ul>
+                    <li>$25M GAAP net income.</li>
+                    <li>$94M Adjusted EBITDA.</li>
+                    <li>$318M total revenue and other income.</li>
+                    <li>$2.6B network volume.</li>
+                  </ul>
+                </div>
+                <div class="item">
+                  <h3>Compliance</h3>
+                  <ul>
+                    <li>Fair lending, ECOA/Reg B, FCRA, UDAAP.</li>
+                    <li>SOC 2 Type II, ISO 27001, ISO 27017, ISO 27018.</li>
+                    <li>Data encryption, access controls, monitoring, testing.</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="quote">
+                Interview implication: pitch governed speed, not uncontrolled experimentation.
+              </div>
+              <label class="checkline"><input type="checkbox" data-track="read-company"><span>I can summarize Pagaya's business in 60 seconds.</span></label>
+            </section>
+
+            <section class="section" id="interviewer">
+              <h2>Interviewer Calibration</h2>
+              <p>
+                I could not independently verify a reliable public profile for "Maor Saubron" under that spelling.
+                Keep personalization grounded and use the opening minutes to understand his lens.
+              </p>
+              <details open>
+                <summary>Opening calibration</summary>
+                <p>
+                  "Before we go deep, I saw the role is positioned under the CIO and also works closely with the CTO organization.
+                  I would love to understand how you see the AI Squad's mandate: is it primarily internal enterprise AI
+                  transformation, product/R&D acceleration, or both?"
+                </p>
+              </details>
+              <details>
+                <summary>CIO acronym nuance</summary>
+                <p>
+                  "I noticed the role sits in IT & Cyber, while Pagaya also has investment leadership because of the
+                  capital-markets side of the business. For this role, how should I understand the CIO reporting line
+                  and the boundary with the CTO organization?"
+                </p>
+              </details>
+              <label class="checkline"><input type="checkbox" data-track="read-interviewer"><span>I will ask about mandate before assuming the role shape.</span></label>
+            </section>
+
+            <section class="section" id="fit">
+              <h2>Fit Matrix</h2>
+              <table class="matrix">
+                <thead>
+                  <tr>
+                    <th>Pagaya need</th>
+                    <th>Your evidence</th>
+                    <th>How to say it</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Build AI squad from zero</td>
+                    <td>Multi-agent systems, SERS, AutoResolver, lifecycle orchestrator, internal tools.</td>
+                    <td>"I can design the operating model, build first paved paths, then hire and coach into it."</td>
+                  </tr>
+                  <tr>
+                    <td>Org-wide transformation</td>
+                    <td>Engineering, support escalation, hiring evaluation, analytics, Slack/doc sync, dashboards.</td>
+                    <td>"My work is not limited to developer productivity. I apply AI across business workflows."</td>
+                  </tr>
+                  <tr>
+                    <td>Technical depth</td>
+                    <td>Next.js, TypeScript, PostgreSQL, Redis/BullMQ, ChromaDB, Claude API, Bedrock, MCP, Python, Playwright.</td>
+                    <td>"I can sit with engineers on architecture and executives on ROI."</td>
+                  </tr>
+                  <tr>
+                    <td>Security and governance</td>
+                    <td>Human review gates, evidence contracts, source-of-truth separation, advisory derived layers.</td>
+                    <td>"My default is auditability, data boundaries, and clear authority contracts."</td>
+                  </tr>
+                  <tr>
+                    <td>Cross-functional influence</td>
+                    <td>Work across CS, engineering, product owners, support, interviewers, Jira, Slack, leadership metrics.</td>
+                    <td>"The hard part is getting departments aligned on ownership, data access, and success metrics."</td>
+                  </tr>
+                </tbody>
+              </table>
+              <label class="checkline"><input type="checkbox" data-track="read-fit"><span>I can connect each job requirement to one concrete story.</span></label>
+            </section>
+
+            <section class="section" id="narrative">
+              <h2>Core Narrative</h2>
+              <div class="quote">
+                I am an engineering manager and hands-on AI systems builder. My recent focus has been turning complex
+                operational work into AI-assisted, measurable workflows. At Stampli I lead escalation work around ERP
+                integrations, where the complexity is high: Jira tickets, customer context, Coralogix logs, code history,
+                ERP-specific behavior, and multiple teams.
+              </div>
+              <div class="quote">
+                The theme across my work is that AI only creates value when it changes an operating process. I built
+                and designed multi-agent systems like SERS and AutoResolver, a project lifecycle orchestrator,
+                engineering analytics dashboards, candidate evaluation automation, and AI adoption frameworks.
+              </div>
+              <div class="quote">
+                What attracted me to this role is that Pagaya is already an AI company, but this role seems to be about
+                making AI an operating capability across the organization.
+              </div>
+              <label class="checkline"><input type="checkbox" data-track="read-narrative"><span>I can deliver this without reading.</span></label>
+            </section>
+
+            <section class="section" id="stories">
+              <h2>Story Bank</h2>
+              <div class="story-grid">
+                <article class="item">
+                  <h3>SERS</h3>
+                  <p>Use for AI leadership, agents, ROI, production accountability, and complex integrations.</p>
+                  <ul>
+                    <li>Problem: engineers reconstructed context from Jira, logs, past tickets, code, and tribal knowledge.</li>
+                    <li>Action: built a 10-agent investigation pipeline with vector search, logs, code, knowledge, solution, test, report.</li>
+                    <li>Result: structured investigation reports and compounding knowledge.</li>
+                  </ul>
+                  <div class="badge-row">
+                    <span class="badge">Agents</span>
+                    <span class="badge">Coralogix</span>
+                    <span class="badge">ChromaDB</span>
+                    <span class="badge">Human gates</span>
+                  </div>
+                  <label class="checkline"><input type="checkbox" data-track="story-sers"><span>Story rehearsed</span></label>
+                </article>
+                <article class="item">
+                  <h3>ERP Taxonomy</h3>
+                  <p>Use for knowledge strategy, prioritization, and turning noise into roadmap.</p>
+                  <ul>
+                    <li>2,054 incidents classified.</li>
+                    <li>100% L1/L2 coverage.</li>
+                    <li>93.8% high confidence.</li>
+                    <li>3,297 closed-side tickets analyzed.</li>
+                  </ul>
+                  <div class="badge-row">
+                    <span class="badge">Taxonomy</span>
+                    <span class="badge">Evidence layer</span>
+                    <span class="badge">Routing</span>
+                  </div>
+                  <label class="checkline"><input type="checkbox" data-track="story-taxonomy"><span>Story rehearsed</span></label>
+                </article>
+                <article class="item">
+                  <h3>Lifecycle Orchestrator</h3>
+                  <p>Use for roadmap thinking, governance, squad process, and human approval gates.</p>
+                  <ul>
+                    <li>Jira or requirement intake.</li>
+                    <li>Planning, architecture, implementation, code review, QA, product acceptance, release.</li>
+                    <li>Certainty scoring, model fallback, audit logs, learning loops.</li>
+                  </ul>
+                  <div class="badge-row">
+                    <span class="badge">SDLC</span>
+                    <span class="badge">Approvals</span>
+                    <span class="badge">Audit trail</span>
+                  </div>
+                  <label class="checkline"><input type="checkbox" data-track="story-lifecycle"><span>Story rehearsed</span></label>
+                </article>
+                <article class="item">
+                  <h3>Candidate Evaluation</h3>
+                  <p>Use for cross-functional AI beyond engineering and risk-aware automation.</p>
+                  <ul>
+                    <li>Video analysis to structured report.</li>
+                    <li>Playwright form filling into Comeet.</li>
+                    <li>Final submission stays manual.</li>
+                    <li>30-45 minutes reduced to 8-10 minutes.</li>
+                  </ul>
+                  <div class="badge-row">
+                    <span class="badge">People ops</span>
+                    <span class="badge">Manual review</span>
+                    <span class="badge">Workflow</span>
+                  </div>
+                  <label class="checkline"><input type="checkbox" data-track="story-candidate"><span>Story rehearsed</span></label>
+                </article>
+                <article class="item">
+                  <h3>Engineering Analytics</h3>
+                  <p>Use for management maturity and adoption measurement.</p>
+                  <ul>
+                    <li>Throughput, cycle time, PR size, review friction.</li>
+                    <li>Reopen rate, estimate accuracy, composite scoring.</li>
+                    <li>Caveats for recent joiners, PTO, and metric misuse.</li>
+                  </ul>
+                  <div class="badge-row">
+                    <span class="badge">Metrics</span>
+                    <span class="badge">Coaching</span>
+                    <span class="badge">Adoption</span>
+                  </div>
+                  <label class="checkline"><input type="checkbox" data-track="story-analytics"><span>Story rehearsed</span></label>
+                </article>
+              </div>
+            </section>
+
+            <section class="section" id="roadmap">
+              <h2>30/60/90 Plan</h2>
+              <div class="timeline">
+                <div class="day">
+                  <h3>First 30</h3>
+                  <ul>
+                    <li>Clarify AI Squad mandate.</li>
+                    <li>Inventory official and shadow AI usage.</li>
+                    <li>Meet IT, Security, Data, Engineering, Product, Research, Legal, Finance, HR, Ops.</li>
+                    <li>Define governance baseline.</li>
+                    <li>Pick 2-3 quick wins and 1 platform initiative.</li>
+                  </ul>
+                </div>
+                <div class="day">
+                  <h3>Days 31-60</h3>
+                  <ul>
+                    <li>Launch first measurable workflows.</li>
+                    <li>Create eval harness.</li>
+                    <li>Create implementation playbook.</li>
+                    <li>Start AI champions and office hours.</li>
+                    <li>Define build-vs-buy framework.</li>
+                  </ul>
+                </div>
+                <div class="day">
+                  <h3>Days 61-90</h3>
+                  <ul>
+                    <li>Productionize successful pilots.</li>
+                    <li>Publish quarterly AI roadmap.</li>
+                    <li>Start adoption dashboard.</li>
+                    <li>Set squad operating rhythm.</li>
+                    <li>Formalize relationship with CTO org and Security.</li>
+                  </ul>
+                </div>
+              </div>
+              <label class="checkline"><input type="checkbox" data-track="read-roadmap"><span>I can explain the 30/60/90 plan conversationally.</span></label>
+            </section>
+
+            <section class="section" id="qa">
+              <h2>Likely Q&A</h2>
+              <div class="qa-grid">
+                <details>
+                  <summary>Why Pagaya?</summary>
+                  <p>Pagaya is already AI-native, but this role is about making AI an organizational capability across departments. That mix of data scale, regulation, business pressure, and real adoption is exactly where I create leverage.</p>
+                </details>
+                <details>
+                  <summary>How would you prioritize AI use cases?</summary>
+                  <p>Use a two-axis filter: measurable business impact and implementation/risk feasibility. Score ROI, time-to-value, data sensitivity, integration complexity, auditability, and adoption readiness.</p>
+                </details>
+                <details>
+                  <summary>How do you avoid scattered experiments?</summary>
+                  <p>Create an operating model: intake, prioritization, security review, architecture standards, evals, rollout plan, adoption metrics, and ownership.</p>
+                </details>
+                <details>
+                  <summary>Build or buy?</summary>
+                  <p>Buy commodity capabilities when the workflow is standard and security is acceptable. Build when Pagaya has unique data, unique process advantage, or needs deep integration and control.</p>
+                </details>
+                <details>
+                  <summary>How do you handle regulated data?</summary>
+                  <p>Start with data classification, access boundaries, retention, logging, and human approval for irreversible decisions. Use approved retrieval sources, strict permissions, audit trails, and red-team tests.</p>
+                </details>
+                <details>
+                  <summary>Do you have Workato experience?</summary>
+                  <p>If not direct: "I have not led a Workato rollout specifically, but the underlying patterns are familiar: event-driven workflows, API integrations, identity, retries, observability, and governance."</p>
+                </details>
+              </div>
+              <label class="checkline"><input type="checkbox" data-track="read-qa"><span>I can answer the top six questions.</span></label>
+            </section>
+
+            <section class="section" id="ask">
+              <h2>Questions To Ask Maor</h2>
+              <div class="question-grid">
+                <div class="item"><p>How do you define the AI Squad mandate: internal productivity, enterprise workflows, R&D acceleration, product enablement, or all of the above?</p></div>
+                <div class="item"><p>The role reports to the CIO and works closely with the CTO org. Where do you want the boundary between IT-led AI enablement and product/research AI to sit?</p></div>
+                <div class="item"><p>What triggered creating this role now?</p></div>
+                <div class="item"><p>What AI tools or workflows are already in use at Pagaya, officially or unofficially?</p></div>
+                <div class="item"><p>What are the first departments where you expect measurable AI impact?</p></div>
+                <div class="item"><p>How will success be measured after 6 months: adoption, cost savings, cycle time, risk reduction, revenue impact, or something else?</p></div>
+                <div class="item"><p>What is the current risk appetite around employee-facing LLM tools touching internal, customer, or financial data?</p></div>
+                <div class="item"><p>What would make you say after 90 days: hiring this person changed the slope of AI adoption?</p></div>
+              </div>
+              <label class="checkline"><input type="checkbox" data-track="read-ask"><span>I picked my top four questions.</span></label>
+            </section>
+
+            <section class="section" id="landmines">
+              <h2>Landmines</h2>
+              <div class="story-grid">
+                <div class="item warn"><h3>Do not sell pure ML/research.</h3><p>This role likely needs enterprise implementation, governance, automation, and stakeholder leadership.</p></div>
+                <div class="item warn"><h3>Do not imply AI replaces people.</h3><p>Say AI removes repetitive context reconstruction and drafting so people can review, decide, and own higher-value work.</p></div>
+                <div class="item warn"><h3>Do not underplay regulation.</h3><p>Pagaya is finance, lending, fair-lending, compliance, data security, and capital markets.</p></div>
+                <div class="item warn"><h3>Do not over-personalize Maor.</h3><p>No reliable public profile was found under that spelling. Ask calibration questions instead.</p></div>
+                <div class="item warn"><h3>Do not pitch only custom code.</h3><p>They explicitly mention third-party tools and Workato. Show build/buy judgment.</p></div>
+                <div class="item warn"><h3>Do not sound like side projects.</h3><p>Tie examples to operational pain, adoption, risk controls, and measurable value.</p></div>
+              </div>
+              <label class="checkline"><input type="checkbox" data-track="read-landmines"><span>I know the five things to avoid.</span></label>
+            </section>
+
+            <section class="section" id="sources">
+              <h2>Sources</h2>
+              <div class="source-grid">
+                <div class="item"><h3>Role</h3><p><a href="https://job-boards.greenhouse.io/pagayais/jobs/7734302003">AI Lead posting</a></p><p><a href="https://job-boards.greenhouse.io/pagayais/jobs/7736824003">AI Solution Manager posting</a></p></div>
+                <div class="item"><h3>Company</h3><p><a href="https://pagaya.com/">Pagaya homepage</a></p><p><a href="https://pagaya.com/about-us">Pagaya about and leadership</a></p><p><a href="https://pagaya.com/compliance">Pagaya compliance</a></p></div>
+                <div class="item"><h3>Investor</h3><p><a href="https://investor.pagaya.com/">Investor overview</a></p><p><a href="https://investor.pagaya.com/static-files/1f38d3e9-6d00-49c7-921d-a6b5be49a276">Q1 2026 results</a></p><p><a href="https://investor.pagaya.com/static-files/eee2a755-f64a-40c9-bced-4cb336b598db">Company 101 presentation</a></p></div>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <section id="drill" class="tab-panel">
+        <section class="section">
+          <h2>Flashcards</h2>
+          <div class="flashcard" id="flashcard">
+            <div class="flashcard-label" id="flashcardIndex">Card 1</div>
+            <p class="flashcard-question" id="flashcardQuestion"></p>
+            <p class="flashcard-answer" id="flashcardAnswer"></p>
+          </div>
+          <div class="drill-controls">
+            <button type="button" id="prevCard">Previous</button>
+            <button type="button" id="showAnswer">Show answer</button>
+            <button type="button" id="markKnown">Mark known</button>
+            <button type="button" id="nextCard">Next</button>
+          </div>
+        </section>
+
+        <section class="section">
+          <h2>Mock Questions</h2>
+          <div class="qa-grid">
+            <details><summary>Give an example of an AI process you implemented end to end.</summary><p>Lead with SERS or candidate evaluation. Use situation, task, action, result, then explain the governance pattern.</p></details>
+            <details><summary>How do you measure ROI for GenAI?</summary><p>Before/after cycle time, manual hours saved, quality or error rate, adoption, escalation rate, cost per run, and stakeholder owner satisfaction.</p></details>
+            <details><summary>What is your view on agents vs deterministic workflows?</summary><p>Agents are useful for ambiguous knowledge work. Deterministic stages, gates, evals, and audit trails are needed around them for production workflows.</p></details>
+            <details><summary>How do you hire the first AI Squad members?</summary><p>Look for AI solution engineering, automation/integration skill, product discovery, security judgment, and people who can ship through ambiguity.</p></details>
+            <details><summary>How do you make AI adoption stick?</summary><p>Start from department pain, ship visible wins, measure adoption, create champions, and make the safe path easier than shadow AI.</p></details>
+            <details><summary>Tell me about a failed automation.</summary><p>Pick a real example. Emphasize what you changed: data contract, human gate, eval, rollout size, or stakeholder clarity.</p></details>
+          </div>
+          <label class="checkline"><input type="checkbox" data-track="drill-mock"><span>I answered all mock questions out loud.</span></label>
+        </section>
+      </section>
+
+      <section id="plan" class="tab-panel">
+        <section class="section">
+          <h2>48-Hour Prep Plan</h2>
+          <div class="story-grid">
+            <article class="item">
+              <h3>Must do</h3>
+              <div class="track-list">
+                <label class="checkline"><input type="checkbox" data-track="plan-narrative"><span>Memorize the 60-90 second narrative.</span></label>
+                <label class="checkline"><input type="checkbox" data-track="plan-stories"><span>Prepare SERS, ERP taxonomy, and candidate evaluation or lifecycle stories.</span></label>
+                <label class="checkline"><input type="checkbox" data-track="plan-metrics"><span>Memorize the six key metrics.</span></label>
+                <label class="checkline"><input type="checkbox" data-track="plan-roadmap"><span>Practice 30/60/90 in plain speech.</span></label>
+                <label class="checkline"><input type="checkbox" data-track="plan-questions"><span>Choose top four questions for Maor.</span></label>
+              </div>
+            </article>
+            <article class="item">
+              <h3>Metrics</h3>
+              <ul>
+                <li>2,054 tickets classified.</li>
+                <li>100% L1/L2 coverage.</li>
+                <li>93.8% high-confidence classification.</li>
+                <li>1,762 linked DEV tickets / 85.8%.</li>
+                <li>Candidate evaluation: 30-45 minutes to 8-10 minutes.</li>
+                <li>App inventory: 42 apps, 40 checks, 30 passed.</li>
+              </ul>
+            </article>
+            <article class="item">
+              <h3>Close strong</h3>
+              <p>
+                "What I can bring here is a rare combination: I can build the first version myself,
+                manage the team that scales it, and work with executives on choosing the right problems."
+              </p>
+            </article>
+          </div>
+        </section>
+      </section>
+
+      <section id="notes" class="tab-panel">
+        <section class="section">
+          <h2>Notes</h2>
+          <p class="compact">Use this for your own wording, follow-up questions, and post-call notes.</p>
+          <textarea class="notes" id="notesArea" spellcheck="true"></textarea>
+          <div class="drill-controls notes-actions">
+            <button type="button" id="saveNotes">Save notes</button>
+            <button type="button" id="clearNotes">Clear notes</button>
+            <button type="button" id="resetProgress">Reset progress</button>
+          </div>
+        </section>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const STORAGE_KEY = "pagaya-ai-lead-prep-v1";
+    const state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{"checks":{},"knownCards":{},"notes":""}');
+    const checkboxes = Array.from(document.querySelectorAll("[data-track]"));
+    const progressText = document.getElementById("progressText");
+    const progressFill = document.getElementById("progressFill");
+
+    function saveState() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function updateProgress() {
+      const total = checkboxes.length;
+      const done = checkboxes.filter((box) => box.checked).length;
+      const percent = total ? Math.round((done / total) * 100) : 0;
+      progressText.textContent = percent + "%";
+      progressFill.style.width = percent + "%";
+    }
+
+    checkboxes.forEach((box) => {
+      const key = box.dataset.track;
+      box.checked = Boolean(state.checks[key]);
+      box.addEventListener("change", () => {
+        state.checks[key] = box.checked;
+        saveState();
+        updateProgress();
+      });
+    });
+
+    updateProgress();
+
+    const tabs = Array.from(document.querySelectorAll("[data-tab]"));
+    const panels = Array.from(document.querySelectorAll(".tab-panel"));
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        const target = tab.dataset.tab;
+        tabs.forEach((button) => button.setAttribute("aria-selected", button === tab ? "true" : "false"));
+        panels.forEach((panel) => panel.classList.toggle("active", panel.id === target));
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      });
+    });
+
+    document.getElementById("printButton").addEventListener("click", () => window.print());
+
+    const cards = [
+      {
+        q: "What is the one-line positioning?",
+        a: "I build governed, measurable AI operating systems inside complex organizations, not isolated demos."
+      },
+      {
+        q: "What is this role really about?",
+        a: "Enterprise AI transformation in IT & Cyber: squad leadership, org-wide AI strategy, secure implementation, ROI, adoption, and executive influence."
+      },
+      {
+        q: "What is the biggest Pagaya-specific caution?",
+        a: "Regulated financial services. Pitch governed speed, data boundaries, auditability, fair lending awareness, and security partnership."
+      },
+      {
+        q: "What is the SERS result?",
+        a: "Engineers move from raw ticket/log hunting to structured investigation reports with evidence, confidence, and compounding knowledge."
+      },
+      {
+        q: "What metrics prove the ERP taxonomy work?",
+        a: "2,054 incidents, 100% L1/L2 coverage, 93.8% high confidence, 1,762 linked DEV tickets, 3,297 closed-side tickets analyzed."
+      },
+      {
+        q: "How do you prioritize AI use cases?",
+        a: "Score measurable impact and feasibility/risk: ROI, time-to-value, data sensitivity, integration complexity, auditability, and adoption readiness."
+      },
+      {
+        q: "What is your build-vs-buy stance?",
+        a: "Buy commodity capabilities when secure and standard. Build where unique data, process advantage, deep integration, or control matters."
+      },
+      {
+        q: "How do you avoid AI chaos?",
+        a: "Create intake, prioritization, security review, architecture standards, evals, rollout metrics, and clear ownership."
+      },
+      {
+        q: "What should you ask Maor first?",
+        a: "How does he define the AI Squad mandate: internal enterprise AI, R&D/product acceleration, or both?"
+      },
+      {
+        q: "What should you not overclaim?",
+        a: "Do not claim verified details about Maor's background. Public profile was not reliably found under that spelling."
+      }
+    ];
+
+    let cardIndex = 0;
+    const flashcard = document.getElementById("flashcard");
+    const flashcardIndex = document.getElementById("flashcardIndex");
+    const flashcardQuestion = document.getElementById("flashcardQuestion");
+    const flashcardAnswer = document.getElementById("flashcardAnswer");
+    const showAnswer = document.getElementById("showAnswer");
+    const markKnown = document.getElementById("markKnown");
+
+    function renderCard() {
+      const card = cards[cardIndex];
+      const known = Boolean(state.knownCards[cardIndex]);
+      flashcard.classList.remove("answering");
+      flashcardIndex.textContent = "Card " + (cardIndex + 1) + " of " + cards.length + (known ? " - known" : "");
+      flashcardQuestion.textContent = card.q;
+      flashcardAnswer.textContent = card.a;
+      showAnswer.textContent = "Show answer";
+      markKnown.textContent = known ? "Marked known" : "Mark known";
+    }
+
+    document.getElementById("prevCard").addEventListener("click", () => {
+      cardIndex = (cardIndex - 1 + cards.length) % cards.length;
+      renderCard();
+    });
+
+    document.getElementById("nextCard").addEventListener("click", () => {
+      cardIndex = (cardIndex + 1) % cards.length;
+      renderCard();
+    });
+
+    showAnswer.addEventListener("click", () => {
+      const isAnswering = flashcard.classList.toggle("answering");
+      showAnswer.textContent = isAnswering ? "Hide answer" : "Show answer";
+    });
+
+    markKnown.addEventListener("click", () => {
+      state.knownCards[cardIndex] = !state.knownCards[cardIndex];
+      saveState();
+      renderCard();
+    });
+
+    renderCard();
+
+    const notesArea = document.getElementById("notesArea");
+    notesArea.value = state.notes || "";
+
+    document.getElementById("saveNotes").addEventListener("click", () => {
+      state.notes = notesArea.value;
+      saveState();
+    });
+
+    notesArea.addEventListener("input", () => {
+      state.notes = notesArea.value;
+      saveState();
+    });
+
+    document.getElementById("clearNotes").addEventListener("click", () => {
+      if (!confirm("Clear notes?")) return;
+      notesArea.value = "";
+      state.notes = "";
+      saveState();
+    });
+
+    document.getElementById("resetProgress").addEventListener("click", () => {
+      if (!confirm("Reset all checkmarks and known cards? Notes will stay.")) return;
+      state.checks = {};
+      state.knownCards = {};
+      checkboxes.forEach((box) => {
+        box.checked = false;
+      });
+      saveState();
+      updateProgress();
+      renderCard();
+    });
+  </script>
+</body>
+</html>
