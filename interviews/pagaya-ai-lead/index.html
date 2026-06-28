@@ -649,6 +649,22 @@
         box-shadow: none;
       }
     }
+    .deck-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 40px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--green-soft);
+      color: var(--ink);
+      text-decoration: none;
+      font-weight: 700;
+    }
+
+    .deck-link:hover {
+      border-color: var(--faint);
+    }
   </style>
 </head>
 <body>
@@ -664,6 +680,8 @@
           <button class="tab-button" data-tab="drill" aria-selected="false">Drill</button>
           <button class="tab-button" data-tab="plan" aria-selected="false">Plan</button>
           <button class="tab-button" data-tab="notes" aria-selected="false">Notes</button>
+          <a class="deck-link" href="./presentation/">Management deck</a>
+          <a class="deck-link" href="./presentation/he/">עברית</a>
           <button id="printButton" type="button">Print</button>
         </div>
       </div>

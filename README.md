@@ -15,6 +15,10 @@ Static personal website for private pages and section catalogues.
     index.html
     /pagaya-ai-lead/
       index.html
+      /presentation/
+        index.html        # Management presentation (English)
+        /he/
+          index.html      # Management presentation (Hebrew)
   /assets/
     styles.css
 ```

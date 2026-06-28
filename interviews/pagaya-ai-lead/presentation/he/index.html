@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pagaya · מוביל AI — מצגת ראיון</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700&family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+:root{
+  --blue:#2563EB;
+  --blue-2:#3B82F6;
+  --blue-ink:#1D4ED8;
+  --cta:#F97316;
+  --bg:#F8FAFC;
+  --surface:#FFFFFF;
+  --ink:#1E293B;
+  --ink-2:#475569;
+  --ink-3:#94A3B8;
+  --line:#E2E8F0;
+  --line-2:#CBD5E1;
+  --soft:#EFF4FF;
+  --green:#059669;
+  --amber:#D97706;
+  --radius:14px;
+  --shadow:0 1px 2px rgba(15,23,42,.06), 0 8px 24px rgba(15,23,42,.06);
+  --shadow-lg:0 12px 40px rgba(15,23,42,.12);
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:'Heebo','Open Sans',system-ui,sans-serif;
+  background:var(--bg);
+  color:var(--ink);
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+h1,h2,h3,.font-head{font-family:'Heebo','Poppins',sans-serif;letter-spacing:-.01em}
+
+/* ---------- progress + chrome ---------- */
+#progress{position:fixed;top:0;right:0;height:3px;background:var(--blue);width:0;z-index:60;transition:width .35s cubic-bezier(.2,.7,.2,1)}
+#topbar{position:fixed;top:0;left:0;right:0;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:50;pointer-events:none}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Heebo','Poppins';font-weight:600;font-size:14px;color:var(--ink);letter-spacing:.02em}
+.brand .dot{width:9px;height:9px;border-radius:50%;background:var(--blue)}
+.brand .sep{color:var(--line-2);font-weight:400}
+.brand .role{color:var(--ink-3);font-weight:500}
+.counter{font-family:'Heebo','Poppins';font-size:13px;color:var(--ink-3);font-weight:500;font-variant-numeric:tabular-nums}
+.counter b{color:var(--ink);font-weight:600}
+
+/* ---------- slides ---------- */
+#deck{position:relative;height:100%;width:100%}
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;justify-content:center;
+  padding:74px 7vw 84px;
+  opacity:0;visibility:hidden;
+  transform:translateX(-40px);
+  transition:opacity .5s ease, transform .5s cubic-bezier(.2,.7,.2,1), visibility .5s;
+  overflow-y:auto;
+}
+.slide.active{opacity:1;visibility:visible;transform:translateX(0)}
+.slide.prev{transform:translateX(40px)}
+.wrap{width:100%;max-width:1120px;margin:0 auto}
+
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Heebo','Poppins';font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--blue);margin-bottom:18px}
+.eyebrow::before{content:"";width:22px;height:2px;background:var(--blue);display:inline-block}
+h2.title{font-size:clamp(26px,3.4vw,42px);font-weight:600;line-height:1.12;margin-bottom:14px}
+.lede{font-size:clamp(15px,1.4vw,18px);color:var(--ink-2);max-width:780px;line-height:1.65;margin-bottom:30px}
+
+/* ---------- nav ---------- */
+#nav{position:fixed;bottom:0;left:0;right:0;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;z-index:50}
+.dots{display:flex;gap:7px;align-items:center;flex-wrap:wrap;max-width:60%}
+.dots button{width:9px;height:9px;border-radius:50%;border:none;background:var(--line-2);cursor:pointer;padding:0;transition:all .25s}
+.dots button:hover{background:var(--blue-2)}
+.dots button.on{background:var(--blue);width:26px;border-radius:5px}
+.arrows{display:flex;gap:10px}
+.arrows button{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;display:grid;place-items:center;transition:all .2s;box-shadow:var(--shadow)}
+.arrows button:hover:not(:disabled){border-color:var(--blue);color:var(--blue);transform:translateY(-1px)}
+.arrows button:disabled{opacity:.35;cursor:not-allowed}
+.arrows svg{width:18px;height:18px}
+
+/* ---------- building blocks ---------- */
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,1fr)}
+.g3{grid-template-columns:repeat(3,1fr)}
+.g4{grid-template-columns:repeat(4,1fr)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);transition:transform .25s,box-shadow .25s,border-color .25s}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg);border-color:var(--line-2)}
+.card .ico{width:38px;height:38px;border-radius:10px;background:var(--soft);color:var(--blue);display:grid;place-items:center;margin-bottom:14px}
+.card .ico svg{width:20px;height:20px}
+.card h3{font-size:16px;font-weight:600;margin-bottom:6px}
+.card p{font-size:13.5px;color:var(--ink-2);line-height:1.6}
+.card .big{font-family:'Heebo','Poppins';font-size:30px;font-weight:600;color:var(--blue);line-height:1;margin-bottom:4px;font-variant-numeric:tabular-nums}
+.card .lbl{font-size:12.5px;color:var(--ink-3);font-weight:600;letter-spacing:.04em}
+
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;padding:5px 11px;border-radius:999px;background:var(--soft);color:var(--blue-ink);border:1px solid #DBEAFE}
+.chip.cta{background:#FFF1E6;color:#C2410C;border-color:#FFE0C2}
+.chip.green{background:#ECFDF5;color:#047857;border-color:#A7F3D0}
+.gate{font-size:11.5px;color:var(--ink-2);background:var(--soft);border:1px solid #DBEAFE;border-radius:8px;padding:8px 11px;margin-top:12px;line-height:1.5}
+.gate b{color:var(--blue-ink);font-weight:600}
+.compound{font-size:11.5px;color:var(--blue-ink);margin-top:12px;padding-top:11px;border-top:1px dashed var(--line-2);display:flex;gap:7px;align-items:flex-start;line-height:1.45;font-weight:600}
+.compound svg{width:14px;height:14px;flex-shrink:0;margin-top:1px;color:var(--blue)}
+
+ul.ticks{list-style:none;display:flex;flex-direction:column;gap:11px}
+ul.ticks li{display:flex;gap:11px;font-size:14px;color:var(--ink-2);line-height:1.55}
+ul.ticks li svg{width:18px;height:18px;color:var(--blue);flex-shrink:0;margin-top:2px}
+ul.ticks li b{color:var(--ink);font-weight:600}
+
+.kpi-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:6px}
+.kpi{flex:1;min-width:150px;background:var(--surface);border:1px solid var(--line);border-right:3px solid var(--blue);border-radius:10px;padding:16px 18px}
+.kpi .n{font-family:'Heebo','Poppins';font-size:24px;font-weight:600;color:var(--ink);line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .t{font-size:12.5px;color:var(--ink-3);margin-top:6px;line-height:1.45}
+
+/* ---------- flow chart ---------- */
+.flow{display:flex;flex-direction:column;gap:18px}
+.flow-row{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;justify-content:center}
+.fstep{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 16px;width:154px;box-shadow:var(--shadow);display:flex;flex-direction:column;gap:7px}
+.fstep .num{position:absolute;top:-9px;right:-9px;width:24px;height:24px;border-radius:50%;background:var(--blue);color:#fff;font-family:'Heebo','Poppins';font-size:12px;font-weight:600;display:grid;place-items:center;box-shadow:0 2px 6px rgba(37,99,235,.4)}
+.fstep .fico{width:30px;height:30px;border-radius:8px;background:var(--soft);color:var(--blue);display:grid;place-items:center}
+.fstep .fico svg{width:17px;height:17px}
+.fstep h4{font-family:'Heebo','Poppins';font-size:13px;font-weight:600;line-height:1.25}
+.fstep p{font-size:11px;color:var(--ink-3);line-height:1.45}
+.fstep.blackbox{background:#0F172A;border-color:#0F172A}
+.fstep.blackbox h4,.fstep.blackbox p{color:#fff}
+.fstep.blackbox p{color:#94A3B8}
+.fstep.blackbox .fico{background:rgba(255,255,255,.12);color:#fff}
+.fstep.blackbox .num{background:var(--cta);box-shadow:0 2px 6px rgba(249,115,66,.5)}
+.fstep.cta-step{border-color:var(--cta);border-width:1.5px}
+.fstep.cta-step .num{background:var(--cta)}
+.fstep.cta-step .fico{background:#FFF1E6;color:var(--cta)}
+.arrow-h{display:flex;align-items:center;color:var(--line-2);padding:0 4px}
+.arrow-h svg{width:26px;height:26px;transform:scaleX(-1)}
+.fnote{display:flex;align-items:center;gap:10px;background:#0F172A;color:#E2E8F0;border-radius:10px;padding:12px 16px;font-size:13px;line-height:1.55;max-width:720px;margin:4px auto 0}
+.fnote svg{width:18px;height:18px;color:var(--cta);flex-shrink:0}
+.fnote b{color:#fff}
+.feedback-bar{display:flex;align-items:center;justify-content:center;gap:10px;color:var(--green);font-size:12.5px;font-weight:600;background:#ECFDF5;border:1px dashed #6EE7B7;border-radius:999px;padding:8px 18px;width:fit-content;margin:2px auto 0}
+.feedback-bar svg{width:16px;height:16px}
+
+/* ---------- timeline ---------- */
+.tl{position:relative;display:flex;flex-direction:column;gap:0}
+.tl-track{position:absolute;left:0;right:0;top:34px;height:3px;background:var(--line);border-radius:2px}
+.tl-fill{position:absolute;right:0;top:34px;height:3px;background:linear-gradient(90deg,var(--blue),var(--blue-2));border-radius:2px}
+.tl-steps{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;position:relative}
+.tl-step{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
+.tl-node{width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--blue);z-index:2;margin-bottom:6px}
+.tl-step.accent .tl-node{background:var(--cta);border-color:var(--cta)}
+.tl-wk{font-family:'Heebo','Poppins';font-size:12px;font-weight:600;color:var(--blue)}
+.tl-step.accent .tl-wk{color:var(--cta)}
+.tl-step.dim .tl-node{border-color:var(--line-2)}
+.tl-step.dim .tl-wk,.tl-step.dim .tl-name{color:var(--ink-3)}
+.tl-name{font-family:'Heebo','Poppins';font-size:13px;font-weight:600;color:var(--ink)}
+.tl-desc{font-size:11.5px;color:var(--ink-3);line-height:1.45}
+
+/* ---------- architecture ---------- */
+.arch{display:flex;flex-direction:column;gap:9px}
+.arch-layer{display:flex;align-items:flex-start;gap:13px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px 16px;box-shadow:var(--shadow)}
+.arch-layer .lico{width:36px;height:36px;border-radius:9px;background:var(--soft);color:var(--blue);display:grid;place-items:center;flex-shrink:0}
+.arch-layer .lico svg{width:19px;height:19px}
+.arch-layer .body{flex:1;min-width:0}
+.arch-layer .htag{font-size:13px;color:var(--ink-2);line-height:1.55}
+.arch-layer .htag b{font-family:'Heebo','Poppins';font-weight:600;color:var(--ink);font-size:14px}
+.arch-layer .mods{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}
+.mod{font-size:11.5px;font-weight:500;color:var(--ink-2);background:var(--bg);border:1px solid var(--line);border-radius:7px;padding:5px 10px}
+.arch-layer.gov{background:#0F172A;border-color:#0F172A}
+.arch-layer.gov .lico{background:rgba(255,255,255,.1);color:var(--cta)}
+.arch-layer.gov .htag{color:#CBD5E1}
+.arch-layer.gov .htag b{color:#fff}
+.arch-layer.gov .mod{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);color:#CBD5E1}
+
+/* ---------- 90 day ---------- */
+.phase{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.phase::before{content:"";position:absolute;top:0;left:0;width:100%;height:4px;background:var(--blue)}
+.phase.p2::before{background:var(--blue-2)}
+.phase.p3::before{background:var(--cta)}
+.phase .days{font-family:'Heebo','Poppins';font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.02em;margin-bottom:4px}
+.phase.p3 .days{color:var(--cta)}
+.phase h3{font-size:16px;margin-bottom:12px}
+.phase ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.phase li{font-size:13px;color:var(--ink-2);line-height:1.5;padding-right:16px;position:relative}
+.phase li::before{content:"";position:absolute;right:0;top:7px;width:6px;height:6px;border-radius:50%;background:var(--line-2)}
+
+/* ---------- Q&A ---------- */
+.qa{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px;box-shadow:var(--shadow)}
+.qa .q{display:flex;gap:10px;font-family:'Heebo','Poppins';font-weight:600;font-size:14.5px;color:var(--ink);margin-bottom:8px;align-items:flex-start}
+.qa .q span{color:var(--cta);font-weight:700}
+.qa .a{font-size:13px;color:var(--ink-2);line-height:1.6;padding-right:22px}
+
+/* ---------- title slide ---------- */
+.hero{text-align:right}
+.hero .kicker{font-family:'Heebo','Poppins';font-size:13px;font-weight:600;letter-spacing:.04em;color:var(--blue);margin-bottom:22px}
+.hero h1{font-size:clamp(32px,5.2vw,64px);font-weight:600;line-height:1.1;margin-bottom:20px}
+.hero h1 .accent{color:var(--blue)}
+.hero .sub{font-size:clamp(16px,1.6vw,20px);color:var(--ink-2);max-width:700px;line-height:1.6;margin-bottom:30px}
+.hero .meta{display:flex;gap:26px;flex-wrap:wrap;padding-top:24px;border-top:1px solid var(--line)}
+.hero .meta div .l{font-size:11px;letter-spacing:.04em;color:var(--ink-3);font-weight:600;margin-bottom:3px}
+.hero .meta div .v{font-family:'Heebo','Poppins';font-size:15px;font-weight:600;color:var(--ink)}
+
+.agenda-item{display:flex;align-items:center;gap:16px;padding:15px 18px;background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);transition:all .2s;cursor:pointer}
+.agenda-item:hover{border-color:var(--blue);transform:translateX(-4px)}
+.agenda-item .idx{font-family:'Heebo','Poppins';font-size:20px;font-weight:600;color:var(--blue);width:36px;flex-shrink:0;font-variant-numeric:tabular-nums}
+.agenda-item h3{font-size:15px;font-weight:600;margin-bottom:2px}
+.agenda-item p{font-size:12.5px;color:var(--ink-3)}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+.section-note{font-size:12px;color:var(--ink-3);margin-top:18px;display:flex;align-items:center;gap:8px}
+.section-note svg{width:15px;height:15px;color:var(--ink-3);flex-shrink:0}
+
+.hint{position:fixed;bottom:74px;left:50%;transform:translateX(-50%);font-size:11.5px;color:var(--ink-3);z-index:40;background:var(--surface);border:1px solid var(--line);padding:5px 12px;border-radius:999px;box-shadow:var(--shadow);transition:opacity .4s}
+.hint b{color:var(--ink-2)}
+
+@media (max-width:860px){
+  .slide{padding:70px 6vw 80px}
+  .g2,.g3,.g4,.two-col{grid-template-columns:1fr}
+  .tl-steps{grid-template-columns:repeat(2,1fr);gap:22px}
+  .tl-track,.tl-fill{display:none}
+  .arch-layer{gap:10px}
+  .arrow-h{transform:rotate(90deg)}
+  .arrow-h svg{transform:none}
+  .dots{display:none}
+  .hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important}
+}
+</style>
+</head>
+<body>
+<div id="progress"></div>
+<header id="topbar">
+  <div class="brand"><span class="dot"></span> PAGAYA <span class="sep">/</span> <span class="role">מוביל AI</span></div>
+  <div class="counter"><b id="cur">01</b> / <span id="tot">14</span></div>
+</header>
+
+<main id="deck"><!-- slides injected as static markup below --></main>
+
+<div class="hint" id="hint">נווטו עם מקשי החצים <b>← →</b></div>
+
+<nav id="nav">
+  <div class="dots" id="dots"></div>
+  <div class="arrows">
+    <button id="prev" aria-label="השקופית הקודמת"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg></button>
+    <button id="next" aria-label="השקופית הבאה"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+  </div>
+</nav>
+
+<script>
+/* ============ ICONS (Lucide-style, inline SVG) ============ */
+const I = {
+  network:'<path d="M12 2v6m0 8v6M4.93 4.93l4.24 4.24m5.66 5.66l4.24 4.24M2 12h6m8 0h6"/><circle cx="12" cy="12" r="3"/>',
+  bank:'<path d="M3 21h18M5 21V10m14 11V10M3 10l9-6 9 6M9 21v-6h6v6"/>',
+  coins:'<circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18M7 6h1v4M16.71 13.88l.7.71-2.82 2.82"/>',
+  brain:'<path d="M12 5a3 3 0 0 0-3 3 3 3 0 0 0-3 3 3 3 0 0 0 0 6 3 3 0 0 0 3 3 3 3 0 0 0 6 0 3 3 0 0 0 3-3 3 3 0 0 0 0-6 3 3 0 0 0-3-3 3 3 0 0 0-3-3z"/><path d="M12 5v14"/>',
+  shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',
+  user:'<circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6"/>',
+  doc:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/>',
+  check:'<path d="M20 6L9 17l-5-5"/>',
+  arrowR:'<path d="M5 12h14M13 6l6 6-6 6"/>',
+  refresh:'<path d="M3 12a9 9 0 0 1 15-6.7L21 8M21 3v5h-5M21 12a9 9 0 0 1-15 6.7L3 16M3 21v-5h5"/>',
+  chart:'<path d="M3 3v18h18"/><path d="M7 16l4-5 3 3 5-7"/>',
+  alert:'<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4M12 17h.01"/>',
+  layers:'<path d="M12 2l9 5-9 5-9-5 9-5z"/><path d="M3 12l9 5 9-5M3 17l9 5 9-5"/>',
+  target:'<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/>',
+  bolt:'<path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>',
+  flag:'<path d="M4 22V4s2-2 5-2 5 2 8 2 3-1 3-1v11s-1 1-3 1-5-2-8-2-5 1-5 1"/>',
+  scale:'<path d="M12 3v18M5 7h14M5 7l-3 7h6l-3-7zM19 7l-3 7h6l-3-7zM7 21h10"/>',
+  eye:'<path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/>',
+  car:'<path d="M5 17H3v-5l2-5h14l2 5v5h-2M5 17a2 2 0 1 0 4 0M15 17a2 2 0 1 0 4 0M5 17h10"/>',
+  cart:'<circle cx="9" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M3 3h2l2.4 12.4a2 2 0 0 0 2 1.6h7.7a2 2 0 0 0 2-1.6L21 7H6"/>',
+  card:'<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/>',
+  send:'<path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>',
+  cog:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-2.82 1.17V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 8 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15H4.5a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 6 9.4l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 12 5.6V4.5a2 2 0 0 1 4 0v.09c.7.28 1.5.13 2-.41l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06c-.54.5-.69 1.3-.41 2H21a2 2 0 0 1 0 4h-.09c-.66.02-1.27.42-1.51 1z"/>',
+  handshake:'<path d="M11 17l2 2a1 1 0 0 0 3-1l3-3 1 1 3-3-4-4-2 2H9L5 11l-3 3 3 3 2-2"/>',
+  rocket:'<path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/>',
+  search:'<circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/>',
+  database:'<ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5v14a9 3 0 0 0 18 0V5M3 12a9 3 0 0 0 18 0"/>',
+  pulse:'<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+  globe:'<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18"/>',
+};
+function svg(name,sw){return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="'+(sw||2)+'" stroke-linecap="round" stroke-linejoin="round">'+I[name]+'</svg>';}
+/* arrow that should point along RTL reading flow (leftward) */
+function flow(){return '<span style="display:flex;transform:scaleX(-1)">'+svg('arrowR')+'</span>';}
+
+/* ============ SLIDES ============ */
+const slides = [];
+
+/* 1 — TITLE */
+slides.push(`
+<div class="wrap hero">
+  <div class="kicker">מצגת ראיון · פאנל הנהלה</div>
+  <h1>בניית יתרון ה־<span class="accent">AI</span> של Pagaya<br>בתפקיד מוביל AI</h1>
+  <p class="sub">מבט אסטרטגי, ארכיטקטוני ותפעולי על האופן שבו AI מכפיל את ערך רשת ההלוואות של Pagaya — ממסע הלווה ועד לגלגל התנופה של שוקי ההון.</p>
+  <div class="meta">
+    <div><div class="l">הוכן על ידי</div><div class="v">מועמד לתפקיד מוביל AI</div></div>
+    <div><div class="l">קהל</div><div class="v">פאנל ניהולי וטכני</div></div>
+    <div><div class="l">היקף</div><div class="v">עסקי · ארכיטקטורה · תוכנית 90 יום</div></div>
+  </div>
+</div>`);
+
+/* 2 — AGENDA */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">סדר יום</div>
+  <h2 class="title">מה נכסה היום</h2>
+  <div class="grid g2" style="margin-top:24px">
+    <div class="agenda-item" data-go="2"><div class="idx">01</div><div><h3>המודל העסקי של Pagaya</h3><p>כיצד רשת ההלוואות מבוססת ה-AI מרוויחה</p></div></div>
+    <div class="agenda-item" data-go="4"><div class="idx">02</div><div><h3>מסע ההלוואה של הלווה</h3><p>תרשים זרימה עסקי ברמה גבוהה (המערכות כקופסה שחורה)</p></div></div>
+    <div class="agenda-item" data-go="6"><div class="idx">03</div><div><h3>שימוש ב-AI בעל מינוף גבוה</h3><p>בחירת הבעיה הנכונה — ולמה AI הוא המנוף</p></div></div>
+    <div class="agenda-item" data-go="8"><div class="idx">04</div><div><h3>הפתרון הטכני</h3><p>איך זה עובד, ארכיטקטורה, מודלים וממשל</p></div></div>
+    <div class="agenda-item" data-go="13"><div class="idx">05</div><div><h3>ציר זמן: מגילוי ← השקה</h3><p>מסלול מדורג מהבעיה לייצור</p></div></div>
+    <div class="agenda-item" data-go="15"><div class="idx">06</div><div><h3>תוכנית 90 יום</h3><p>מחזון לפעולה — הצעדים הראשונים שלי כמוביל AI</p></div></div>
+  </div>
+</div>`);
+
+/* 3 — Q1 BUSINESS MODEL */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">שאלה 01 · המודל העסקי</div>
+  <h2 class="title">Pagaya היא רשת הלוואות מבוססת AI — לא מַלווה</h2>
+  <p class="lede">Pagaya ממוקמת בין <b>מַלווים שזקוקים ליותר הלוואות איכותיות</b> ל<b>משקיעים שזקוקים לנכסים איכותיים</b>. ה-AI הוא מנוע ההתאמה. Pagaya מרוויחה <b>עמלות</b> עבור השימוש במודלים וברשת ההון שלה — היא אינה שואפת להחזיק סיכון אשראי במאזן שלה.</p>
+  <div class="grid g3">
+    <div class="card"><div class="ico">${svg('handshake')}</div><h3>שותפים (ביקוש)</h3><p>בנקים, חברות פינטק, מַלווי רכב וסוחרים שולחים בקשות ש-Pagaya עוזרת לאשר — מרחיבים נגישות מבלי לשנות את תיאבון הסיכון שלהם.</p></div>
+    <div class="card"><div class="ico">${svg('brain')}</div><h3>רשת ה-AI (המנוע)</h3><p>מודל החלטה ל&quot;מבט שני&quot; מעריך בקשות בזמן אמת ומתמחר סיכון הלוואה-אחר-הלוואה ברחבי הרשת.</p></div>
+    <div class="card"><div class="ico">${svg('coins')}</div><h3>משקיעים (הון)</h3><p>הון מוסדי שגויס מראש ומימון ABS רוכשים את ההלוואות, כך שהשותפים אינם נושאים בעומס מאזני חדש.</p></div>
+  </div>
+  <div class="kpi-row" style="margin-top:18px">
+    <div class="kpi"><div class="n">מבוסס-עמלות</div><div class="t">עמלות רשת וניהול קרנות — דל-הון בתכנון</div></div>
+    <div class="kpi"><div class="n">דו-צדדי</div><div class="t">יותר שותפים ← יותר נתונים ← מודלים טובים יותר ← יותר אמון משקיעים</div></div>
+    <div class="kpi"><div class="n">רב-נכסי</div><div class="t">הלוואות אישיות (כשני שלישים), רכב ונקודת-מכירה · מעל 30 שותפי הלוואות</div></div>
+  </div>
+  <div class="section-note">${svg('alert')} נתונים פומביים משתנים מרבעון לרבעון; מצגת זו מתמקדת במודל ובמנופי ה-AI, לא בנתונים פיננסיים נקודתיים.</div>
+</div>`);
+
+/* 4 — Q1 FLYWHEEL */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">שאלה 01 · גלגל התנופה</div>
+  <h2 class="title">למה המודל הזה מצטבר — והיכן ה-AI פועל</h2>
+  <p class="lede">כל סיבוב של הרשת מחזק את הבא אחריו. ה-AI הוא המכפיל בכל חץ: החלטות טובות יותר משפרות את ביצועי הנכסים, מה שמרוויח אמון משקיעים, שמממן יותר נפח.</p>
+  <div class="grid g4">
+    <div class="card"><span class="chip">שלב 1</span><h3 style="margin-top:12px">יותר שותפים</h3><p>ההפצה מביאה יותר בקשות ונתונים עשירים ומגוונים יותר.</p></div>
+    <div class="card"><span class="chip">שלב 2</span><h3 style="margin-top:12px">AI חכם יותר</h3><p>יותר נתונים מחדדים החלטות מותאמות-סיכון ודיוק תמחור.</p></div>
+    <div class="card"><span class="chip">שלב 3</span><h3 style="margin-top:12px">נכסים טובים יותר</h3><p>הלוואות איכותיות יותר ← ביצועי ABS חזקים יותר והפסדים נמוכים יותר.</p></div>
+    <div class="card"><span class="chip green">שלב 4</span><h3 style="margin-top:12px">הון זול יותר</h3><p>אמון המשקיעים מוזיל את עלות המימון ← מימון נפח גדול עוד יותר.</p></div>
+  </div>
+  <div class="feedback-bar" style="margin-top:22px">${svg('refresh')} גלגל התנופה מסתובב רק אם ביצועי הנכסים נשארים חזקים — תובנה זו מנחה את בחירת שימוש ה-AI שלי (שאלה 3)</div>
+</div>`);
+
+/* 5 — Q2 BORROWER JOURNEY FLOWCHART */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">שאלה 02 · הזרימה העסקית</div>
+  <h2 class="title">מסע ההלוואה של הלווה — Pagaya כקופסה שחורה</h2>
+  <p class="lede">מבט ברמה העסקית: מה הלווה חווה ומה מתרחש מאחורי הקלעים. המערכות הפנימיות של Pagaya מטופלות כקופסה שחורה אחת.</p>
+  <div class="flow">
+    <div class="flow-row">
+      <div class="fstep"><span class="num">1</span><div class="fico">${svg('user')}</div><h4>הלווה מגיש בקשה</h4><p>בבנק, בסוכנות רכב, בקופה או בהצעת אשראי</p></div>
+      <div class="arrow-h">${svg('arrowR')}</div>
+      <div class="fstep"><span class="num">2</span><div class="fico">${svg('bank')}</div><h4>השותף בוחן</h4><p>מאשר את הרובד העליון; היה דוחה את השאר</p></div>
+      <div class="arrow-h">${svg('arrowR')}</div>
+      <div class="fstep blackbox"><span class="num">3</span><div class="fico">${svg('brain')}</div><h4>רשת Pagaya</h4><p>החלטת &quot;מבט שני&quot; ותמחור סיכון מבוססי AI</p></div>
+      <div class="arrow-h">${svg('arrowR')}</div>
+      <div class="fstep cta-step"><span class="num">4</span><div class="fico">${svg('check')}</div><h4>הצעה מורחבת</h4><p>הלווה מקבל אישור שהיה מפספס</p></div>
+    </div>
+    <div class="flow-row">
+      <div class="fstep"><span class="num">5</span><div class="fico">${svg('send')}</div><h4>הכספים מועברים</h4><p>ההלוואה ממומנת מהון המשקיעים</p></div>
+      <div class="arrow-h">${svg('arrowR')}</div>
+      <div class="fstep"><span class="num">6</span><div class="fico">${svg('cog')}</div><h4>ההלוואה מנוהלת</h4><p>ההחזרים נגבים לאורך התקופה</p></div>
+      <div class="arrow-h">${svg('arrowR')}</div>
+      <div class="fstep blackbox"><span class="num">7</span><div class="fico">${svg('layers')}</div><h4>אריזה ומכירה</h4><p>הלוואות נארזות ל-ABS עבור משקיעים</p></div>
+      <div class="arrow-h">${svg('arrowR')}</div>
+      <div class="fstep"><span class="num">8</span><div class="fico">${svg('coins')}</div><h4>המשקיעים מרוויחים</h4><p>תשואות מביצועי ההלוואות</p></div>
+    </div>
+    <div class="feedback-bar">${svg('refresh')} נתוני החזר והפסד זורמים בחזרה לאימון מחדש של המודלים — סוגרים את הלולאה</div>
+    <div class="fnote">${svg('shield')}<span><b>קופסה שחורה =</b> הלווה והשותף רואים החלטה אחת חלקה. בפנים, Pagaya מתזמרת נתונים, מודלים, הון וסיכון — מופשט כאן בכוונה.</span></div>
+  </div>
+</div>`);
+
+/* 5b — WHAT IS AN ABS */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">הזרימה העסקית · זום על שלב 7</div>
+  <h2 class="title">מה זה ABS? מאלפי הלוואות למוצר השקעה אחד</h2>
+  <p class="lede">&quot;אריזה ומכירה&quot; היא הדרך שבה ההלוואות באמת ממומנות. Pagaya אינה מלווה מכספה שלה — היא הופכת מאגרי הלוואות למוצר השקעה ומוכרת אותו למשקיעים גדולים, שכספם מממן את ההלוואות.</p>
+  <div class="flow">
+    <div class="flow-row">
+      <div class="fstep"><span class="num">1</span><div class="fico">${svg('doc')}</div><h4>אלפי הלוואות</h4><p>כל הלוואה היא זרם של החזרים עתידיים המגיע לבעליה</p></div>
+      <div class="arrow-h">${svg('arrowR')}</div>
+      <div class="fstep"><span class="num">2</span><div class="fico">${svg('layers')}</div><h4>איגוד למאגר</h4><p>צירוף אלפי הלוואות כך שכמה החמצות תשלום בקושי פוגעות בשלם</p></div>
+      <div class="arrow-h">${svg('arrowR')}</div>
+      <div class="fstep blackbox"><span class="num">3</span><div class="fico">${svg('shield')}</div><h4>אריזה כ-ABS</h4><p>Asset-Backed Security — מוצר סחיר שמשקיעים קונים ממנו פרוסות</p></div>
+      <div class="arrow-h">${svg('arrowR')}</div>
+      <div class="fstep cta-step"><span class="num">4</span><div class="fico">${svg('coins')}</div><h4>מכירה למשקיעים</h4><p>המשקיעים משלמים מזומן מראש כדי להחזיק בפרוסות</p></div>
+    </div>
+    <div class="feedback-bar">${svg('refresh')} המזומן חוזר מיד ← מממן את הגל הבא של ההלוואות. המשקיעים גובים את ההחזרים לאורך זמן.</div>
+  </div>
+  <div class="two-col" style="margin-top:24px;gap:24px">
+    <div class="card" style="background:var(--soft);border-color:#DBEAFE">
+      <h3 style="font-size:14px;margin-bottom:10px">פענוח השם: A · B · S</h3>
+      <ul class="ticks" style="gap:8px">
+        <li>${svg('check')}<span><b>Asset (נכס)</b> — ההלוואות (ההחזרים העתידיים המגיעים)</span></li>
+        <li>${svg('check')}<span><b>Backed (מגובה)</b> — המוצר נתמך על ידי אותן הלוואות</span></li>
+        <li>${svg('check')}<span><b>Security (נייר ערך)</b> — משהו שמשקיעים יכולים לקנות ולמכור, כמו אג״ח</span></li>
+      </ul>
+    </div>
+    <div class="card">
+      <span class="chip">במשפט אחד</span>
+      <p style="margin-top:12px;font-size:14px;line-height:1.65">כמו לאגד 100 שטרי חוב של שכנים לקרן ולמכור ממנה מניות היום: אתה מקבל את כספך בחזרה עכשיו כדי להלוות שוב, בעוד המשקיעים גובים את ההחזרים והריבית לאורך השנים.</p>
+    </div>
+  </div>
+</div>`);
+
+/* 6 — Q3 PROBLEM SELECTION (three bets) */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">שאלה 03 · בחירת הבעיה הנכונה</div>
+  <h2 class="title">היכן ל-AI יש את המינוף הגבוה ביותר?</h2>
+  <p class="lede">דירגתי הזדמנויות לאורך כל מחזור חיי ההלוואה לפי <b>השפעה כספית</b>, <b>התאמה ל-AI</b> ו<b>היתכנות</b>. החלטות האשראי בקצה הקדמי כבר ברמה עולמית — לכן הפוטנציאל הגדול ביותר שטרם מומש נמצא משני צדדיה. שלושה הימורים בולטים.</p>
+  <div class="grid g3">
+    <div class="card"><div class="ico">${svg('coins')}</div><span class="chip">מימון · רווח</span><h3 style="margin-top:10px">AI לשוקי הון</h3><p>מיטוב האופן שבו הלוואות מקובצות, מובנות ומותאמות למשקיעים — הוזלת עלות ההון, המנוף הגדול ביותר במודל ממומן-מראש.</p></div>
+    <div class="card" style="border-color:var(--cta);border-width:1.5px"><div class="ico" style="background:#FFF1E6;color:var(--cta)">${svg('pulse')}</div><span class="chip cta">ניהול · בחירה מובילה</span><h3 style="margin-top:10px">מנוע מיתון הפסדים</h3><p>חיזוי פיגורים מוקדם והתערבות — הגנה על איכות הנכסים שכל גלגל התנופה תלוי בה. <b>נצלול לעומק בהמשך.</b></p></div>
+    <div class="card"><div class="ico">${svg('doc')}</div><span class="chip green">תפעול · יעילות</span><h3 style="margin-top:10px">Copilot תפעולי מבוסס GenAI</h3><p>אוטומציה של מסמכים, קליטת שותפים ודיווח למשקיעים על פני מעל 30 שותפים ו-150 משקיעים — צמצום עלות השירות.</p></div>
+  </div>
+  <div class="fnote" style="margin-top:20px">${svg('target')}<span><b>בחירה מובילה:</b> מנוע מיתון ההפסדים — ההשפעה הכספית הגבוהה ביותר × התאמה חזקה ל-AI. שני ההימורים הנוספים מפורטים בשקופית הבאה ומשולבים במפת הדרכים.</span></div>
+</div>`);
+
+/* 6b — TWO MORE BETS */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">שאלה 03 · שני הימורים נוספים בעלי מינוף גבוה</div>
+  <h2 class="title">מעבר למיתון הפסדים: שני הימורי AI נוספים</h2>
+  <p class="lede">אותה עדשה — הרבה כסף, התאמה חזקה ל-AI — חושפת שתי הזדמנויות נוספות שכדאי לממן: אחת שמגדילה <b>רווח</b>, ואחת שמניעה <b>יעילות</b>.</p>
+  <div class="two-col" style="gap:20px">
+    <div class="card" style="border-top:3px solid var(--blue)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div class="ico" style="margin:0">${svg('coins')}</div><span class="chip">מימון · רווחיות</span></div>
+      <h3 style="font-size:16.5px">AI לשוקי הון — מיטוב מימון ו-ABS</h3>
+      <p style="margin:8px 0 12px;font-size:13px;color:var(--ink-2);line-height:1.6"><b>למה זה בעל מינוף גבוה:</b> Pagaya מממנת מראש כל הלוואה — מעל 34 מיליארד דולר גויסו ב-83 איגוחים ממעל 150 משקיעים. עלות ההון היא התנודה הגדולה ביותר ביחידות הכלכליות; מספר נקודות בסיס מצטברות על פני עשרות מיליארדים.</p>
+      <ul class="ticks" style="gap:9px">
+        <li>${svg('layers')}<span><b>בניית מאגרים חכמה</b> — הרכבת מאגרי הלוואות שעומדים בדירוגי יעד ובמנדטים של משקיעים תוך מיטוב הכלכליות.</span></li>
+        <li>${svg('chart')}<span><b>חיזוי ביצועי טראנשים</b> — בניית מבנה ההון האופטימלי ותמחור עסקאות לפי הביקוש בזמן אמת.</span></li>
+        <li>${svg('send')}<span><b>ניתוב מימון בזמן אמת</b> — התאמת כל הלוואה מאושרת למקור ההון הזול ביותר הזמין.</span></li>
+      </ul>
+      <div class="gate"><b>השפעה:</b> עלות הון נמוכה יותר + שיעור מילוי גבוה יותר (פחות הלוואות מאושרות שנותרות ללא מימון) ← יותר נפח ממומן ומרווח.</div>
+    </div>
+    <div class="card" style="border-top:3px solid var(--green)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px"><div class="ico" style="margin:0;background:#ECFDF5;color:var(--green)">${svg('doc')}</div><span class="chip green">תפעול · יעילות</span></div>
+      <h3 style="font-size:16.5px">Copilot תפעולי ולמשקיעים מבוסס GenAI</h3>
+      <p style="margin:8px 0 12px;font-size:13px;color:var(--ink-2);line-height:1.6"><b>למה זה בעל מינוף גבוה:</b> רשת של מעל 30 שותפי הלוואות ו-150 משקיעים מייצרת עבודה ידנית כבדה — קליטה, תפעול חיתום, מסמכי ציות ודיווחי ABS חוזרים. עלות שירות זו גדלה עם העסק אלא אם תעבור אוטומציה.</p>
+      <ul class="ticks" style="gap:9px">
+        <li>${svg('doc')}<span><b>Copilots למסמכים</b> — חילוץ, אימות והתאמה של מסמכי הלוואה (הרחבת אוטומציה דלת-מגע בסגנון FastPass).</span></li>
+        <li>${svg('chart')}<span><b>Copilot לדיווח למשקיעים</b> — ניסוח אוטומטי של דוחות מעקב וגילוי ל-ABS מנתוני התיק, בבקרת אדם.</span></li>
+        <li>${svg('handshake')}<span><b>עוזרי קליטה ותפעול</b> — האצת אינטגרציית שותפים ומענה לשאלות ממאגר ידע מבוקר.</span></li>
+      </ul>
+      <div class="gate" style="background:#ECFDF5;border-color:#A7F3D0"><b style="color:#047857">השפעה:</b> עלות שירות נמוכה יותר ומחזורים מהירים יותר ← מינוף תפעולי שמגדיל נפח בלי להגדיל כוח אדם.</div>
+    </div>
+  </div>
+</div>`);
+
+/* 7 — Q4a WHY A PROBLEM */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">שאלה 04א · למה זו בעיה?</div>
+  <h2 class="title">מחיקות חוב הן המס על כל גלגל התנופה</h2>
+  <p class="lede">הפסדי אשראי הם הגורם הבר-שליטה הגדול ביותר שגורע מתשואות המשקיעים. כשההפסדים עולים באופן בלתי צפוי, עלויות המימון מטפסות וכושר ההנפקה מצטמצם — גלגל התנופה מאט עבור כולם ברשת.</p>
+  <div class="two-col">
+    <ul class="ticks">
+      <li>${svg('alert')}<span><b>תגובתי כיום.</b> רוב הניהול פועל <i>אחרי</i> שהלווה כבר בפיגור — כשסיכויי ההבראה הנמוכים ביותר וההשבה היקרה ביותר.</span></li>
+      <li>${svg('chart')}<span><b>עלות מצטברת.</b> בהנפקות של מיליארדי דולרים, הפחתה קטנה בשיעור ההפסד שווה סכום גדול של תשואת משקיעים שנשמרה.</span></li>
+      <li>${svg('coins')}<span><b>רגישות מימון.</b> משקיעי ABS מתמחרים את העסקה לפי הפסדים צפויים — אותות טובים ומוקדמים יותר מהדקים את התמחור ומוזילים את עלות ההון.</span></li>
+      <li>${svg('shield')}<span><b>האמון הוא החפיר.</b> ביצועים צפויים הם מה ששומר על זרימת ההון בחזרה לרשת.</span></li>
+    </ul>
+    <div class="card" style="background:#0F172A;border-color:#0F172A">
+      <span class="chip cta">חשבון המינוף</span>
+      <p style="color:#CBD5E1;margin-top:14px;font-size:14px;line-height:1.65">תפיסת אפילו חלק מההפסדים הפוטנציאליים <b style="color:#fff">30–60 ימים מוקדם יותר</b> — עם ההתערבות הנכונה — הופכת הפסדים להבראות.</p>
+      <div style="display:flex;gap:20px;margin-top:18px">
+        <div><div style="font-family:Heebo,Poppins;font-size:26px;font-weight:600;color:#fff">30–60 ימים</div><div style="font-size:11.5px;color:#94A3B8;margin-top:4px">התרעה מוקדמת יותר</div></div>
+        <div><div style="font-family:Heebo,Poppins;font-size:26px;font-weight:600;color:var(--cta)">↑ הבראה</div><div style="font-size:11.5px;color:#94A3B8;margin-top:4px">באמצעות פנייה בזמן הנכון</div></div>
+      </div>
+    </div>
+  </div>
+</div>`);
+
+/* 8 — Q4b HOW SOLUTION WORKS */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">שאלה 04ב · איך הפתרון עובד</div>
+  <h2 class="title">חיזוי ← תיעדוף ← התערבות ← למידה</h2>
+  <p class="lede">מנוע פעיל-תמיד שמדרג כל הלוואה פעילה מדי יום, מחליט למי לעזור ואיך, מבצע את ההתערבות, ומודד מה באמת שינה התנהגות.</p>
+  <div class="grid g4">
+    <div class="card"><span class="chip">01 · חיזוי</span><h3 style="margin-top:12px">אות סיכון</h3><p>מודל זמן-עד-כשל מדרג כל הלוואה מדי יום לפי התנהגות תשלומים, תזרים מזומנים ואותות מאקרו.</p></div>
+    <div class="card"><span class="chip">02 · תיעדוף</span><h3 style="margin-top:12px">Uplift, לא רק סיכון</h3><p>מודל uplift מכוון ללווים שפעולה באמת תשנה אצלם — לא אלה שיבריאו ממילא או לעולם לא.</p></div>
+    <div class="card"><span class="chip">03 · התערבות</span><h3 style="margin-top:12px">פעולה בזמן הנכון</h3><p>תזכורות, תוכניות הקלה, מבני חוב מחדש או פנייה אישית — מתוזמנים בשכבת מדיניות עם בקרות.</p></div>
+    <div class="card"><span class="chip green">04 · למידה</span><h3 style="margin-top:12px">לולאה סגורה</h3><p>התוצאות חוזרות כתוויות; בדיקות champion/challenger משפרות את המדיניות.</p></div>
+  </div>
+  <div class="fnote" style="margin-top:20px">${svg('brain')}<span><b>למה AI הוא המנוף הנכון:</b> הבעיה רחבת-היקף, עשירת-דפוסים וברמת הפרט — בדיוק היכן שמודלים עולים על כללים קבועים. הניצחון הוא <b>מיטוב הטיפול</b>, לא רק חיזוי.</span></div>
+</div>`);
+
+/* 9 — ARCHITECTURE (plain language) */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">ארכיטקטורה · בשפה פשוטה</div>
+  <h2 class="title">איך פלטפורמת ה-AI באמת עובדת</h2>
+  <p class="lede">חשבו על זה כקו ייצור עם שישה שלבים. מידע גולמי נכנס בצד אחד; החלטה חכמה, הוגנת ומבוקרת לחלוטין יוצאת בצד השני. הנה כל שלב בשפת היום-יום.</p>
+  <div class="arch">
+    <div class="arch-layer"><div class="lico">${svg('database')}</div><div class="body"><div class="htag"><b>1 · נתונים — חומר הגלם.</b> כל מה שאנחנו יודעים על כל הלוואה ולווה, מרוכז במקום אחד.</div><div class="mods"><span class="mod">היסטוריית תשלומים</span><span class="mod">לשכת אשראי ונתונים נוספים</span><span class="mod">ביצועי הלוואות עבר</span><span class="mod">המצב הכלכלי</span></div></div></div>
+    <div class="arch-layer"><div class="lico">${svg('cog')}</div><div class="body"><div class="htag"><b>2 · מאפיינים — הפיכת נתונים גולמיים לרמזים.</b> מחשבים מראש אותות לשימוש חוזר (למשל &quot;פספס 2 מ-6 התשלומים האחרונים&quot;) ומוודאים שאף אחד מהם לא מציץ בסתר לעתיד.</div><div class="mods"><span class="mod">מחסן אותות מוכנים משותף</span><span class="mod">בדיקות &quot;ללא מידע מהעתיד&quot;</span></div></div></div>
+    <div class="arch-layer"><div class="lico">${svg('brain')}</div><div class="body"><div class="htag"><b>3 · מודלים — המוח.</b> תוכנות שלומדות דפוסים ממיליוני הלוואות עבר כדי לחזות מה צפוי לקרות. <i>(השמות המפחידים מפוענחים בשקופית הבאה.)</i></div><div class="mods"><span class="mod">מודלי Gradient boosting</span><span class="mod">מודלי יסוד טבלאיים</span><span class="mod">זמן-עד-כשל</span><span class="mod">Uplift</span></div></div></div>
+    <div class="arch-layer"><div class="lico">${svg('bolt')}</div><div class="body"><div class="htag"><b>4 · הגשה (Serving) — הפעלת המודל.</b> אימון מודל הוא כמו לימוד; הגשה היא לגשת למבחן האמיתי. זו המערכת החיה שמדרגת הלוואות אמיתיות ומחזירה תשובה בשבריר שנייה.</div><div class="mods"><span class="mod">מדרג כל הלוואה בן-לילה</span><span class="mod">תשובות מיידיות לפי דרישה</span><span class="mod">מודל חדש נבחן מול הטוב הנוכחי</span></div></div></div>
+    <div class="arch-layer"><div class="lico">${svg('eye')}</div><div class="body"><div class="htag"><b>5 · ניטור — שמירה על בריאות.</b> העולם משתנה, ולכן אנו עוקבים אחר התיישנות המודל ובודקים אם תחזיותיו אכן התממשו.</div><div class="mods"><span class="mod">מזהה סחף (drift) במודל</span><span class="mod">האם התחזיות התקיימו?</span><span class="mod">מתריע לצוות</span></div></div></div>
+    <div class="arch-layer gov"><div class="lico">${svg('scale')}</div><div class="body"><div class="htag"><b>6 · ממשל — הוגנות, כללים ותיעוד.</b> כל החלטה חייבת להיות הוגנת, ניתנת להסבר ומתועדת — רגולטור יכול לשאול &quot;למה?&quot; על כל הלוואה ואנחנו יכולים לענות.</div><div class="mods"><span class="mod">בדיקות הלוואות הוגנות</span><span class="mod">סקירת מודל עצמאית (SR 11-7)</span><span class="mod">סיבה בשפה פשוטה לכל החלטה</span><span class="mod">מסלול ביקורת מלא</span></div></div></div>
+  </div>
+</div>`);
+
+/* 9b — JARGON DECODED */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">ארכיטקטורה · פענוח ז׳רגון</div>
+  <h2 class="title">ארבעת המונחים שנשמעים הכי מפחידים</h2>
+  <p class="lede">אף אחד מאלה אינו מסובך כפי שהוא נשמע. הנה הם בשפה פשוטה.</p>
+  <div class="grid g2">
+    <div class="card"><span class="chip">שלב 3 · מודלים</span><h3 style="margin-top:12px">מודלי Gradient boosting ומודלי יסוד טבלאיים</h3><p><b>מודל Gradient boosting</b> = צוות של עצי החלטה פשוטים (כן/לא), כשכל עץ חדש נוסף כדי לתקן את טעויות קודמיו. זהו סוס העבודה המוכח לנתונים בסגנון גיליון אלקטרוני כמו אשראי. <b>מודל יסוד טבלאי</b> הוא סוג חדש יותר — מודל גדול שאומן מראש על כמויות אדירות של נתונים טבלאיים (אותו רעיון שמניע את ChatGPT לטקסט), ואז שב לשימוש לבעיות אשראי.</p></div>
+    <div class="card"><span class="chip">שלב 3 · מודלים</span><h3 style="margin-top:12px">מידול Uplift</h3><p>במקום לשאול <i>&quot;מי בסיכון?&quot;</i>, הוא שואל <b>&quot;מי באמת ישנה את התנהגותו אם נתערב?&quot;</b> הוא מדלג בכוונה על אלה שישלמו ממילא ועל אלה שלעולם לא — כך שזמן, כסף ופנייה מופנים רק לאן שפעולה באמת עושה הבדל.</p></div>
+    <div class="card"><span class="chip">שלב 4 · הגשה</span><h3 style="margin-top:12px">מה זה &quot;הגשה&quot; (Serving)</h3><p>בניית מודל היא כמו לימוד למבחן; <b>הגשה היא לגשת למבחן בעולם האמיתי.</b> זו התוכנה החיה שלוקחת הלוואה אמיתית, מריצה אותה דרך המודל המאומן ומחזירה תשובה — בכמות גדולה בן-לילה, או בשבריר שנייה כשנדרש.</p></div>
+    <div class="card" style="border-color:var(--cta);border-width:1.5px"><span class="chip cta">שלב 6 · ממשל</span><h3 style="margin-top:12px">סיכון מודל (SR 11-7)</h3><p><b>הנחיה של הבנק המרכזי של ארה״ב (Federal Reserve)</b> לחברות פיננסיות: כל מודל חייב להיבדק, להיות מתועד ומנוטר באופן עצמאי על ידי מישהו שאינו בונה המודל — כדי שמודל פגום לא יגרום נזק בשקט. בקצרה, זהו כלל &quot;הצג את עבודתך ושלח אותה לביקורת&quot; עבור AI בפיננסים.</p></div>
+  </div>
+</div>`);
+
+/* 10 — MODEL CAPABILITIES (worked example) */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">יכולות ואמון</div>
+  <h2 class="title">יכולות המודל — בנויות כדי לזכות באמון</h2>
+  <p class="lede">הדרך הברורה ביותר להראות זאת היא דוגמה אחת. עקבו אחר לווה יחיד דרך המנוע: כל שלב הוא יכולת שעושה את עבודתה — ואיש אינו נוצר עמו קשר עד שעוברת בדיקת הוגנות.</p>
+  <div class="flow">
+    <div class="flow-row">
+      <div class="fstep"><span class="num">1</span><div class="fico">${svg('user')}</div><h4>הלוואה פעילה</h4><p>&quot;מריה&quot;, 8 חודשים לתוך הלוואה אישית</p></div>
+      <div class="arrow-h">${svg('arrowR')}</div>
+      <div class="fstep"><span class="num">2</span><div class="fico">${svg('chart')}</div><h4>חיזוי סיכון</h4><p>הסיכוי להיקלע לפיגור עולה ל-~38% תוך 60 יום</p></div>
+      <div class="arrow-h">${svg('arrowR')}</div>
+      <div class="fstep"><span class="num">3</span><div class="fico">${svg('target')}</div><h4>האם עזרה תעבוד?</h4><p>מודל uplift: דחיפה עדינה צפויה לשנות את התוצאה</p></div>
+      <div class="arrow-h">${svg('arrowR')}</div>
+      <div class="fstep blackbox"><span class="num">4</span><div class="fico">${svg('scale')}</div><h4>שער הוגנות</h4><p>נבדק להטיה · הסיבה תועדה · אדם יכול לעקוף</p></div>
+      <div class="arrow-h">${svg('arrowR')}</div>
+      <div class="fstep cta-step"><span class="num">5</span><div class="fico">${svg('send')}</div><h4>עזרה בזמן הנכון</h4><p>תוכנית הקלה מוצעת עוד לפני שאי פעם פיגרה</p></div>
+    </div>
+    <div class="feedback-bar">${svg('refresh')} מריה נשארת מעודכנת בתשלומים — התוצאה חוזרת ומחדדת את התחזית הבאה</div>
+  </div>
+  <div class="two-col" style="margin-top:26px;gap:24px">
+    <div>
+      <h3 class="font-head" style="font-size:12px;margin-bottom:11px;color:var(--blue);letter-spacing:.04em">יכולות בפעולה</h3>
+      <div style="display:flex;gap:7px;flex-wrap:wrap">
+        <span class="chip">חיזוי זמן-עד-כשל</span>
+        <span class="chip">Uplift — למי לעזור</span>
+        <span class="chip">ציונים מכוילים (38% באמת אומר 38%)</span>
+        <span class="chip">GenAI מנסח את הפנייה</span>
+      </div>
+    </div>
+    <div>
+      <h3 class="font-head" style="font-size:12px;margin-bottom:11px;color:var(--cta);letter-spacing:.04em">אמצעי אמון · שלב 4</h3>
+      <div style="display:flex;gap:7px;flex-wrap:wrap">
+        <span class="chip cta">נבדק להלוואות הוגנות</span>
+        <span class="chip cta">קוד סיבה מתועד</span>
+        <span class="chip cta">סקירה עצמאית (SR 11-7)</span>
+        <span class="chip cta">עקיפה אנושית</span>
+      </div>
+    </div>
+  </div>
+  <div class="two-col" style="margin-top:16px;gap:16px">
+    <div class="card" style="border-top:3px solid var(--cta)">
+      <span class="chip cta">מהו שער ההוגנות</span>
+      <p style="margin-top:11px;font-size:13px;line-height:1.65">נקודת ביקורת מחייבת לפני שנוצר קשר עם <b>כל</b> לווה: ההחלטה נבדקת להטיה לפי כללי הלוואות הוגנות, נרשמת סיבה בשפה פשוטה, ואדם יכול לעקוף אותה. שום דבר אינו מגיע ללווה עד שהוא עובר את השער.</p>
+    </div>
+    <div class="card" style="border-top:3px solid var(--green)">
+      <span class="chip green">איך זה משרת את המשקיעים</span>
+      <p style="margin-top:11px;font-size:13px;line-height:1.65">הפעולה — תזכורת עדינה, שינוי מועד תשלום או תוכנית הקלה — הופכת הפסדים פוטנציאליים להבראות. הלוואות אלו נמצאות במאגרי ABS, כך שכל הבראה היא כסף שזורם למשקיעים. הפסדים מעטים ויציבים יותר מפחיתים את הסיכון שלהם ומוזילים את ההון של Pagaya.</p>
+    </div>
+  </div>
+</div>`);
+
+/* 11a — TIMELINE · שלבים 1–3 */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">שאלה 04ג · ציר זמן</div>
+  <h2 class="title">מגילוי ועד השקה — כשני רבעונים</h2>
+  <p class="lede">שישה שלבים <b>שחופפים בכוונה</b> — הצוותים עובדים במקביל, כך שהשלב הבא יכול להתחיל עוד לפני שהקודם מסתיים לגמרי. הכלל: להוכיח את הערך על הנייר, ואז בשקט, לפני שלווה כלשהו מושפע — עם שער &quot;יציאה/המשך&quot; (go/no-go) בסוף כל שלב.</p>
+  <div class="tl" style="margin:26px 0 32px">
+    <div class="tl-track"></div><div class="tl-fill" style="width:42%"></div>
+    <div class="tl-steps">
+      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">שבועות 0–4</div><div class="tl-name">גילוי</div></div>
+      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">שבועות 4–10</div><div class="tl-name">נתונים ומאפיינים</div></div>
+      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">שבועות 8–16</div><div class="tl-name">מידול</div></div>
+      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">שבועות 14–20</div><div class="tl-name">ממשל</div></div>
+      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">שבועות 18–24</div><div class="tl-name">מצב צללים</div></div>
+      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">שבועות 24–30</div><div class="tl-name">השקה</div></div>
+    </div>
+  </div>
+  <p style="font-size:12.5px;color:var(--blue);margin-bottom:14px;font-weight:600;letter-spacing:.03em">שלבים 1–3 · בנייה והוכחה</p>
+  <div class="grid g3">
+    <div class="card"><span class="chip">שבועות 0–4 · גילוי</span><p style="margin-top:11px">ראיון צוותי ניהול הלוואות, סיכון ושוקי הון כדי למסגר את הבעיה האמיתית. משיכת 2–3 שנות היסטוריית הלוואות ותוצאות. הגדרת מה זו &quot;הצלחה&quot; בדולרים, ומדידת קו הבסיס התגובתי של היום.</p><div class="gate"><b>שער:</b> הגדרת בעיה מוסכמת, מדד יעד (למשל נקודות בסיס של הפסד שנמנע), ומצאי נתונים מאושר.</div></div>
+    <div class="card"><span class="chip">שבועות 4–10 · נתונים ומאפיינים</span><p style="margin-top:11px">בניית מחסן המאפיינים: הנדסת אותות של התנהגות תשלומים, תזרים מזומנים וכלכלה, ויצירת תוויות נקיות &quot;כשל מול הבראה&quot;. הרצת <b>בדיקות דליפה (leakage)</b> — הוכחה שאף אות אינו &quot;מציץ אל העתיד&quot; (מידע שעדיין לא קיים בזמן ההחלטה), דבר שהיה גורם למודל להיראות מצוין בבדיקות אך להיכשל במציאות.</p><div class="gate"><b>שער:</b> מערך מאפיינים מאומת ומתועד שהצוות סומך עליו.</div></div>
+    <div class="card"><span class="chip">שבועות 8–16 · מידול</span><p style="margin-top:11px">אימון מודל הסיכון (מתי צרה מתקרבת) ומודל ה-uplift (למי פעולה באמת תעזור). בדיקה לאחור על הלוואות היסטוריות שמורות כדי לאמוד הפסדים שנמנעו, וכיול הציונים.</p><div class="gate"><b>שער:</b> הבדיקה לאחור עולה על קו הבסיס התגובתי במרווח משמעותי — יציאה/המשך.</div></div>
+  </div>
+</div>`);
+
+/* 11b — TIMELINE · שלבים 4–6 */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">שאלה 04ג · ציר זמן (המשך)</div>
+  <h2 class="title">מממשל ועד השקה מבוקרת</h2>
+  <p class="lede">המחצית השנייה ממתנת את הסיכון בהשקה: להוכיח שהמודל הוגן ותואם רגולציה, להריץ אותו בשקט, ואז להגדיל בהדרגה מול קבוצת ביקורת שמורה — בלי לגעת בלווה עד שהראיות בידינו.</p>
+  <div class="tl" style="margin:26px 0 32px">
+    <div class="tl-track"></div><div class="tl-fill" style="width:100%"></div>
+    <div class="tl-steps">
+      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">שבועות 0–4</div><div class="tl-name">גילוי</div></div>
+      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">שבועות 4–10</div><div class="tl-name">נתונים ומאפיינים</div></div>
+      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">שבועות 8–16</div><div class="tl-name">מידול</div></div>
+      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">שבועות 14–20</div><div class="tl-name">ממשל</div></div>
+      <div class="tl-step accent"><div class="tl-node"></div><div class="tl-wk">שבועות 18–24</div><div class="tl-name">מצב צללים</div></div>
+      <div class="tl-step accent"><div class="tl-node"></div><div class="tl-wk">שבועות 24–30</div><div class="tl-name">השקה</div></div>
+    </div>
+  </div>
+  <p style="font-size:12.5px;color:var(--cta);margin-bottom:14px;font-weight:600;letter-spacing:.03em">שלבים 4–6 · מיתון סיכון והשקה</p>
+  <div class="grid g3">
+    <div class="card"><span class="chip">שבועות 14–20 · ממשל</span><p style="margin-top:11px"><b>צוות עצמאי</b> בודק שוב שהמודל תקין, הוגן ומתועד במלואו (תקן SR 11-7). מוודאים שהוא אינו פוגע באף קבוצה מוגנת, דואגים שכל החלטה ניתנת להסבר, ומקבלים אישור משפטי וציות.</p><div class="gate"><b>שער:</b> אישור להרצה על נתונים אמיתיים — אך בשקט, מבלי ליצור קשר עם איש עדיין.</div></div>
+    <div class="card"><span class="chip">שבועות 18–24 · מצב צללים</span><p style="margin-top:11px">הרצת המנוע חי אך שקט: הוא נותן המלצות שאיש אינו פועל לפיהן, ואנו משווים אותן למה שקרה בפועל. כוונון ספים ווידוא שאין הפתעות.</p><div class="gate"><b>שער:</b> תוצאות הצללים תואמות את הבדיקה לאחור; סיכון ותפעול בנוח לפעול באמת.</div></div>
+    <div class="card" style="border-color:var(--cta);border-width:1.5px"><span class="chip cta">שבועות 24–30 · השקה מבוקרת</span><p style="margin-top:11px">הפעלת התערבויות אמיתיות לקבוצה קטנה, נמדדת מול קבוצת ביקורת שמורה. מעקב שבועי אחר הפסדים, שיעורי הבראה והוגנות. הגדלת נפח ככל שהראיות מצטברות.</p><div class="gate" style="background:#FFF1E6;border-color:#FFE0C2"><b style="color:#C2410C">שער:</b> שיפור חי מול הביקורת אומת ← הרחבה לכל התיק.</div></div>
+  </div>
+</div>`);
+
+/* 13 — 90 DAY PLAN */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">כמוביל AI · ביצוע</div>
+  <h2 class="title">90 הימים הראשונים שלי</h2>
+  <p class="lede">להקשיב, להוכיח ולהתוות כיוון — לזכות באמון עם ניצחון מהיר שהושק תוך הנחת יסודות הפלטפורמה.</p>
+  <div class="grid g3">
+    <div class="phase"><div class="days">ימים 0–30 · להקשיב ולהעריך</div><h3>מיפוי השטח</h3><ul>
+      <li>ביקורת מודלים, נתונים, בשלות MLOps וממשל</li>
+      <li>פגישה עם שותפים, סיכון, שוקי הון וצוות ה-AI</li>
+      <li>מיפוי סיכון מודל ועמדת הלוואות הוגנות</li>
+      <li>זיהוי ההזדמנויות בעלות ה-ROI הגבוה ביותר</li></ul></div>
+    <div class="phase p2"><div class="days">ימים 31–60 · להוכיח ולתכנן</div><h3>ניצחון מהיר + אסטרטגיה</h3><ul>
+      <li>השקת ניצחון תפעולי אחד מבוסס GenAI לבניית מומנטום</li>
+      <li>בדיקה לאחור של רעיון ההתרעה המוקדמת על נתונים אמיתיים</li>
+      <li>סגירת פערי MLOps / ממשל הדחופים ביותר</li>
+      <li>ניסוח מפת דרכים ל-AI ל-12 חודשים ותוכנית גיוס</li></ul></div>
+    <div class="phase p3"><div class="days">ימים 61–90 · לספק וליישר</div><h3>הכיוון נקבע</h3><ul>
+      <li>הקמת בניית מנוע מיתון ההפסדים</li>
+      <li>הצגת מפת הדרכים ותיק ההשקעה להנהלה</li>
+      <li>הקמת מועצת ממשל AI ומדדים</li>
+      <li>נעילת מבנה הצוות וגיוסים מרכזיים</li></ul></div>
+  </div>
+</div>`);
+
+/* 14 — Q&A PREP / CLOSE */
+slides.push(`
+<div class="wrap">
+  <div class="eyebrow">שאלות צפויות</div>
+  <h2 class="title">שאלות ותשובות — תשובות מוכנות</h2>
+  <div class="grid g2" style="margin-top:22px">
+    <div class="qa"><div class="q"><span>ש</span>למה מיתון הפסדים על פני מודל ההחלטה המרכזי?</div><div class="a">מודל ההחלטה כבר מצוין; הרווחים השוליים קטנים. ביצועי הנכסים לאחר המימון מנוטרים באופן תגובתי ומשפיעים ישירות על תשואות ה-ABS — שם עדיין קיים שינוי מדרגה.</div></div>
+    <div class="qa"><div class="q"><span>ש</span>איך נמנעים מסיכון הלוואות לא-הוגנות?</div><div class="a">בדיקת השפעה לא-פרופורציונלית לפני ההשקה, קודי סיבה לכל פעולה שלילית, אימות מודל עצמאי, ועקיפה אנושית בפעולות מול לווים — הממשל בנוי פנימה, לא מולבש מבחוץ.</div></div>
+    <div class="qa"><div class="q"><span>ש</span>איך מוכיחים שזה עובד לפני שמסכנים לווים?</div><div class="a">מצב צללים: המודל רץ בשקט ומושווה למצב הקיים. רק אחרי שהוא עולה על קו הבסיס אנו מרחיבים באמצעות champion/challenger עם קבוצת ביקורת שמורה.</div></div>
+    <div class="qa"><div class="q"><span>ש</span>לבנות או להישען על מה שקיים?</div><div class="a">שימוש חוזר בעמוד השדרה של הנתונים וההחלטות של Pagaya ובמחסן המאפיינים. הבנייה החדשה היא שכבת הניטור + uplift + תזמור הפעולות — לא מערך מקביל.</div></div>
+    <div class="qa"><div class="q"><span>ש</span>איך מודדים הצלחה ו-ROI?</div><div class="a">הפחתת הפסד נטו בנקודות בסיס מול קבוצת ביקורת שמורה, בתוספת שיפור בשיעור ההבראה והשפעת עלות ההון הנובעת. קשור לכלכלת ה-ABS — לא לדיוק המודל כשלעצמו.</div></div>
+    <div class="qa"><div class="q"><span>ש</span>מה קורה כשהכלכלה מתהפכת?</div><div class="a">אנו עורכים מבחני קיצון מול תרחישי האטה, מאמנים מחדש ברציפות, ונשענים על ניטור לתפיסת סחף מוקדם. המודלים נחלשים בהדרגה, ואנו מריצים מחדש מצב צללים לפני שסומכים עליהם במשטר חדש.</div></div>
+    <div class="qa"><div class="q"><span>ש</span>האם ריבוי פניות לא יטריד לווים?</div><div class="a">כיוון uplift פירושו פחות פניות, ובתזמון טוב יותר — רק היכן שהן באמת עוזרות. אנו מתייחסים לתדירות הפנייה כעלות שיש למזער, וממסגרים אפשרויות הקלה כתמיכה אמיתית שמכבדת את המותג של כל שותף.</div></div>
+    <div class="qa"><div class="q"><span>ש</span>כמה גדול צוות צריך כדי להתחיל?</div><div class="a">רזה. צוות חוצה-תחומים קטן — ML, הנדסת נתונים, ושותף סיכון/ציות משובץ — על תשתית קיימת. הגדלת הצוות רק ככל שהראיות והנפח מצדיקים.</div></div>
+  </div>
+  <div class="fnote" style="margin-top:22px">${svg('rocket')}<span><b>התזה:</b> Pagaya כבר מנצחת בהחלטה. היתרון המצטבר הבא הוא ניצחון ב<b>ביצועי הנכסים</b> — וזו בעיה של AI. תודה — אשמח להעמיק בכל שכבה.</span></div>
+</div>`);
+
+/* ============ RENDER ============ */
+const deck = document.getElementById('deck');
+slides.forEach((html,i)=>{
+  const s=document.createElement('section');
+  s.className='slide'+(i===0?' active':'');
+  s.innerHTML=html;
+  deck.appendChild(s);
+});
+
+const slideEls=[...document.querySelectorAll('.slide')];
+const total=slideEls.length;
+let idx=0;
+document.getElementById('tot').textContent=String(total).padStart(2,'0');
+
+const dots=document.getElementById('dots');
+slideEls.forEach((_,i)=>{
+  const b=document.createElement('button');
+  b.setAttribute('aria-label','מעבר לשקופית '+(i+1));
+  if(i===0)b.classList.add('on');
+  b.addEventListener('click',()=>go(i));
+  dots.appendChild(b);
+});
+const dotEls=[...dots.children];
+const prevBtn=document.getElementById('prev'), nextBtn=document.getElementById('next');
+const progress=document.getElementById('progress'), hint=document.getElementById('hint');
+
+function go(n){
+  n=Math.max(0,Math.min(total-1,n));
+  if(n===idx)return;
+  slideEls[idx].classList.remove('active');
+  slideEls[idx].classList.toggle('prev', n>idx);
+  slideEls[n].classList.remove('prev');
+  slideEls[n].classList.add('active');
+  dotEls[idx].classList.remove('on');
+  dotEls[n].classList.add('on');
+  idx=n;
+  update();
+}
+function update(){
+  document.getElementById('cur').textContent=String(idx+1).padStart(2,'0');
+  progress.style.width=((idx)/(total-1)*100)+'%';
+  prevBtn.disabled=idx===0;
+  nextBtn.disabled=idx===total-1;
+  if(idx>0&&hint){hint.style.opacity='0';}
+}
+prevBtn.addEventListener('click',()=>go(idx-1));
+nextBtn.addEventListener('click',()=>go(idx+1));
+/* RTL: Left arrow advances, Right arrow goes back */
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowLeft'||e.key==='PageDown'||e.key===' '){e.preventDefault();go(idx+1);}
+  else if(e.key==='ArrowRight'||e.key==='PageUp'){e.preventDefault();go(idx-1);}
+  else if(e.key==='Home'){go(0);}
+  else if(e.key==='End'){go(total-1);}
+});
+deck.addEventListener('click',e=>{
+  const a=e.target.closest('[data-go]');
+  if(a)go(parseInt(a.dataset.go,10));
+});
+// swipe (RTL: swipe right-to-left advances)
+let x0=null;
+deck.addEventListener('touchstart',e=>x0=e.touches[0].clientX,{passive:true});
+deck.addEventListener('touchend',e=>{
+  if(x0===null)return;
+  const dx=e.changedTouches[0].clientX-x0;
+  if(Math.abs(dx)>50)go(idx+(dx>0?1:-1));
+  x0=null;
+});
+update();
+</script>
+<a href="../" aria-label="English version" style="position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:70;font-family:Heebo,Poppins,system-ui,sans-serif;font-size:12px;font-weight:600;color:#1D4ED8;background:#fff;border:1px solid #E2E8F0;border-radius:999px;padding:5px 13px;text-decoration:none;box-shadow:0 2px 8px rgba(15,23,42,.08)">English</a>
+</body>
+</html>
