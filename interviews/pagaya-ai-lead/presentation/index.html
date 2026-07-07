@@ -139,11 +139,11 @@ ul.ticks li b{color:var(--ink);font-weight:600}
 
 /* ---------- timeline ---------- */
 .tl{position:relative;display:flex;flex-direction:column;gap:0}
-.tl-track{position:absolute;left:0;right:0;top:34px;height:3px;background:var(--line);border-radius:2px}
-.tl-fill{position:absolute;left:0;top:34px;height:3px;background:linear-gradient(90deg,var(--blue),var(--blue-2));border-radius:2px}
+.tl-track{position:absolute;left:0;right:0;top:8px;height:3px;background:var(--line);border-radius:2px}
+.tl-fill{position:absolute;left:0;top:8px;height:3px;background:linear-gradient(90deg,var(--blue),var(--blue-2));border-radius:2px}
 .tl-steps{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;position:relative}
 .tl-step{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
-.tl-node{width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--blue);z-index:2;margin-bottom:6px}
+.tl-node{width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--blue);z-index:2;margin-bottom:14px}
 .tl-step.accent .tl-node{background:var(--cta);border-color:var(--cta)}
 .tl-wk{font-family:'Poppins';font-size:12px;font-weight:600;color:var(--blue)}
 .tl-step.accent .tl-wk{color:var(--cta)}
@@ -222,6 +222,33 @@ ul.ticks li b{color:var(--ink);font-weight:600}
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important}
 }
+/* ---------- uplift diagrams ---------- */
+.cf{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin:8px 0 6px}
+.cf-node{background:#0F172A;color:#fff;font-family:'Poppins';font-weight:600;font-size:14px;border-radius:12px;padding:16px 20px;flex-shrink:0}
+.cf-svg{flex-shrink:0}
+.cf-outs{display:flex;flex-direction:column;gap:12px}
+.cf-out{border-radius:10px;padding:10px 14px;font-size:12.5px;line-height:1.45;max-width:360px}
+.cf-out b{font-family:'Poppins';font-weight:600;font-size:13px;display:block;margin-bottom:2px}
+.cf-out.obs{background:#ECFDF5;border:1.5px solid #6EE7B7;color:#065F46}
+.cf-out.obs b{color:#047857}
+.cf-out.counter{background:var(--bg);border:1.5px dashed var(--line-2);color:var(--ink-3)}
+.cf-out.counter b{color:var(--ink-2)}
+.cf-cap{text-align:center;font-size:12px;color:var(--ink-3);font-style:italic;line-height:1.5;max-width:800px;margin:6px auto 0}
+.cf-cap b{color:var(--ink-2);font-style:normal}
+.mtx-title{font-family:'Poppins';font-weight:600;font-size:14px;margin:20px 0 10px;text-align:center;color:var(--ink)}
+.mtx{display:grid;grid-template-columns:24px 1fr 1fr;gap:10px;align-items:stretch}
+.mtx-colhead{font-size:11px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;text-align:center;align-self:end;padding-bottom:2px}
+.mtx-rowhead{writing-mode:vertical-rl;transform:rotate(180deg);font-size:10px;font-weight:700;color:var(--ink-3);text-transform:uppercase;letter-spacing:.05em;display:flex;align-items:center;justify-content:center}
+.mtx-cell{border-radius:10px;border:1.5px solid var(--line);background:var(--surface);padding:12px 14px}
+.mtx-cell h4{font-family:'Poppins';font-size:13.5px;font-weight:600;margin-bottom:3px;color:var(--ink)}
+.mtx-cell p{font-size:12px;color:var(--ink-2);line-height:1.4}
+.mtx-cell.good{background:#ECFDF5;border-color:#6EE7B7}
+.mtx-cell.good h4{color:#047857}
+.mtx-cell.bad{background:#FEF2F2;border-color:#FCA5A5}
+.mtx-cell.bad h4{color:#B91C1C}
+.mtx-cell.neutral{background:var(--bg)}
+.mtx-cell.neutral h4{color:var(--ink-2)}
+@media (max-width:860px){.cf-svg{transform:rotate(90deg)}.mtx{grid-template-columns:20px 1fr 1fr}}
 </style>
 </head>
 <body>
@@ -303,8 +330,8 @@ slides.push(`
     <div class="agenda-item" data-go="2"><div class="idx">01</div><div><h3>Pagaya's Business Model</h3><p>How the AI lending network makes money</p></div></div>
     <div class="agenda-item" data-go="4"><div class="idx">02</div><div><h3>The Borrower's Loan Journey</h3><p>High-level business flowchart (systems as a black box)</p></div></div>
     <div class="agenda-item" data-go="6"><div class="idx">03</div><div><h3>High-Leverage AI Use Case</h3><p>Choosing the right problem — and why AI is the lever</p></div></div>
-    <div class="agenda-item" data-go="8"><div class="idx">04</div><div><h3>The Technical Solution</h3><p>How it works, architecture, models & governance</p></div></div>
-    <div class="agenda-item" data-go="13"><div class="idx">05</div><div><h3>Timeline: Discovery → Launch</h3><p>A phased path from problem to production</p></div></div>
+    <div class="agenda-item" data-go="8"><div class="idx">04</div><div><h3>The Technical Solution</h3><p>How it works, why AI is the lever, and governance</p></div></div>
+    <div class="agenda-item" data-go="12"><div class="idx">05</div><div><h3>Timeline: POC → Launch</h3><p>Prove it lean with a POC, then implement</p></div></div>
   </div>
 </div>`);
 
@@ -483,42 +510,46 @@ slides.push(`
   <h2 class="title">Predict → Prioritize → Intervene → Learn</h2>
   <p class="lede">An always-on engine that scores every active loan daily, decides who to help and how, executes the intervention, and measures what actually changed behavior.</p>
   <div class="grid g4">
-    <div class="card"><span class="chip">01 · Predict</span><h3 style="margin-top:12px">Risk signal</h3><p>A time-to-default model scores each loan daily using payment behavior, cash-flow and macro signals.</p></div>
-    <div class="card"><span class="chip">02 · Prioritize</span><h3 style="margin-top:12px">Uplift, not just risk</h3><p>An uplift model targets borrowers an action will actually change — not those who'd cure anyway or never.</p></div>
-    <div class="card"><span class="chip">03 · Intervene</span><h3 style="margin-top:12px">Right-time action</h3><p>Reminders, hardship plans, restructures or live outreach — sequenced by a policy layer with guardrails.</p></div>
-    <div class="card"><span class="chip green">04 · Learn</span><h3 style="margin-top:12px">Closed loop</h3><p>Outcomes feed back as labels; champion/challenger testing keeps the policy improving.</p></div>
+    <div class="card"><span class="chip">01 · Predict</span><h3 style="margin-top:12px">Risk signal</h3><p>AI scores each active loan daily for how likely — and how soon — a borrower may fall behind, from payment behavior, cash-flow and economic signals.</p></div>
+    <div class="card"><span class="chip">02 · Prioritize</span><h3 style="margin-top:12px">Uplift, not just risk</h3><p>AI targets borrowers an action will actually change — not those who'd get back on track anyway, or never.</p></div>
+    <div class="card"><span class="chip">03 · Intervene</span><h3 style="margin-top:12px">Right-time action</h3><p>A reminder, a payment-date change, a hardship plan or live outreach — chosen with built-in guardrails.</p></div>
+    <div class="card"><span class="chip green">04 · Learn</span><h3 style="margin-top:12px">Closed loop</h3><p>Every outcome feeds back, so the engine keeps learning which action actually works.</p></div>
   </div>
-  <div class="fnote" style="margin-top:20px">${svg('brain')}<span><b>Why AI is the right lever:</b> the problem is high-volume, pattern-rich, and individual-level — exactly where models beat fixed rules. The win is <b>treatment optimization</b>, not just prediction.</span></div>
+  <div class="fnote" style="margin-top:20px">${svg('brain')}<span><b>Why AI is the right lever:</b> this is a high-volume, individual-level, cause-and-effect problem — exactly where AI beats fixed rules. The win is <b>choosing the right action</b>, not just predicting who's at risk.</span></div>
 </div>`);
 
-/* 9 — ARCHITECTURE (plain English) */
+/* 9 — WHY UPLIFT NEEDS AI */
 slides.push(`
 <div class="wrap">
-  <div class="eyebrow">Architecture · In Plain English</div>
-  <h2 class="title">How the AI platform actually works</h2>
-  <p class="lede">Think of it as an assembly line with six stages. Raw information goes in one end; a smart, fair, fully-audited decision comes out the other. Here's each stage in everyday language.</p>
-  <div class="arch">
-    <div class="arch-layer"><div class="lico">${svg('database')}</div><div class="body"><div class="htag"><b>1 · Data — the raw material.</b> Everything we know about each loan and borrower, gathered in one place.</div><div class="mods"><span class="mod">Payment history</span><span class="mod">Credit bureau & extra data</span><span class="mod">How past loans performed</span><span class="mod">The economy</span></div></div></div>
-    <div class="arch-layer"><div class="lico">${svg('cog')}</div><div class="body"><div class="htag"><b>2 · Features — turning raw data into clues.</b> We pre-compute reusable signals (e.g. "missed 2 of the last 6 payments") and double-check none of them secretly peek at the future.</div><div class="mods"><span class="mod">A shared pantry of ready-made signals</span><span class="mod">"No future info" safety checks</span></div></div></div>
-    <div class="arch-layer"><div class="lico">${svg('brain')}</div><div class="body"><div class="htag"><b>3 · Models — the brains.</b> Programs that learn patterns from millions of past loans to predict what's likely to happen next. <i>(The scary names are decoded on the next slide.)</i></div><div class="mods"><span class="mod">Gradient-boosted models</span><span class="mod">Tabular foundation models</span><span class="mod">Time-to-default</span><span class="mod">Uplift</span></div></div></div>
-    <div class="arch-layer"><div class="lico">${svg('bolt')}</div><div class="body"><div class="htag"><b>4 · Serving — putting the model to work.</b> Training a model is like studying; serving is sitting the real exam. This is the live system that scores actual loans and returns an answer in a split second.</div><div class="mods"><span class="mod">Scores every loan overnight</span><span class="mod">Instant answers on demand</span><span class="mod">New model tested vs. current best</span></div></div></div>
-    <div class="arch-layer"><div class="lico">${svg('eye')}</div><div class="body"><div class="htag"><b>5 · Monitoring — keeping it healthy.</b> The world changes, so we watch for the model going stale and check whether its predictions actually came true.</div><div class="mods"><span class="mod">Spots when the model drifts</span><span class="mod">Did predictions hold up?</span><span class="mod">Alerts the team</span></div></div></div>
-    <div class="arch-layer gov"><div class="lico">${svg('scale')}</div><div class="body"><div class="htag"><b>6 · Governance — fairness, rules & paper trail.</b> Every decision must be fair, explainable and documented — a regulator could ask "why?" about any single loan and we can answer.</div><div class="mods"><span class="mod">Fair-lending tests</span><span class="mod">Independent model review (SR 11-7)</span><span class="mod">Plain-English reason per decision</span><span class="mod">Full audit trail</span></div></div></div>
+  <div class="eyebrow">The AI Difference</div>
+  <h2 class="title">Why this needs AI — not just a risk score</h2>
+  <p class="lede">For any borrower you only ever see <b>one world</b> — you contacted them, or you didn't, never both. The gain from acting is a difference you can't directly observe — and that's exactly why a risk score isn't enough.</p>
+  <div class="cf">
+    <div class="cf-node">Borrower</div>
+    <svg class="cf-svg" width="70" height="132" viewBox="0 0 70 132" fill="none" aria-hidden="true">
+      <path d="M0 66 C 35 66, 35 30, 70 30" stroke="#059669" stroke-width="2.5" fill="none"/>
+      <path d="M0 66 C 35 66, 35 102, 70 102" stroke="#CBD5E1" stroke-width="2.5" stroke-dasharray="5 5" fill="none"/>
+    </svg>
+    <div class="cf-outs">
+      <div class="cf-out obs"><b>Contacted → did they cure?</b>✓ OBSERVED — you have this data</div>
+      <div class="cf-out counter"><b>Not contacted → would they cure?</b>✗ NEVER OBSERVED — the counterfactual</div>
+    </div>
   </div>
-</div>`);
+  <p class="cf-cap">You want <b>P(cure | contacted) − P(cure | not contacted)</b> per borrower — a difference of two worlds, only one of which you ever see. A normal risk score can't do it; AI trained on experiments can.</p>
 
-/* 9b — JARGON DECODED */
-slides.push(`
-<div class="wrap">
-  <div class="eyebrow">Architecture · Jargon Decoded</div>
-  <h2 class="title">The four terms that sound scariest</h2>
-  <p class="lede">None of these are as complicated as they sound. Here they are in plain language.</p>
-  <div class="grid g2">
-    <div class="card"><span class="chip">Stage 3 · Models</span><h3 style="margin-top:12px">Gradient-boosted & tabular foundation models</h3><p><b>Gradient-boosted model</b> = a team of simple yes/no decision trees, where each new tree is added to fix the mistakes of the ones before it. It's the proven workhorse for spreadsheet-style data like credit. A <b>tabular foundation model</b> is a newer type — a large model pre-trained on enormous amounts of table data (the same idea that powers ChatGPT for text), then reused for credit problems.</p></div>
-    <div class="card"><span class="chip">Stage 3 · Models</span><h3 style="margin-top:12px">Uplift modeling</h3><p>Instead of asking <i>"who is risky?"</i>, it asks <b>"who will actually change their behavior if we step in?"</b> It deliberately skips people who'll pay anyway and people who never will — so time, money and outreach go only where an action genuinely makes a difference.</p></div>
-    <div class="card"><span class="chip">Stage 4 · Serving</span><h3 style="margin-top:12px">What "serving" means</h3><p>Building a model is like studying for an exam; <b>serving is taking the exam in the real world.</b> It's the live software that takes a real loan, runs it through the trained model and hands back an answer — either in bulk overnight, or in a fraction of a second when something asks.</p></div>
-    <div class="card" style="border-color:var(--cta);border-width:1.5px"><span class="chip cta">Stage 6 · Governance</span><h3 style="margin-top:12px">Model risk (SR 11-7)</h3><p>A <b>U.S. Federal Reserve guideline</b> for financial firms: every model must be independently checked, documented and monitored by someone other than the person who built it — so a flawed model can't quietly cause harm. In short, it's the "show your work and have it reviewed" rule for AI in finance.</p></div>
+  <div class="mtx-title">The four kinds of borrower — only one is worth money</div>
+  <div class="mtx">
+    <div></div>
+    <div class="mtx-colhead">Cures if we contact</div>
+    <div class="mtx-colhead">Doesn't cure if we contact</div>
+    <div class="mtx-rowhead">Cures if left alone</div>
+    <div class="mtx-cell neutral"><h4>Sure things</h4><p>Would pay anyway → wasted spend</p></div>
+    <div class="mtx-cell bad"><h4>Sleeping dogs ⚠</h4><p>Contact <i>backfires</i> — they pay less. Uplift is NEGATIVE.</p></div>
+    <div class="mtx-rowhead">Doesn't cure if left alone</div>
+    <div class="mtx-cell good"><h4>Persuadables ✓</h4><p>Only cure BECAUSE we act → target these</p></div>
+    <div class="mtx-cell neutral"><h4>Lost causes</h4><p>Won't cure regardless → wasted spend</p></div>
   </div>
+  <p class="cf-cap">A risk-only model can't tell these apart — it would happily poke <b>sleeping dogs</b> and spend on <b>sure things</b>. AI finds the <b>persuadables</b>. In one line: <b>ML predicts what's likely; AI decides what to do.</b></p>
 </div>`);
 
 /* 10 — MODEL CAPABILITIES (worked example) */
@@ -545,10 +576,10 @@ slides.push(`
     <div>
       <h3 class="font-head" style="font-size:12px;margin-bottom:11px;color:var(--blue);text-transform:uppercase;letter-spacing:.07em">Capabilities at work</h3>
       <div style="display:flex;gap:7px;flex-wrap:wrap">
-        <span class="chip">Time-to-default prediction</span>
-        <span class="chip">Uplift — who to help</span>
-        <span class="chip">Calibrated scores (38% means 38%)</span>
-        <span class="chip">GenAI drafts the outreach</span>
+        <span class="chip">Predicts who &amp; when</span>
+        <span class="chip">Uplift — who to actually help</span>
+        <span class="chip">Reliable probabilities</span>
+        <span class="chip">AI drafts the outreach</span>
       </div>
     </div>
     <div>
@@ -573,53 +604,26 @@ slides.push(`
   </div>
 </div>`);
 
-/* 11a — TIMELINE · phases 1–3 */
+/* 11 — TIMELINE (one-page visual, POC → implement) */
 slides.push(`
 <div class="wrap">
   <div class="eyebrow">Question 04c · Timeline</div>
-  <h2 class="title">Discovery to launch — roughly two quarters</h2>
-  <p class="lede">Six phases that <b>deliberately overlap</b> — teams work in parallel, so the next phase can start before the previous one fully wraps. The rule: prove the value on paper, then in silence, before any borrower is affected — with a go / no-go gate ending every phase.</p>
-  <div class="tl" style="margin:26px 0 32px">
-    <div class="tl-track"></div><div class="tl-fill" style="width:42%"></div>
-    <div class="tl-steps">
-      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">Wk 0–4</div><div class="tl-name">Discovery</div></div>
-      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">Wk 4–10</div><div class="tl-name">Data & features</div></div>
-      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">Wk 8–16</div><div class="tl-name">Modeling</div></div>
-      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">Wk 14–20</div><div class="tl-name">Governance</div></div>
-      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">Wk 18–24</div><div class="tl-name">Shadow mode</div></div>
-      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">Wk 24–30</div><div class="tl-name">Launch</div></div>
-    </div>
+  <h2 class="title">From POC to launch</h2>
+  <p class="lede" style="margin-bottom:34px">Prove it with a lean POC first — commit to the full build only if it pays.</p>
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:14px">
+    <div style="grid-column:1 / span 2;text-align:center;font-family:'Poppins';font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--blue);border-bottom:2px solid var(--blue);padding-bottom:7px">Phase 1 · Investigate &amp; POC</div>
+    <div style="grid-column:3 / span 4;text-align:center;font-family:'Poppins';font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--cta);border-bottom:2px solid var(--cta);padding-bottom:7px">Phase 2 · Implement &amp; Launch</div>
   </div>
-  <p style="font-size:12.5px;color:var(--blue);margin-bottom:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Phases 1–3 · Build &amp; prove</p>
-  <div class="grid g3">
-    <div class="card"><span class="chip">Wk 0–4 · Discovery</span><p style="margin-top:11px">Interview servicing, risk and capital-markets teams to frame the real problem. Pull 2–3 years of loan and outcome history. Define what "success" means in dollars, and measure today's reactive baseline.</p><div class="gate"><b>Gate:</b> agreed problem statement, a target metric (e.g. basis points of loss avoided), and a green-lit data inventory.</div></div>
-    <div class="card"><span class="chip">Wk 4–10 · Data & Features</span><p style="margin-top:11px">Build the feature store: engineer payment, cash-flow and economic signals, and create clean "defaulted vs. cured" labels. Run <b>leakage checks</b> — proof that no signal secretly peeks at the future (info that wouldn't exist yet at decision time), which would make the model look great in testing but fail in real life.</p><div class="gate"><b>Gate:</b> a validated, documented feature set the team trusts.</div></div>
-    <div class="card"><span class="chip">Wk 8–16 · Modeling</span><p style="margin-top:11px">Train the risk model (when trouble is coming) and the uplift model (who an action will actually help). Backtest on held-out historical loans to estimate losses avoided, and calibrate the scores.</p><div class="gate"><b>Gate:</b> backtest beats the reactive baseline by a meaningful margin — go / no-go.</div></div>
-  </div>
-</div>`);
-
-/* 11b — TIMELINE · phases 4–6 */
-slides.push(`
-<div class="wrap">
-  <div class="eyebrow">Question 04c · Timeline (continued)</div>
-  <h2 class="title">From governance to a controlled launch</h2>
-  <p class="lede">The second half de-risks the rollout: prove it's fair and compliant, run it silently, then ramp under a held-out control — never touching a borrower until the evidence is in.</p>
-  <div class="tl" style="margin:26px 0 32px">
+  <div class="tl" style="margin:6px 0 0">
     <div class="tl-track"></div><div class="tl-fill" style="width:100%"></div>
     <div class="tl-steps">
-      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">Wk 0–4</div><div class="tl-name">Discovery</div></div>
-      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">Wk 4–10</div><div class="tl-name">Data & features</div></div>
-      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">Wk 8–16</div><div class="tl-name">Modeling</div></div>
-      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">Wk 14–20</div><div class="tl-name">Governance</div></div>
-      <div class="tl-step accent"><div class="tl-node"></div><div class="tl-wk">Wk 18–24</div><div class="tl-name">Shadow mode</div></div>
-      <div class="tl-step accent"><div class="tl-node"></div><div class="tl-wk">Wk 24–30</div><div class="tl-name">Launch</div></div>
+      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">Wk 0–3</div><div class="tl-name">Discovery</div><div class="tl-desc">Frame the problem; secure the data and the success metric.</div></div>
+      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">Wk 3–8</div><div class="tl-name">POC · go/no-go</div><div class="tl-desc">Prove on past data that AI finds who's savable — and the upside.</div></div>
+      <div class="tl-step accent"><div class="tl-node"></div><div class="tl-wk">Wk 8–16</div><div class="tl-name">Build</div><div class="tl-desc">Build the production engine from the POC blueprint.</div></div>
+      <div class="tl-step accent"><div class="tl-node"></div><div class="tl-wk">Wk 14–20</div><div class="tl-name">Governance</div><div class="tl-desc">Fair-lending checks, reason codes, human override, sign-off.</div></div>
+      <div class="tl-step accent"><div class="tl-node"></div><div class="tl-wk">Wk 18–24</div><div class="tl-name">Shadow mode</div><div class="tl-desc">Run live but silent; compare to what really happened.</div></div>
+      <div class="tl-step accent"><div class="tl-node"></div><div class="tl-wk">Wk 24–30</div><div class="tl-name">Launch</div><div class="tl-desc">Controlled launch vs. a held-out control, then ramp.</div></div>
     </div>
-  </div>
-  <p style="font-size:12.5px;color:var(--cta);margin-bottom:14px;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Phases 4–6 · De-risk &amp; launch</p>
-  <div class="grid g3">
-    <div class="card"><span class="chip">Wk 14–20 · Governance</span><p style="margin-top:11px">An <b>independent team</b> double-checks the model is sound, fair and fully documented (the SR 11-7 standard). They confirm it doesn't disadvantage any protected group, ensure every decision can be explained, and get legal & compliance approval.</p><div class="gate"><b>Gate:</b> approval to run on real data — but silently, contacting no one yet.</div></div>
-    <div class="card"><span class="chip">Wk 18–24 · Shadow Mode</span><p style="margin-top:11px">Run the engine live but silent: it makes recommendations nobody acts on, and we compare them to what actually happened. Tune thresholds and confirm there are no surprises.</p><div class="gate"><b>Gate:</b> shadow results match the backtest; risk and ops are comfortable acting for real.</div></div>
-    <div class="card" style="border-color:var(--cta);border-width:1.5px"><span class="chip cta">Wk 24–30 · Controlled Launch</span><p style="margin-top:11px">Turn on real interventions for a small group, measured against a held-out control. Watch losses, cure rates and fairness weekly. Ramp volume as the evidence builds.</p><div class="gate" style="background:#FFF1E6;border-color:#FFE0C2"><b style="color:#C2410C">Gate:</b> live lift vs. control confirmed → scale across the portfolio.</div></div>
   </div>
 </div>`);
 

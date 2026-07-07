@@ -139,11 +139,11 @@ ul.ticks li b{color:var(--ink);font-weight:600}
 
 /* ---------- timeline ---------- */
 .tl{position:relative;display:flex;flex-direction:column;gap:0}
-.tl-track{position:absolute;left:0;right:0;top:34px;height:3px;background:var(--line);border-radius:2px}
-.tl-fill{position:absolute;right:0;top:34px;height:3px;background:linear-gradient(90deg,var(--blue),var(--blue-2));border-radius:2px}
+.tl-track{position:absolute;left:0;right:0;top:8px;height:3px;background:var(--line);border-radius:2px}
+.tl-fill{position:absolute;right:0;top:8px;height:3px;background:linear-gradient(90deg,var(--blue),var(--blue-2));border-radius:2px}
 .tl-steps{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;position:relative}
 .tl-step{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
-.tl-node{width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--blue);z-index:2;margin-bottom:6px}
+.tl-node{width:18px;height:18px;border-radius:50%;background:#fff;border:3px solid var(--blue);z-index:2;margin-bottom:14px}
 .tl-step.accent .tl-node{background:var(--cta);border-color:var(--cta)}
 .tl-wk{font-family:'Heebo','Poppins';font-size:12px;font-weight:600;color:var(--blue)}
 .tl-step.accent .tl-wk{color:var(--cta)}
@@ -223,6 +223,32 @@ ul.ticks li b{color:var(--ink);font-weight:600}
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important}
 }
+/* ---------- uplift diagrams ---------- */
+.cf{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;margin:8px 0 6px}
+.cf-node{background:#0F172A;color:#fff;font-family:'Heebo','Poppins';font-weight:600;font-size:14px;border-radius:12px;padding:16px 20px;flex-shrink:0}
+.cf-svg{flex-shrink:0;transform:scaleX(-1)}
+.cf-outs{display:flex;flex-direction:column;gap:12px}
+.cf-out{border-radius:10px;padding:10px 14px;font-size:12.5px;line-height:1.55;max-width:360px}
+.cf-out b{font-family:'Heebo','Poppins';font-weight:600;font-size:13px;display:block;margin-bottom:2px}
+.cf-out.obs{background:#ECFDF5;border:1.5px solid #6EE7B7;color:#065F46}
+.cf-out.obs b{color:#047857}
+.cf-out.counter{background:var(--bg);border:1.5px dashed var(--line-2);color:var(--ink-3)}
+.cf-out.counter b{color:var(--ink-2)}
+.cf-cap{text-align:center;font-size:12px;color:var(--ink-3);font-style:italic;line-height:1.55;max-width:820px;margin:6px auto 0}
+.cf-cap b{color:var(--ink-2);font-style:normal}
+.mtx-title{font-family:'Heebo','Poppins';font-weight:600;font-size:14px;margin:20px 0 10px;text-align:center;color:var(--ink)}
+.mtx{display:grid;grid-template-columns:96px 1fr 1fr;gap:10px;align-items:stretch}
+.mtx-colhead{font-size:11px;font-weight:700;color:var(--ink-3);letter-spacing:.03em;text-align:center;align-self:end;padding-bottom:2px}
+.mtx-rowhead{font-size:10.5px;font-weight:700;color:var(--ink-3);letter-spacing:.03em;display:flex;align-items:center;justify-content:center;text-align:center;line-height:1.35}
+.mtx-cell{border-radius:10px;border:1.5px solid var(--line);background:var(--surface);padding:12px 14px}
+.mtx-cell h4{font-family:'Heebo','Poppins';font-size:13.5px;font-weight:600;margin-bottom:3px;color:var(--ink)}
+.mtx-cell p{font-size:12px;color:var(--ink-2);line-height:1.45}
+.mtx-cell.good{background:#ECFDF5;border-color:#6EE7B7}
+.mtx-cell.good h4{color:#047857}
+.mtx-cell.bad{background:#FEF2F2;border-color:#FCA5A5}
+.mtx-cell.bad h4{color:#B91C1C}
+.mtx-cell.neutral{background:var(--bg)}
+.mtx-cell.neutral h4{color:var(--ink-2)}
 </style>
 </head>
 <body>
@@ -306,9 +332,9 @@ slides.push(`
     <div class="agenda-item" data-go="2"><div class="idx">01</div><div><h3>המודל העסקי של Pagaya</h3><p>כיצד רשת ההלוואות מבוססת ה-AI מרוויחה</p></div></div>
     <div class="agenda-item" data-go="4"><div class="idx">02</div><div><h3>מסע ההלוואה של הלווה</h3><p>תרשים זרימה עסקי ברמה גבוהה (המערכות כקופסה שחורה)</p></div></div>
     <div class="agenda-item" data-go="6"><div class="idx">03</div><div><h3>שימוש ב-AI בעל מינוף גבוה</h3><p>בחירת הבעיה הנכונה — ולמה AI הוא המנוף</p></div></div>
-    <div class="agenda-item" data-go="8"><div class="idx">04</div><div><h3>הפתרון הטכני</h3><p>איך זה עובד, ארכיטקטורה, מודלים וממשל</p></div></div>
-    <div class="agenda-item" data-go="13"><div class="idx">05</div><div><h3>ציר זמן: מגילוי ← השקה</h3><p>מסלול מדורג מהבעיה לייצור</p></div></div>
-    <div class="agenda-item" data-go="15"><div class="idx">06</div><div><h3>תוכנית 90 יום</h3><p>מחזון לפעולה — הצעדים הראשונים שלי כמוביל AI</p></div></div>
+    <div class="agenda-item" data-go="8"><div class="idx">04</div><div><h3>הפתרון הטכני</h3><p>איך זה עובד, למה AI הוא המנוף, וממשל</p></div></div>
+    <div class="agenda-item" data-go="12"><div class="idx">05</div><div><h3>ציר זמן: POC ← השקה</h3><p>מוכיחים עם POC רזה, ואז מיישמים</p></div></div>
+    <div class="agenda-item" data-go="13"><div class="idx">06</div><div><h3>תוכנית 90 יום</h3><p>מחזון לפעולה — הצעדים הראשונים שלי כמוביל AI</p></div></div>
   </div>
 </div>`);
 
@@ -487,42 +513,45 @@ slides.push(`
   <h2 class="title">חיזוי ← תיעדוף ← התערבות ← למידה</h2>
   <p class="lede">מנוע פעיל-תמיד שמדרג כל הלוואה פעילה מדי יום, מחליט למי לעזור ואיך, מבצע את ההתערבות, ומודד מה באמת שינה התנהגות.</p>
   <div class="grid g4">
-    <div class="card"><span class="chip">01 · חיזוי</span><h3 style="margin-top:12px">אות סיכון</h3><p>מודל זמן-עד-כשל מדרג כל הלוואה מדי יום לפי התנהגות תשלומים, תזרים מזומנים ואותות מאקרו.</p></div>
-    <div class="card"><span class="chip">02 · תיעדוף</span><h3 style="margin-top:12px">Uplift, לא רק סיכון</h3><p>מודל uplift מכוון ללווים שפעולה באמת תשנה אצלם — לא אלה שיבריאו ממילא או לעולם לא.</p></div>
-    <div class="card"><span class="chip">03 · התערבות</span><h3 style="margin-top:12px">פעולה בזמן הנכון</h3><p>תזכורות, תוכניות הקלה, מבני חוב מחדש או פנייה אישית — מתוזמנים בשכבת מדיניות עם בקרות.</p></div>
-    <div class="card"><span class="chip green">04 · למידה</span><h3 style="margin-top:12px">לולאה סגורה</h3><p>התוצאות חוזרות כתוויות; בדיקות champion/challenger משפרות את המדיניות.</p></div>
+    <div class="card"><span class="chip">01 · חיזוי</span><h3 style="margin-top:12px">אות סיכון</h3><p>ה-AI מדרג כל הלוואה פעילה מדי יום לפי כמה — ומתי — לווה עלול להיקלע לפיגור, מתוך התנהגות תשלומים, תזרים ואותות כלכליים.</p></div>
+    <div class="card"><span class="chip">02 · תיעדוף</span><h3 style="margin-top:12px">Uplift, לא רק סיכון</h3><p>ה-AI מכוון ללווים שפעולה באמת תשנה אצלם — לא לאלה שיבריאו ממילא, או לעולם לא.</p></div>
+    <div class="card"><span class="chip">03 · התערבות</span><h3 style="margin-top:12px">פעולה בזמן הנכון</h3><p>תזכורת, שינוי מועד תשלום, תוכנית הקלה או פנייה אישית — נבחרים עם בקרות מובנות.</p></div>
+    <div class="card"><span class="chip green">04 · למידה</span><h3 style="margin-top:12px">לולאה סגורה</h3><p>כל תוצאה חוזרת פנימה, כך שהמנוע ממשיך ללמוד איזו פעולה באמת עובדת.</p></div>
   </div>
-  <div class="fnote" style="margin-top:20px">${svg('brain')}<span><b>למה AI הוא המנוף הנכון:</b> הבעיה רחבת-היקף, עשירת-דפוסים וברמת הפרט — בדיוק היכן שמודלים עולים על כללים קבועים. הניצחון הוא <b>מיטוב הטיפול</b>, לא רק חיזוי.</span></div>
+  <div class="fnote" style="margin-top:20px">${svg('brain')}<span><b>למה AI הוא המנוף הנכון:</b> זו בעיה רחבת-היקף, ברמת הפרט, של סיבה-ותוצאה — בדיוק היכן ש-AI עולה על כללים קבועים. הניצחון הוא <b>בחירת הפעולה הנכונה</b>, לא רק חיזוי מי בסיכון.</span></div>
 </div>`);
 
-/* 9 — ARCHITECTURE (plain language) */
+/* 9 — WHY UPLIFT NEEDS AI */
 slides.push(`
 <div class="wrap">
-  <div class="eyebrow">ארכיטקטורה · בשפה פשוטה</div>
-  <h2 class="title">איך פלטפורמת ה-AI באמת עובדת</h2>
-  <p class="lede">חשבו על זה כקו ייצור עם שישה שלבים. מידע גולמי נכנס בצד אחד; החלטה חכמה, הוגנת ומבוקרת לחלוטין יוצאת בצד השני. הנה כל שלב בשפת היום-יום.</p>
-  <div class="arch">
-    <div class="arch-layer"><div class="lico">${svg('database')}</div><div class="body"><div class="htag"><b>1 · נתונים — חומר הגלם.</b> כל מה שאנחנו יודעים על כל הלוואה ולווה, מרוכז במקום אחד.</div><div class="mods"><span class="mod">היסטוריית תשלומים</span><span class="mod">לשכת אשראי ונתונים נוספים</span><span class="mod">ביצועי הלוואות עבר</span><span class="mod">המצב הכלכלי</span></div></div></div>
-    <div class="arch-layer"><div class="lico">${svg('cog')}</div><div class="body"><div class="htag"><b>2 · מאפיינים — הפיכת נתונים גולמיים לרמזים.</b> מחשבים מראש אותות לשימוש חוזר (למשל &quot;פספס 2 מ-6 התשלומים האחרונים&quot;) ומוודאים שאף אחד מהם לא מציץ בסתר לעתיד.</div><div class="mods"><span class="mod">מחסן אותות מוכנים משותף</span><span class="mod">בדיקות &quot;ללא מידע מהעתיד&quot;</span></div></div></div>
-    <div class="arch-layer"><div class="lico">${svg('brain')}</div><div class="body"><div class="htag"><b>3 · מודלים — המוח.</b> תוכנות שלומדות דפוסים ממיליוני הלוואות עבר כדי לחזות מה צפוי לקרות. <i>(השמות המפחידים מפוענחים בשקופית הבאה.)</i></div><div class="mods"><span class="mod">מודלי Gradient boosting</span><span class="mod">מודלי יסוד טבלאיים</span><span class="mod">זמן-עד-כשל</span><span class="mod">Uplift</span></div></div></div>
-    <div class="arch-layer"><div class="lico">${svg('bolt')}</div><div class="body"><div class="htag"><b>4 · הגשה (Serving) — הפעלת המודל.</b> אימון מודל הוא כמו לימוד; הגשה היא לגשת למבחן האמיתי. זו המערכת החיה שמדרגת הלוואות אמיתיות ומחזירה תשובה בשבריר שנייה.</div><div class="mods"><span class="mod">מדרג כל הלוואה בן-לילה</span><span class="mod">תשובות מיידיות לפי דרישה</span><span class="mod">מודל חדש נבחן מול הטוב הנוכחי</span></div></div></div>
-    <div class="arch-layer"><div class="lico">${svg('eye')}</div><div class="body"><div class="htag"><b>5 · ניטור — שמירה על בריאות.</b> העולם משתנה, ולכן אנו עוקבים אחר התיישנות המודל ובודקים אם תחזיותיו אכן התממשו.</div><div class="mods"><span class="mod">מזהה סחף (drift) במודל</span><span class="mod">האם התחזיות התקיימו?</span><span class="mod">מתריע לצוות</span></div></div></div>
-    <div class="arch-layer gov"><div class="lico">${svg('scale')}</div><div class="body"><div class="htag"><b>6 · ממשל — הוגנות, כללים ותיעוד.</b> כל החלטה חייבת להיות הוגנת, ניתנת להסבר ומתועדת — רגולטור יכול לשאול &quot;למה?&quot; על כל הלוואה ואנחנו יכולים לענות.</div><div class="mods"><span class="mod">בדיקות הלוואות הוגנות</span><span class="mod">סקירת מודל עצמאית (SR 11-7)</span><span class="mod">סיבה בשפה פשוטה לכל החלטה</span><span class="mod">מסלול ביקורת מלא</span></div></div></div>
+  <div class="eyebrow">ההבדל של ה-AI</div>
+  <h2 class="title">למה זה דורש AI — לא רק ציון סיכון</h2>
+  <p class="lede">עבור כל לווה רואים תמיד <b>עולם אחד בלבד</b> — יצרתם קשר, או שלא, אף פעם לא את שניהם. הרווח מהפעולה הוא הפרש שלא ניתן לראות ישירות — ובדיוק לכן ציון סיכון אינו מספיק.</p>
+  <div class="cf">
+    <div class="cf-node">לווה</div>
+    <svg class="cf-svg" width="70" height="132" viewBox="0 0 70 132" fill="none" aria-hidden="true">
+      <path d="M0 66 C 35 66, 35 30, 70 30" stroke="#059669" stroke-width="2.5" fill="none"/>
+      <path d="M0 66 C 35 66, 35 102, 70 102" stroke="#CBD5E1" stroke-width="2.5" stroke-dasharray="5 5" fill="none"/>
+    </svg>
+    <div class="cf-outs">
+      <div class="cf-out obs"><b>נוצר קשר → האם הבריא?</b>✓ נצפה — יש לנו את הנתונים</div>
+      <div class="cf-out counter"><b>לא נוצר קשר → האם היה מבריא?</b>✗ לעולם לא נצפה — התרחיש הנגדי</div>
+    </div>
   </div>
-</div>`);
-
-/* 9b — JARGON DECODED */
-slides.push(`
-<div class="wrap">
-  <div class="eyebrow">ארכיטקטורה · פענוח ז׳רגון</div>
-  <h2 class="title">ארבעת המונחים שנשמעים הכי מפחידים</h2>
-  <p class="lede">אף אחד מאלה אינו מסובך כפי שהוא נשמע. הנה הם בשפה פשוטה.</p>
-  <div class="grid g2">
-    <div class="card"><span class="chip">שלב 3 · מודלים</span><h3 style="margin-top:12px">מודלי Gradient boosting ומודלי יסוד טבלאיים</h3><p><b>מודל Gradient boosting</b> = צוות של עצי החלטה פשוטים (כן/לא), כשכל עץ חדש נוסף כדי לתקן את טעויות קודמיו. זהו סוס העבודה המוכח לנתונים בסגנון גיליון אלקטרוני כמו אשראי. <b>מודל יסוד טבלאי</b> הוא סוג חדש יותר — מודל גדול שאומן מראש על כמויות אדירות של נתונים טבלאיים (אותו רעיון שמניע את ChatGPT לטקסט), ואז שב לשימוש לבעיות אשראי.</p></div>
-    <div class="card"><span class="chip">שלב 3 · מודלים</span><h3 style="margin-top:12px">מידול Uplift</h3><p>במקום לשאול <i>&quot;מי בסיכון?&quot;</i>, הוא שואל <b>&quot;מי באמת ישנה את התנהגותו אם נתערב?&quot;</b> הוא מדלג בכוונה על אלה שישלמו ממילא ועל אלה שלעולם לא — כך שזמן, כסף ופנייה מופנים רק לאן שפעולה באמת עושה הבדל.</p></div>
-    <div class="card"><span class="chip">שלב 4 · הגשה</span><h3 style="margin-top:12px">מה זה &quot;הגשה&quot; (Serving)</h3><p>בניית מודל היא כמו לימוד למבחן; <b>הגשה היא לגשת למבחן בעולם האמיתי.</b> זו התוכנה החיה שלוקחת הלוואה אמיתית, מריצה אותה דרך המודל המאומן ומחזירה תשובה — בכמות גדולה בן-לילה, או בשבריר שנייה כשנדרש.</p></div>
-    <div class="card" style="border-color:var(--cta);border-width:1.5px"><span class="chip cta">שלב 6 · ממשל</span><h3 style="margin-top:12px">סיכון מודל (SR 11-7)</h3><p><b>הנחיה של הבנק המרכזי של ארה״ב (Federal Reserve)</b> לחברות פיננסיות: כל מודל חייב להיבדק, להיות מתועד ומנוטר באופן עצמאי על ידי מישהו שאינו בונה המודל — כדי שמודל פגום לא יגרום נזק בשקט. בקצרה, זהו כלל &quot;הצג את עבודתך ושלח אותה לביקורת&quot; עבור AI בפיננסים.</p></div>
+  <p class="cf-cap">רוצים <b>P(הבראה | נוצר קשר) − P(הבראה | לא נוצר קשר)</b> לכל לווה — הפרש בין שני עולמות, שרואים רק אחד מהם. ציון סיכון רגיל לא מסוגל; AI שאומן על ניסויים כן.</p>
+  <div class="mtx-title">ארבעה סוגי לווים — רק אחד שווה כסף</div>
+  <div class="mtx">
+    <div></div>
+    <div class="mtx-colhead">מבריא אם ניצור קשר</div>
+    <div class="mtx-colhead">לא מבריא אם ניצור קשר</div>
+    <div class="mtx-rowhead">מבריא אם נניח לו</div>
+    <div class="mtx-cell neutral"><h4>בטוחים</h4><p>ישלמו ממילא ← בזבוז כסף</p></div>
+    <div class="mtx-cell bad"><h4>כלבים ישנים ⚠</h4><p>הקשר <i>מזיק</i> — הם ישלמו פחות. ה-Uplift שלילי.</p></div>
+    <div class="mtx-rowhead">לא מבריא אם נניח לו</div>
+    <div class="mtx-cell good"><h4>ברי-שכנוע ✓</h4><p>מבריאים רק בגלל שפעלנו ← אליהם לכוון</p></div>
+    <div class="mtx-cell neutral"><h4>אבודים</h4><p>לא יבריאו בכל מקרה ← בזבוז כסף</p></div>
   </div>
+  <p class="cf-cap">מודל סיכון בלבד לא מבחין ביניהם — הוא יטריד <b>כלבים ישנים</b> ויבזבז על <b>בטוחים</b>. AI מוצא את <b>ברי-השכנוע</b>. בשורה אחת: <b>ML חוזה מה צפוי; AI מחליט מה לעשות.</b></p>
 </div>`);
 
 /* 10 — MODEL CAPABILITIES (worked example) */
@@ -549,10 +578,10 @@ slides.push(`
     <div>
       <h3 class="font-head" style="font-size:12px;margin-bottom:11px;color:var(--blue);letter-spacing:.04em">יכולות בפעולה</h3>
       <div style="display:flex;gap:7px;flex-wrap:wrap">
-        <span class="chip">חיזוי זמן-עד-כשל</span>
+        <span class="chip">חיזוי מי ומתי</span>
         <span class="chip">Uplift — למי לעזור</span>
-        <span class="chip">ציונים מכוילים (38% באמת אומר 38%)</span>
-        <span class="chip">GenAI מנסח את הפנייה</span>
+        <span class="chip">הסתברויות אמינות</span>
+        <span class="chip">AI מנסח את הפנייה</span>
       </div>
     </div>
     <div>
@@ -577,53 +606,26 @@ slides.push(`
   </div>
 </div>`);
 
-/* 11a — TIMELINE · שלבים 1–3 */
+/* 11 — TIMELINE (one-page visual, POC → implement) */
 slides.push(`
 <div class="wrap">
   <div class="eyebrow">שאלה 04ג · ציר זמן</div>
-  <h2 class="title">מגילוי ועד השקה — כשני רבעונים</h2>
-  <p class="lede">שישה שלבים <b>שחופפים בכוונה</b> — הצוותים עובדים במקביל, כך שהשלב הבא יכול להתחיל עוד לפני שהקודם מסתיים לגמרי. הכלל: להוכיח את הערך על הנייר, ואז בשקט, לפני שלווה כלשהו מושפע — עם שער &quot;יציאה/המשך&quot; (go/no-go) בסוף כל שלב.</p>
-  <div class="tl" style="margin:26px 0 32px">
-    <div class="tl-track"></div><div class="tl-fill" style="width:42%"></div>
-    <div class="tl-steps">
-      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">שבועות 0–4</div><div class="tl-name">גילוי</div></div>
-      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">שבועות 4–10</div><div class="tl-name">נתונים ומאפיינים</div></div>
-      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">שבועות 8–16</div><div class="tl-name">מידול</div></div>
-      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">שבועות 14–20</div><div class="tl-name">ממשל</div></div>
-      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">שבועות 18–24</div><div class="tl-name">מצב צללים</div></div>
-      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">שבועות 24–30</div><div class="tl-name">השקה</div></div>
-    </div>
+  <h2 class="title">מ-POC ועד השקה</h2>
+  <p class="lede" style="margin-bottom:34px">הוכיחו עם POC רזה תחילה — התחייבו לבנייה המלאה רק אם זה משתלם.</p>
+  <div style="display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-bottom:14px">
+    <div style="grid-column:1 / span 2;text-align:center;font-family:'Heebo','Poppins';font-size:12px;font-weight:700;letter-spacing:.03em;color:var(--blue);border-bottom:2px solid var(--blue);padding-bottom:7px">שלב 1 · חקירה ו-POC</div>
+    <div style="grid-column:3 / span 4;text-align:center;font-family:'Heebo','Poppins';font-size:12px;font-weight:700;letter-spacing:.03em;color:var(--cta);border-bottom:2px solid var(--cta);padding-bottom:7px">שלב 2 · יישום והשקה</div>
   </div>
-  <p style="font-size:12.5px;color:var(--blue);margin-bottom:14px;font-weight:600;letter-spacing:.03em">שלבים 1–3 · בנייה והוכחה</p>
-  <div class="grid g3">
-    <div class="card"><span class="chip">שבועות 0–4 · גילוי</span><p style="margin-top:11px">ראיון צוותי ניהול הלוואות, סיכון ושוקי הון כדי למסגר את הבעיה האמיתית. משיכת 2–3 שנות היסטוריית הלוואות ותוצאות. הגדרת מה זו &quot;הצלחה&quot; בדולרים, ומדידת קו הבסיס התגובתי של היום.</p><div class="gate"><b>שער:</b> הגדרת בעיה מוסכמת, מדד יעד (למשל נקודות בסיס של הפסד שנמנע), ומצאי נתונים מאושר.</div></div>
-    <div class="card"><span class="chip">שבועות 4–10 · נתונים ומאפיינים</span><p style="margin-top:11px">בניית מחסן המאפיינים: הנדסת אותות של התנהגות תשלומים, תזרים מזומנים וכלכלה, ויצירת תוויות נקיות &quot;כשל מול הבראה&quot;. הרצת <b>בדיקות דליפה (leakage)</b> — הוכחה שאף אות אינו &quot;מציץ אל העתיד&quot; (מידע שעדיין לא קיים בזמן ההחלטה), דבר שהיה גורם למודל להיראות מצוין בבדיקות אך להיכשל במציאות.</p><div class="gate"><b>שער:</b> מערך מאפיינים מאומת ומתועד שהצוות סומך עליו.</div></div>
-    <div class="card"><span class="chip">שבועות 8–16 · מידול</span><p style="margin-top:11px">אימון מודל הסיכון (מתי צרה מתקרבת) ומודל ה-uplift (למי פעולה באמת תעזור). בדיקה לאחור על הלוואות היסטוריות שמורות כדי לאמוד הפסדים שנמנעו, וכיול הציונים.</p><div class="gate"><b>שער:</b> הבדיקה לאחור עולה על קו הבסיס התגובתי במרווח משמעותי — יציאה/המשך.</div></div>
-  </div>
-</div>`);
-
-/* 11b — TIMELINE · שלבים 4–6 */
-slides.push(`
-<div class="wrap">
-  <div class="eyebrow">שאלה 04ג · ציר זמן (המשך)</div>
-  <h2 class="title">מממשל ועד השקה מבוקרת</h2>
-  <p class="lede">המחצית השנייה ממתנת את הסיכון בהשקה: להוכיח שהמודל הוגן ותואם רגולציה, להריץ אותו בשקט, ואז להגדיל בהדרגה מול קבוצת ביקורת שמורה — בלי לגעת בלווה עד שהראיות בידינו.</p>
-  <div class="tl" style="margin:26px 0 32px">
+  <div class="tl" style="margin:6px 0 0">
     <div class="tl-track"></div><div class="tl-fill" style="width:100%"></div>
     <div class="tl-steps">
-      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">שבועות 0–4</div><div class="tl-name">גילוי</div></div>
-      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">שבועות 4–10</div><div class="tl-name">נתונים ומאפיינים</div></div>
-      <div class="tl-step dim"><div class="tl-node"></div><div class="tl-wk">שבועות 8–16</div><div class="tl-name">מידול</div></div>
-      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">שבועות 14–20</div><div class="tl-name">ממשל</div></div>
-      <div class="tl-step accent"><div class="tl-node"></div><div class="tl-wk">שבועות 18–24</div><div class="tl-name">מצב צללים</div></div>
-      <div class="tl-step accent"><div class="tl-node"></div><div class="tl-wk">שבועות 24–30</div><div class="tl-name">השקה</div></div>
+      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">שבועות 0–3</div><div class="tl-name">גילוי</div><div class="tl-desc">ממסגרים את הבעיה; משיגים את הנתונים ואת מדד ההצלחה.</div></div>
+      <div class="tl-step"><div class="tl-node"></div><div class="tl-wk">שבועות 3–8</div><div class="tl-name">POC · יציאה/המשך</div><div class="tl-desc">מוכיחים על נתוני עבר שה-AI מוצא מי ניתן להצלה — ואת התועלת.</div></div>
+      <div class="tl-step accent"><div class="tl-node"></div><div class="tl-wk">שבועות 8–16</div><div class="tl-name">בנייה</div><div class="tl-desc">בונים את מנוע הייצור מתוך תוכנית ה-POC.</div></div>
+      <div class="tl-step accent"><div class="tl-node"></div><div class="tl-wk">שבועות 14–20</div><div class="tl-name">ממשל</div><div class="tl-desc">בדיקות הלוואות הוגנות, קודי סיבה, עקיפה אנושית, אישור.</div></div>
+      <div class="tl-step accent"><div class="tl-node"></div><div class="tl-wk">שבועות 18–24</div><div class="tl-name">מצב צללים</div><div class="tl-desc">מריצים חי אך שקט; משווים למה שקרה בפועל.</div></div>
+      <div class="tl-step accent"><div class="tl-node"></div><div class="tl-wk">שבועות 24–30</div><div class="tl-name">השקה</div><div class="tl-desc">השקה מבוקרת מול קבוצת ביקורת שמורה, ואז הרחבה.</div></div>
     </div>
-  </div>
-  <p style="font-size:12.5px;color:var(--cta);margin-bottom:14px;font-weight:600;letter-spacing:.03em">שלבים 4–6 · מיתון סיכון והשקה</p>
-  <div class="grid g3">
-    <div class="card"><span class="chip">שבועות 14–20 · ממשל</span><p style="margin-top:11px"><b>צוות עצמאי</b> בודק שוב שהמודל תקין, הוגן ומתועד במלואו (תקן SR 11-7). מוודאים שהוא אינו פוגע באף קבוצה מוגנת, דואגים שכל החלטה ניתנת להסבר, ומקבלים אישור משפטי וציות.</p><div class="gate"><b>שער:</b> אישור להרצה על נתונים אמיתיים — אך בשקט, מבלי ליצור קשר עם איש עדיין.</div></div>
-    <div class="card"><span class="chip">שבועות 18–24 · מצב צללים</span><p style="margin-top:11px">הרצת המנוע חי אך שקט: הוא נותן המלצות שאיש אינו פועל לפיהן, ואנו משווים אותן למה שקרה בפועל. כוונון ספים ווידוא שאין הפתעות.</p><div class="gate"><b>שער:</b> תוצאות הצללים תואמות את הבדיקה לאחור; סיכון ותפעול בנוח לפעול באמת.</div></div>
-    <div class="card" style="border-color:var(--cta);border-width:1.5px"><span class="chip cta">שבועות 24–30 · השקה מבוקרת</span><p style="margin-top:11px">הפעלת התערבויות אמיתיות לקבוצה קטנה, נמדדת מול קבוצת ביקורת שמורה. מעקב שבועי אחר הפסדים, שיעורי הבראה והוגנות. הגדלת נפח ככל שהראיות מצטברות.</p><div class="gate" style="background:#FFF1E6;border-color:#FFE0C2"><b style="color:#C2410C">שער:</b> שיפור חי מול הביקורת אומת ← הרחבה לכל התיק.</div></div>
   </div>
 </div>`);
 
