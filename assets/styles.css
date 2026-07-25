@@ -290,62 +290,61 @@ p {
 
 /* Bulgaria trip page */
 .trip-page {
-  background: #f6f8fb;
-  color: #19202a;
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
   line-height: 1.55;
 }
 
 .trip-page header {
-  background: linear-gradient(135deg, #0f766e, #2166d1);
-  color: white;
-  padding: 38px 24px;
+  background: linear-gradient(135deg, var(--green), var(--blue));
+  color: var(--surface);
+  padding: var(--space-xl) var(--space-lg);
   text-align: center;
 }
 
 .trip-page header h1 {
-  margin: 0 0 10px;
+  margin: 0 0 var(--space-sm);
   font-size: 34px;
   line-height: 1.2;
 }
 
 .trip-page header p {
-  margin: 4px 0;
+  margin: var(--space-2xs) 0;
   font-size: 17px;
 }
 
 .trip-page .container {
   max-width: 1180px;
   margin: 0 auto;
-  padding: 24px;
+  padding: var(--space-lg);
 }
 
 .trip-page .summary {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
+  gap: var(--space-sm);
   margin-top: -42px;
 }
 
 .trip-page .metric {
-  background: #ffffff;
-  border: 1px solid #d9e2ec;
-  border-radius: 18px;
-  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: var(--space-md);
   text-align: center;
-  box-shadow: 0 8px 28px rgba(16, 24, 40, 0.08);
+  box-shadow: var(--shadow-soft);
 }
 
 .trip-page .metric b {
   display: block;
-  color: #2166d1;
+  color: var(--blue);
   font-size: 24px;
 }
 
 .trip-page .metric span,
 .trip-page .map-type,
 .trip-page .footer {
-  color: #667085;
+  color: var(--muted);
 }
 
 .trip-page .metric span {
@@ -353,25 +352,25 @@ p {
 }
 
 .trip-page .notice {
-  margin: 22px 0;
-  padding: 18px;
-  border: 1px solid #f6d365;
-  border-radius: 18px;
-  background: #fff8e6;
+  margin: var(--space-lg) 0;
+  padding: var(--space-md);
+  border: 1px solid color-mix(in oklch, var(--accent) 40%, var(--gold-soft));
+  border-radius: var(--radius);
+  background: var(--gold-soft);
 }
 
 .trip-page .grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 22px;
+  gap: var(--space-lg);
 }
 
 .trip-page .day-card {
   overflow: hidden;
-  border: 1px solid #d9e2ec;
-  border-radius: 22px;
-  background: #ffffff;
-  box-shadow: 0 8px 28px rgba(16, 24, 40, 0.07);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  box-shadow: var(--shadow-soft);
 }
 
 .trip-page .day-top {
@@ -382,7 +381,7 @@ p {
 .trip-page .day-image {
   min-height: 260px;
   overflow: hidden;
-  background: #d8dee9;
+  background: var(--border);
 }
 
 .trip-page .day-image img {
@@ -393,80 +392,80 @@ p {
 }
 
 .trip-page .day-content {
-  padding: 22px;
+  padding: var(--space-lg);
 }
 
 .trip-page .badges {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-sm);
 }
 
 .trip-page .badge {
   border-radius: 999px;
-  background: #e7f0ff;
-  color: #164d9f;
-  padding: 6px 10px;
+  background: var(--blue-soft);
+  color: var(--blue);
+  padding: var(--space-2xs) var(--space-xs);
   font-size: 13px;
   font-weight: 700;
 }
 
 .trip-page .badge.green {
-  background: #e5f7f3;
-  color: #0f766e;
+  background: var(--green-soft);
+  color: var(--green);
 }
 
 .trip-page h2 {
-  margin: 0 0 8px;
+  margin: 0 0 var(--space-xs);
   font-size: 25px;
 }
 
 .trip-page h3 {
-  margin: 18px 0 8px;
+  margin: var(--space-md) 0 var(--space-xs);
   font-size: 18px;
 }
 
 .trip-page p {
-  margin: 8px 0;
+  margin: var(--space-xs) 0;
 }
 
 .trip-page ul {
-  margin: 8px 0 0;
-  padding-right: 22px;
+  margin: var(--space-xs) 0 0;
+  padding-right: var(--space-lg);
 }
 
 .trip-page li {
-  margin: 6px 0;
+  margin: var(--space-2xs) 0;
 }
 
 .trip-page .links {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 16px;
+  gap: var(--space-sm);
+  margin-top: var(--space-md);
 }
 
 .trip-page a.button {
   display: inline-block;
-  border-radius: 12px;
-  background: #2166d1;
-  color: white;
-  padding: 9px 13px;
+  border-radius: var(--radius);
+  background: var(--blue);
+  color: var(--surface);
+  padding: var(--space-xs) var(--space-sm);
   font-weight: 700;
   text-decoration: none;
 }
 
 .trip-page a.button.secondary {
-  background: #0f766e;
+  background: var(--green);
 }
 
 .trip-page .table-wrap {
   overflow: auto;
-  margin: 22px 0;
-  border: 1px solid #d9e2ec;
-  border-radius: 18px;
-  background: #ffffff;
+  margin: var(--space-lg) 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
 }
 
 .trip-page table {
@@ -477,18 +476,18 @@ p {
 
 .trip-page th,
 .trip-page td {
-  padding: 12px 14px;
-  border-bottom: 1px solid #d9e2ec;
+  padding: var(--space-sm) var(--space-md);
+  border-bottom: 1px solid var(--border);
   text-align: right;
   vertical-align: top;
 }
 
 .trip-page th {
-  background: #eef4ff;
+  background: var(--blue-soft);
 }
 
 .trip-page .footer {
-  padding: 20px;
+  padding: var(--space-lg);
   text-align: center;
   font-size: 13px;
 }

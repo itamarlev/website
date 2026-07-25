@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+<Document>
+  <name>Bulgaria Family Trip 2026</name>
+  <description>Day-by-day points for the Bulgaria family trip, 30 July to 9 August 2026.</description>
+
+  <Folder>
+    <name>Day 1 - Arrival in Varna (30/07/2026)</name>
+    <Placemark><name>Varna Airport</name><description>Airport</description><Point><coordinates>27.8251,43.2321,0</coordinates></Point></Placemark>
+    <Placemark><name>Sea Garden Varna</name><description>Park</description><Point><coordinates>27.927,43.2096,0</coordinates></Point></Placemark>
+    <Placemark><name>Varna Promenade</name><description>Walk</description><Point><coordinates>27.9258,43.2079,0</coordinates></Point></Placemark>
+  </Folder>
+
+  <Folder>
+    <name>Day 2 - Rope Park and Varna (31/07/2026)</name>
+    <Placemark><name>Adventure Park BELLEVUE</name><description>Rope Park, Golden Sands</description><Point><coordinates>28.0412,43.2846,0</coordinates></Point></Placemark>
+    <Placemark><name>Varna Archaeological Museum</name><description>Museum</description><Point><coordinates>27.9144,43.2099,0</coordinates></Point></Placemark>
+    <Placemark><name>Dormition of the Mother of God Cathedral</name><description>Cathedral</description><Point><coordinates>27.9113,43.2057,0</coordinates></Point></Placemark>
+  </Folder>
+
+  <Folder>
+    <name>Day 3 - Aquamania Water Park (01/08/2026)</name>
+    <Placemark><name>Aquapark Aquamania Albena</name><description>Water Park</description><Point><coordinates>28.0811,43.3629,0</coordinates></Point></Placemark>
+    <Placemark><name>Albena Beach</name><description>Beach</description><Point><coordinates>28.0805,43.3672,0</coordinates></Point></Placemark>
+  </Folder>
+
+  <Folder>
+    <name>Day 4 - Balchik Palace and Botanical Garden (02/08/2026)</name>
+    <Placemark><name>Balchik Palace</name><description>Palace</description><Point><coordinates>28.1585,43.4049,0</coordinates></Point></Placemark>
+    <Placemark><name>Balchik Botanical Garden</name><description>Garden</description><Point><coordinates>28.1579,43.4056,0</coordinates></Point></Placemark>
+  </Folder>
+
+  <Folder>
+    <name>Day 5 - Cape Kaliakra and Bolata Beach (03/08/2026)</name>
+    <Placemark><name>Cape Kaliakra</name><description>Nature / Fortress</description><Point><coordinates>28.4656,43.3654,0</coordinates></Point></Placemark>
+    <Placemark><name>Bolata Beach</name><description>Beach</description><Point><coordinates>28.484,43.3677,0</coordinates></Point></Placemark>
+  </Folder>
+
+  <Folder>
+    <name>Day 6 - Historical Park and Madara Rider (04/08/2026)</name>
+    <Placemark><name>Historical Park Bulgaria</name><description>Theme / Historical Park</description><Point><coordinates>27.5,43.338,0</coordinates></Point></Placemark>
+    <Placemark><name>Madara Rider</name><description>UNESCO Site</description><Point><coordinates>27.1206,43.2767,0</coordinates></Point></Placemark>
+    <Placemark><name>Arbanasi</name><description>Base</description><Point><coordinates>25.6706,43.0985,0</coordinates></Point></Placemark>
+  </Folder>
+
+  <Folder>
+    <name>Day 7 - Tsarevets Fortress and Old Town (05/08/2026)</name>
+    <Placemark><name>Tsarevets Fortress</name><description>Fortress</description><Point><coordinates>25.6525,43.0827,0</coordinates></Point></Placemark>
+    <Placemark><name>Samovodska Charshia</name><description>Old Street</description><Point><coordinates>25.6379,43.0858,0</coordinates></Point></Placemark>
+    <Placemark><name>Veliko Tarnovo Old Town</name><description>Old Town</description><Point><coordinates>25.6489,43.0846,0</coordinates></Point></Placemark>
+  </Folder>
+
+  <Folder>
+    <name>Day 8 - Relaxed Arbanasi Day (06/08/2026)</name>
+    <Placemark><name>Arbanasi Village</name><description>Village</description><Point><coordinates>25.6706,43.0985,0</coordinates></Point></Placemark>
+    <Placemark><name>Mini Bulgaria Park</name><description>Family Attraction</description><Point><coordinates>25.6481,43.0828,0</coordinates></Point></Placemark>
+  </Folder>
+
+  <Folder>
+    <name>Day 9 - Shumen Area (07/08/2026)</name>
+    <Placemark><name>Shumen Fortress</name><description>Fortress</description><Point><coordinates>26.9007,43.2838,0</coordinates></Point></Placemark>
+    <Placemark><name>Monument to 1300 Years of Bulgaria</name><description>Monument</description><Point><coordinates>26.9147,43.2794,0</coordinates></Point></Placemark>
+    <Placemark><name>Shumen</name><description>Base</description><Point><coordinates>26.9361,43.2712,0</coordinates></Point></Placemark>
+  </Folder>
+
+  <Folder>
+    <name>Day 10 - Pliska, Stone Forest and Final Varna Night (08/08/2026)</name>
+    <Placemark><name>Pliska</name><description>Historical Site</description><Point><coordinates>27.1167,43.3667,0</coordinates></Point></Placemark>
+    <Placemark><name>Pobiti Kamani Stone Forest</name><description>Natural Site</description><Point><coordinates>27.7057,43.2318,0</coordinates></Point></Placemark>
+    <Placemark><name>Varna Fun Port</name><description>Evening Fun</description><Point><coordinates>27.9277,43.2046,0</coordinates></Point></Placemark>
+    <Placemark><name>Varna</name><description>Final Base</description><Point><coordinates>27.9147,43.2141,0</coordinates></Point></Placemark>
+  </Folder>
+
+  <Folder>
+    <name>Departure - Flight Home (09/08/2026)</name>
+    <Placemark><name>Varna Airport</name><description>Airport</description><Point><coordinates>27.8251,43.2321,0</coordinates></Point></Placemark>
+  </Folder>
+
+</Document>
+</kml>
