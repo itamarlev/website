@@ -20,7 +20,6 @@ document.documentElement.classList.add("js");
       const isActive = Number(link.dataset.dayLink) === day;
       if (isActive) {
         link.setAttribute("aria-current", "step");
-        link.scrollIntoView({ behavior: "smooth", block: "nearest", inline: "center" });
       } else {
         link.removeAttribute("aria-current");
       }
