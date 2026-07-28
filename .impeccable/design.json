@@ -1,0 +1,463 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-28T16:14:36.000Z",
+  "title": "Design System: Bulgaria Family Travel Atlas",
+  "extensions": {
+    "colorMeta": {
+      "black-sea-navy": {
+        "role": "primary",
+        "displayName": "Black Sea Navy",
+        "canonical": "#052f39",
+        "tonalRamp": [
+          "oklch(15% 0.045 210)",
+          "oklch(25% 0.045 210)",
+          "oklch(35% 0.045 210)",
+          "oklch(45% 0.045 210)",
+          "oklch(58% 0.04 210)",
+          "oklch(72% 0.032 210)",
+          "oklch(84% 0.022 210)",
+          "oklch(95% 0.01 210)"
+        ]
+      },
+      "black-sea-navy-deep": {
+        "role": "primary",
+        "displayName": "Deep Black Sea Navy",
+        "canonical": "#03242c",
+        "tonalRamp": [
+          "oklch(15% 0.038 210)",
+          "oklch(25% 0.038 210)",
+          "oklch(35% 0.038 210)",
+          "oklch(45% 0.036 210)",
+          "oklch(58% 0.032 210)",
+          "oklch(72% 0.026 210)",
+          "oklch(84% 0.018 210)",
+          "oklch(95% 0.008 210)"
+        ]
+      },
+      "pine": {
+        "role": "secondary",
+        "displayName": "Bulgarian Pine",
+        "canonical": "#155b4a",
+        "tonalRamp": [
+          "oklch(15% 0.07 165)",
+          "oklch(25% 0.07 165)",
+          "oklch(35% 0.07 165)",
+          "oklch(45% 0.07 165)",
+          "oklch(58% 0.062 165)",
+          "oklch(72% 0.05 165)",
+          "oklch(84% 0.034 165)",
+          "oklch(95% 0.014 165)"
+        ]
+      },
+      "sea-mist": {
+        "role": "neutral",
+        "displayName": "Sea Mist",
+        "canonical": "#dcecf1",
+        "tonalRamp": [
+          "oklch(15% 0.026 220)",
+          "oklch(25% 0.026 220)",
+          "oklch(35% 0.026 220)",
+          "oklch(45% 0.026 220)",
+          "oklch(58% 0.025 220)",
+          "oklch(72% 0.023 220)",
+          "oklch(84% 0.02 220)",
+          "oklch(95% 0.012 220)"
+        ]
+      },
+      "limestone-paper": {
+        "role": "neutral",
+        "displayName": "Limestone Paper",
+        "canonical": "#f6f3ea",
+        "tonalRamp": [
+          "oklch(15% 0.014 90)",
+          "oklch(25% 0.014 90)",
+          "oklch(35% 0.014 90)",
+          "oklch(45% 0.014 90)",
+          "oklch(58% 0.013 90)",
+          "oklch(72% 0.012 90)",
+          "oklch(84% 0.011 90)",
+          "oklch(95% 0.009 90)"
+        ]
+      },
+      "limestone-bright": {
+        "role": "neutral",
+        "displayName": "Bright Limestone",
+        "canonical": "#fffdf7",
+        "tonalRamp": [
+          "oklch(15% 0.01 90)",
+          "oklch(25% 0.01 90)",
+          "oklch(35% 0.01 90)",
+          "oklch(45% 0.01 90)",
+          "oklch(58% 0.009 90)",
+          "oklch(72% 0.008 90)",
+          "oklch(84% 0.007 90)",
+          "oklch(95% 0.005 90)"
+        ]
+      },
+      "sunflower": {
+        "role": "tertiary",
+        "displayName": "Sunflower Marker",
+        "canonical": "#f4bd32",
+        "tonalRamp": [
+          "oklch(15% 0.15 85)",
+          "oklch(25% 0.16 85)",
+          "oklch(35% 0.17 85)",
+          "oklch(45% 0.18 85)",
+          "oklch(58% 0.18 85)",
+          "oklch(72% 0.17 85)",
+          "oklch(84% 0.13 85)",
+          "oklch(95% 0.05 85)"
+        ]
+      },
+      "sunflower-hover": {
+        "role": "tertiary",
+        "displayName": "Sunflower Hover",
+        "canonical": "#ffd05b",
+        "tonalRamp": [
+          "oklch(15% 0.14 85)",
+          "oklch(25% 0.15 85)",
+          "oklch(35% 0.16 85)",
+          "oklch(45% 0.17 85)",
+          "oklch(58% 0.17 85)",
+          "oklch(72% 0.16 85)",
+          "oklch(84% 0.12 85)",
+          "oklch(95% 0.045 85)"
+        ]
+      },
+      "sunflower-ink": {
+        "role": "neutral",
+        "displayName": "Sunflower Ink",
+        "canonical": "#173237",
+        "tonalRamp": [
+          "oklch(15% 0.03 205)",
+          "oklch(25% 0.03 205)",
+          "oklch(35% 0.03 205)",
+          "oklch(45% 0.029 205)",
+          "oklch(58% 0.026 205)",
+          "oklch(72% 0.022 205)",
+          "oklch(84% 0.015 205)",
+          "oklch(95% 0.007 205)"
+        ]
+      },
+      "atlas-ink": {
+        "role": "neutral",
+        "displayName": "Atlas Ink",
+        "canonical": "#102d32",
+        "tonalRamp": [
+          "oklch(15% 0.03 205)",
+          "oklch(25% 0.03 205)",
+          "oklch(35% 0.03 205)",
+          "oklch(45% 0.029 205)",
+          "oklch(58% 0.026 205)",
+          "oklch(72% 0.022 205)",
+          "oklch(84% 0.015 205)",
+          "oklch(95% 0.007 205)"
+        ]
+      },
+      "route-muted": {
+        "role": "neutral",
+        "displayName": "Route Muted",
+        "canonical": "#526b6e",
+        "tonalRamp": [
+          "oklch(15% 0.03 200)",
+          "oklch(25% 0.03 200)",
+          "oklch(35% 0.03 200)",
+          "oklch(45% 0.03 200)",
+          "oklch(58% 0.027 200)",
+          "oklch(72% 0.022 200)",
+          "oklch(84% 0.015 200)",
+          "oklch(95% 0.007 200)"
+        ]
+      },
+      "cartographic-line": {
+        "role": "neutral",
+        "displayName": "Cartographic Line",
+        "canonical": "#d4d9d2",
+        "tonalRamp": [
+          "oklch(15% 0.016 140)",
+          "oklch(25% 0.016 140)",
+          "oklch(35% 0.016 140)",
+          "oklch(45% 0.016 140)",
+          "oklch(58% 0.015 140)",
+          "oklch(72% 0.014 140)",
+          "oklch(84% 0.012 140)",
+          "oklch(95% 0.006 140)"
+        ]
+      },
+      "activity-wash": {
+        "role": "tertiary",
+        "displayName": "Activity Wash",
+        "canonical": "#f4ebcb",
+        "tonalRamp": [
+          "oklch(15% 0.05 90)",
+          "oklch(25% 0.05 90)",
+          "oklch(35% 0.05 90)",
+          "oklch(45% 0.05 90)",
+          "oklch(58% 0.047 90)",
+          "oklch(72% 0.042 90)",
+          "oklch(84% 0.032 90)",
+          "oklch(95% 0.014 90)"
+        ]
+      },
+      "activity-ink": {
+        "role": "tertiary",
+        "displayName": "Activity Ink",
+        "canonical": "#755a10",
+        "tonalRamp": [
+          "oklch(15% 0.095 85)",
+          "oklch(25% 0.1 85)",
+          "oklch(35% 0.105 85)",
+          "oklch(45% 0.105 85)",
+          "oklch(58% 0.095 85)",
+          "oklch(72% 0.075 85)",
+          "oklch(84% 0.05 85)",
+          "oklch(95% 0.018 85)"
+        ]
+      },
+      "alert-wash": {
+        "role": "tertiary",
+        "displayName": "Important Note Wash",
+        "canonical": "#fff0c6",
+        "tonalRamp": [
+          "oklch(15% 0.06 85)",
+          "oklch(25% 0.06 85)",
+          "oklch(35% 0.06 85)",
+          "oklch(45% 0.06 85)",
+          "oklch(58% 0.056 85)",
+          "oklch(72% 0.05 85)",
+          "oklch(84% 0.038 85)",
+          "oklch(95% 0.016 85)"
+        ]
+      },
+      "alert-ink": {
+        "role": "tertiary",
+        "displayName": "Important Note Ink",
+        "canonical": "#604b12",
+        "tonalRamp": [
+          "oklch(15% 0.08 85)",
+          "oklch(25% 0.085 85)",
+          "oklch(35% 0.09 85)",
+          "oklch(45% 0.09 85)",
+          "oklch(58% 0.08 85)",
+          "oklch(72% 0.064 85)",
+          "oklch(84% 0.042 85)",
+          "oklch(95% 0.016 85)"
+        ]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "#ffffff",
+        "tonalRamp": [
+          "oklch(15% 0 0)",
+          "oklch(25% 0 0)",
+          "oklch(35% 0 0)",
+          "oklch(45% 0 0)",
+          "oklch(58% 0 0)",
+          "oklch(72% 0 0)",
+          "oklch(84% 0 0)",
+          "oklch(95% 0 0)"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "display": {
+        "displayName": "Hero Display",
+        "purpose": "Photographic trip titles only."
+      },
+      "headline": {
+        "displayName": "Atlas Headline",
+        "purpose": "Major route, map, itinerary, and closing chapters."
+      },
+      "title": {
+        "displayName": "Day Title",
+        "purpose": "Daily destination and activity names."
+      },
+      "body": {
+        "displayName": "Itinerary Body",
+        "purpose": "Practical descriptions and long-form travel reading."
+      },
+      "label": {
+        "displayName": "Wayfinding Label",
+        "purpose": "Dates, section labels, facts, badges, and compact controls."
+      }
+    },
+    "shadows": [
+      {
+        "name": "chapter-ambient",
+        "value": "0 24px 64px rgba(4, 39, 47, 0.16)",
+        "purpose": "Standard lift for day chapters and expanded table surfaces."
+      },
+      {
+        "name": "sticky-route",
+        "value": "0 8px 24px rgba(3, 36, 44, 0.18)",
+        "purpose": "Keeps the sticky day navigator distinct over scrolling content."
+      },
+      {
+        "name": "sunflower-action",
+        "value": "0 12px 28px rgba(244, 189, 50, 0.22)",
+        "purpose": "Restrained glow beneath the principal yellow action."
+      },
+      {
+        "name": "map-focus",
+        "value": "0 34px 72px rgba(0, 0, 0, 0.28)",
+        "purpose": "Raises the embedded map above its Navy field."
+      },
+      {
+        "name": "lightbox-focus",
+        "value": "0 30px 90px rgba(0, 0, 0, 0.48)",
+        "purpose": "Separates enlarged photography from the modal backdrop."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease-atlas",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Soft arrival, reveal, image zoom, and progress movement."
+      },
+      {
+        "name": "duration-state",
+        "value": "200ms",
+        "purpose": "Hover, active, color, and compact control transitions."
+      },
+      {
+        "name": "duration-reveal",
+        "value": "700ms",
+        "purpose": "Scroll reveal of route and itinerary chapters."
+      },
+      {
+        "name": "duration-hero",
+        "value": "1400ms",
+        "purpose": "Initial photographic hero arrival."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "chapter-compact",
+        "value": "960px"
+      },
+      {
+        "name": "mobile",
+        "value": "760px"
+      },
+      {
+        "name": "small-mobile",
+        "value": "520px"
+      }
+    ]
+  },
+  "components": [
+      {
+        "name": "Sunflower Primary Button",
+        "kind": "button",
+        "refersTo": "button-sun",
+        "description": "The principal next-step action over photographic or coastal surfaces.",
+        "html": "<a class=\"ds-btn-sun\" href=\"#\">Continue the journey <svg aria-hidden=\"true\" viewBox=\"0 0 24 24\"><path d=\"M5 12h14M13 6l6 6-6 6\"/></svg></a>",
+        "css": ".ds-btn-sun { display:inline-flex; min-height:48px; align-items:center; justify-content:center; gap:10px; padding:0 20px; border-radius:12px; background:#f4bd32; color:#173237; box-shadow:0 12px 28px rgba(244,189,50,.22); font-family:\"Avenir Next\",\"Segoe UI\",Arial,sans-serif; font-weight:800; text-decoration:none; transition:transform .2s ease,background-color .2s ease,box-shadow .2s ease; } .ds-btn-sun svg { width:1.25em; height:1.25em; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; } .ds-btn-sun:hover { background:#ffd05b; transform:translateY(-2px); } .ds-btn-sun:active { transform:translateY(0); } .ds-btn-sun:focus-visible { outline:3px solid #f4bd32; outline-offset:4px; }"
+      },
+      {
+        "name": "Photographic Ghost Button",
+        "kind": "button",
+        "refersTo": "button-ghost",
+        "description": "A secondary action that preserves the visibility of imagery beneath it.",
+        "html": "<a class=\"ds-btn-ghost\" href=\"#\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\"><path d=\"m3 6 6-3 6 3 6-3v15l-6 3-6-3-6 3Z\"/><path d=\"M9 3v15M15 6v15\"/></svg> Open map</a>",
+        "css": ".ds-btn-ghost { display:inline-flex; min-height:48px; align-items:center; justify-content:center; gap:10px; padding:0 20px; border:1px solid rgba(255,255,255,.54); border-radius:12px; background:rgba(3,36,44,.24); color:#fff; font-family:\"Avenir Next\",\"Segoe UI\",Arial,sans-serif; font-weight:800; text-decoration:none; transition:transform .2s ease,background-color .2s ease; } .ds-btn-ghost svg { width:1.25em; height:1.25em; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; } .ds-btn-ghost:hover { background:rgba(255,255,255,.13); transform:translateY(-2px); } .ds-btn-ghost:active { transform:translateY(0); } .ds-btn-ghost:focus-visible { outline:3px solid #f4bd32; outline-offset:4px; }"
+      },
+      {
+        "name": "Destination Chips",
+        "kind": "chip",
+        "refersTo": "chip-city",
+        "description": "Paired labels for place and activity type at the start of each day.",
+        "html": "<div class=\"ds-chip-row\"><span class=\"ds-chip-city\">Varna</span><span class=\"ds-chip-activity\">Coast &amp; city</span></div>",
+        "css": ".ds-chip-row { display:flex; flex-wrap:wrap; gap:8px; font-family:\"Avenir Next\",\"Segoe UI\",Arial,sans-serif; } .ds-chip-city,.ds-chip-activity { padding:5px 10px; border-radius:999px; font-size:.72rem; font-weight:800; } .ds-chip-city { background:#dcecf1; color:#155b4a; } .ds-chip-activity { background:#f4ebcb; color:#755a10; } .ds-chip-city:focus-visible,.ds-chip-activity:focus-visible { outline:3px solid #f4bd32; outline-offset:4px; }"
+      },
+      {
+        "name": "Sticky Day Navigator",
+        "kind": "nav",
+        "description": "The positional spine that tracks the active itinerary day.",
+        "html": "<nav class=\"ds-day-nav\" aria-label=\"Trip days\"><div class=\"ds-progress\"><span></span></div><div class=\"ds-day-track\"><a href=\"#\"><b>01</b><span>30/7</span><em>Varna</em></a><a class=\"ds-current\" href=\"#\" aria-current=\"step\"><b>02</b><span>31/7</span><em>Varna</em></a><a href=\"#\"><b>03</b><span>1/8</span><em>Albena</em></a></div></nav>",
+        "css": ".ds-day-nav { direction:ltr; overflow:hidden; background:#052f39; color:#fff; box-shadow:0 8px 24px rgba(3,36,44,.18); font-family:\"Avenir Next\",\"Segoe UI\",Arial,sans-serif; } .ds-progress { height:3px; background:rgba(255,255,255,.14); } .ds-progress span { display:block; width:48%; height:100%; background:#f4bd32; } .ds-day-track { display:grid; grid-template-columns:repeat(3,minmax(96px,1fr)); } .ds-day-track a { position:relative; padding:12px 10px 13px; border-inline-end:1px solid rgba(255,255,255,.12); color:rgba(255,255,255,.7); text-align:center; text-decoration:none; transition:background-color .2s ease,color .2s ease; } .ds-day-track b,.ds-day-track span,.ds-day-track em { display:block; } .ds-day-track b { color:#f4bd32; font-size:.82rem; } .ds-day-track span { font-size:.7rem; } .ds-day-track em { margin-top:2px; overflow:hidden; font-size:.74rem; font-style:normal; font-weight:700; text-overflow:ellipsis; white-space:nowrap; } .ds-day-track a:hover,.ds-day-track a.ds-current { background:#fffdf7; color:#102d32; } .ds-day-track a:focus-visible { outline:3px solid #f4bd32; outline-offset:-4px; } .ds-day-track a.ds-current::after { position:absolute; right:18px; bottom:0; left:18px; height:3px; background:#f4bd32; content:\"\"; }"
+      },
+      {
+        "name": "Day Chapter",
+        "kind": "card",
+        "refersTo": "card-day",
+        "description": "The signature itinerary surface combining position, image, and practical detail.",
+        "html": "<article class=\"ds-day-card\"><div class=\"ds-day-marker\"><span>04</span><small>02.08</small></div><div class=\"ds-day-scene\" role=\"img\" aria-label=\"Coastal destination photograph\"><span>Destination photography</span></div><div class=\"ds-day-body\"><div class=\"ds-chip-row\"><span>Balchik</span><span>Gardens &amp; views</span></div><h3>Balchik Palace and Botanical Garden</h3><p>A calm day chapter with route context, practical detail, and a clear map action.</p><a href=\"#\">Open daily route →</a></div></article>",
+        "css": ".ds-day-card { display:grid; grid-template-columns:64px minmax(180px,.8fr) minmax(240px,1.2fr); min-height:300px; overflow:hidden; border-radius:16px; background:#fffdf7; color:#102d32; box-shadow:0 24px 64px rgba(4,39,47,.16); font-family:\"Avenir Next\",\"Segoe UI\",Arial,sans-serif; } .ds-day-marker { display:grid; align-content:start; justify-items:center; gap:2px; padding-top:30px; background:#052f39; color:#fff; } .ds-day-marker span { color:#f4bd32; font-size:1.25rem; font-weight:850; } .ds-day-marker small { color:rgba(255,255,255,.62); font-size:.7rem; } .ds-day-scene { display:grid; min-height:300px; place-items:end start; padding:18px; background:linear-gradient(145deg,#24745e,#dcecf1); color:#fff; font-size:.74rem; font-weight:800; } .ds-day-body { display:flex; flex-direction:column; align-items:flex-start; padding:32px; } .ds-chip-row { display:flex; flex-wrap:wrap; gap:8px; } .ds-chip-row span { padding:5px 10px; border-radius:999px; background:#dcecf1; color:#155b4a; font-size:.72rem; font-weight:800; } .ds-chip-row span:last-child { background:#f4ebcb; color:#755a10; } .ds-day-body h3 { margin:14px 0 12px; color:#052f39; font-size:1.8rem; line-height:1.08; letter-spacing:-.025em; } .ds-day-body p { margin:0 0 22px; color:#526b6e; line-height:1.65; } .ds-day-body a { margin-top:auto; color:#155b4a; font-weight:800; text-decoration:none; } .ds-day-body a:hover { color:#052f39; } .ds-day-body a:focus-visible { outline:3px solid #f4bd32; outline-offset:4px; }"
+      },
+      {
+        "name": "Expandable Map Points",
+        "kind": "custom",
+        "description": "A native disclosure that keeps optional route detail scannable.",
+        "html": "<details class=\"ds-points\"><summary><span>Map points</span><small>3 points</small><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\"><path d=\"m7 10 5 5 5-5\"/></svg></summary><ul><li><a href=\"#\">Sea Garden Varna</a><span>Park</span></li><li><a href=\"#\">Varna Promenade</a><span>Walk</span></li></ul></details>",
+        "css": ".ds-points { width:100%; border-top:1px solid #d4d9d2; border-bottom:1px solid #d4d9d2; color:#102d32; font-family:\"Avenir Next\",\"Segoe UI\",Arial,sans-serif; } .ds-points summary { display:grid; grid-template-columns:auto 1fr 20px; gap:10px; align-items:center; padding-block:13px; color:#052f39; cursor:pointer; font-weight:800; list-style:none; } .ds-points summary::-webkit-details-marker { display:none; } .ds-points summary small { color:#526b6e; font-weight:600; } .ds-points summary svg { width:1.25em; height:1.25em; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; transition:transform .25s ease; } .ds-points[open] summary svg { transform:rotate(180deg); } .ds-points ul { display:grid; gap:9px; margin:0; padding:0 0 16px; list-style:none; } .ds-points li { display:flex; justify-content:space-between; gap:18px; } .ds-points a { color:#155b4a; font-weight:750; text-underline-offset:3px; } .ds-points li>span { color:#526b6e; font-size:.75rem; } .ds-points summary:focus-visible,.ds-points a:focus-visible { outline:3px solid #f4bd32; outline-offset:4px; }"
+      },
+      {
+        "name": "Important Travel Note",
+        "kind": "custom",
+        "refersTo": "alert-important",
+        "description": "A warm, high-contrast callout for verified time-sensitive trip facts.",
+        "html": "<aside class=\"ds-important\"><svg aria-hidden=\"true\" viewBox=\"0 0 24 24\"><circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M12 7v5l3 2\"/></svg><div><b>Important timing</b><span>Keep the verified departure detail easy to scan.</span></div></aside>",
+        "css": ".ds-important { display:flex; gap:14px; width:100%; padding:16px 18px; border-radius:12px; background:#fff0c6; color:#604b12; font-family:\"Avenir Next\",\"Segoe UI\",Arial,sans-serif; } .ds-important svg { width:25px; height:25px; flex:0 0 auto; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round; } .ds-important b,.ds-important span { display:block; } .ds-important span { margin-top:3px; font-size:.86rem; } .ds-important:focus-visible { outline:3px solid #f4bd32; outline-offset:4px; }"
+      }
+    ],
+  "narrative": {
+      "northStar": "The Living Travel Atlas",
+      "overview": "This system turns a practical family itinerary into an atlas that feels active in the hand. Cinematic destination photography establishes place, while deep coastal color, lodging nodes, route lines, day markers, and map controls keep every screen oriented toward the next useful travel action.\n\nThe atmosphere is calm, generous, and nature-led rather than promotional. Large photographic chapters carry emotion; compact metadata, restrained badges, and progressively disclosed map points carry logistics. The visual sequence follows the traveller's mental model: orientation, lodging route, shared map, then daily chapters.",
+      "keyCharacteristics": [
+        "Cinematic Black Sea photography anchored by strong coastal overlays.",
+        "Black Sea Navy and Pine surfaces punctuated by rare Sunflower wayfinding.",
+        "Limestone reading surfaces with fine cartographic lines and soft ambient depth.",
+        "Oversized, tightly tracked headings paired with highly scannable practical labels.",
+        "A persistent day route that makes the itinerary feel navigable, not merely readable."
+      ],
+      "rules": [
+        {
+          "name": "The Sunflower Marker Rule",
+          "body": "Use Sunflower for wayfinding, focus, progress, and moments that advance the journey; its rarity makes it navigational.",
+          "section": "colors"
+        },
+        {
+          "name": "The Limestone Reading Rule",
+          "body": "Long-form itinerary content lives on warm Limestone surfaces, while Navy and Pine organize orientation and transitions.",
+          "section": "colors"
+        },
+        {
+          "name": "The One-Family Rule",
+          "body": "Create hierarchy through Avenir Next's weight, size, tracking, and color; do not add a display face that competes with the atlas photography.",
+          "section": "typography"
+        },
+        {
+          "name": "The Route-Before-Detail Rule",
+          "body": "Establish the whole journey and lodging sequence before asking the traveller to parse individual days.",
+          "section": "layout"
+        },
+        {
+          "name": "The Ambient Atlas Rule",
+          "body": "Use shadow to establish a focal reading plane, never as a border substitute on every element.",
+          "section": "elevation"
+        },
+        {
+          "name": "The Map-Marker Geometry Rule",
+          "body": "Reserve circles for position, progress, or compact controls; reserve pills for labels; use rounded rectangles for content and action surfaces.",
+          "section": "shapes"
+        }
+      ],
+      "dos": [
+        "Do let destination photography establish atmosphere before practical detail begins.",
+        "Do keep orientation visible through route lines, numbered markers, map icons, active-day state, and sticky progress.",
+        "Do use Sunflower sparingly for the next useful action, keyboard focus, and current position.",
+        "Do preserve generous Limestone space around dense itinerary information.",
+        "Do collapse the chapter grid responsively while keeping the day marker rail continuous.",
+        "Do respect reduced-motion preferences and retain usable native disclosure, scrolling, and dialog behavior."
+      ],
+      "donts": [
+        "Don't turn the family itinerary into a generic grid of interchangeable travel cards.",
+        "Don't use decorative color where a map-like line, label, or positional marker communicates more clearly.",
+        "Don't place long practical reading directly over photography.",
+        "Don't add ornamental typefaces, heavy dependencies, or animation that competes with route-finding.",
+        "Don't invent live weather, hotel, reservation, ticket, or cost states without verified trip data."
+      ]
+  }
+}
