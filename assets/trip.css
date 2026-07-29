@@ -902,7 +902,6 @@ html {
   font-size: .78rem;
 }
 
-.unconfirmed-stay,
 .pending-note {
   display: flex;
   gap: 12px;
@@ -910,27 +909,8 @@ html {
   color: #755a10;
 }
 
-.unconfirmed-stay {
-  margin-top: 14px;
-  padding: 18px 20px;
-  border-radius: 12px;
-  background: #f4ebcb;
-}
-
-.unconfirmed-stay svg,
 .pending-note svg {
   color: #755a10;
-}
-
-.unconfirmed-stay strong,
-.unconfirmed-stay span {
-  display: block;
-}
-
-.unconfirmed-stay span {
-  margin-top: 3px;
-  color: #755a10;
-  font-size: .82rem;
 }
 
 .pending-note {
@@ -940,6 +920,187 @@ html {
   border-radius: 12px;
   background: #f4ebcb;
   font-size: .84rem;
+}
+
+.trip-knowhow {
+  scroll-margin-top: 96px;
+  padding-block: 0 clamp(90px, 12vw, 150px);
+}
+
+.trip-knowhow > .section-heading {
+  margin-bottom: 54px;
+}
+
+.knowhow-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.knowhow-card {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  min-height: 300px;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: clamp(24px, 3vw, 34px);
+  overflow: hidden;
+  border: 1px solid rgba(21, 91, 74, .12);
+  border-radius: var(--trip-radius);
+  background: var(--trip-paper-bright);
+  box-shadow: 0 18px 48px rgba(4, 39, 47, .09);
+}
+
+.knowhow-card::after {
+  position: absolute;
+  right: -52px;
+  bottom: -60px;
+  width: 150px;
+  height: 150px;
+  border: 1px solid rgba(21, 91, 74, .08);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 24px rgba(21, 91, 74, .035),
+    0 0 0 48px rgba(21, 91, 74, .025);
+  content: "";
+  pointer-events: none;
+}
+
+.knowhow-card--feature {
+  display: grid;
+  min-height: 330px;
+  grid-column: span 2;
+  grid-template-columns: 64px minmax(0, 1fr);
+  gap: 24px;
+  background:
+    radial-gradient(circle at 12% 92%, rgba(244, 189, 50, .16), transparent 30%),
+    var(--trip-navy);
+  color: white;
+}
+
+.knowhow-card--feature::after {
+  border-color: rgba(255,255,255,.1);
+  box-shadow:
+    0 0 0 24px rgba(255,255,255,.035),
+    0 0 0 48px rgba(255,255,255,.025);
+}
+
+.knowhow-card__icon {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 24px;
+  place-items: center;
+  border-radius: 14px;
+  background: var(--trip-sky);
+  color: var(--trip-pine);
+}
+
+.knowhow-card--feature .knowhow-card__icon {
+  margin-bottom: 0;
+  background: var(--trip-sun);
+  color: var(--trip-navy);
+}
+
+.knowhow-card__icon svg {
+  width: 25px;
+  height: 25px;
+}
+
+.knowhow-card__label {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-bottom: 7px;
+  color: var(--trip-pine);
+  font-size: .72rem;
+  font-weight: 850;
+  letter-spacing: .04em;
+}
+
+.knowhow-card--feature .knowhow-card__label {
+  color: var(--trip-sun);
+}
+
+.knowhow-card h3 {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 12px;
+  color: var(--trip-navy);
+  font-size: clamp(1.3rem, 2.4vw, 1.75rem);
+  line-height: 1.18;
+}
+
+.knowhow-card--feature h3 {
+  color: white;
+  font-size: clamp(1.7rem, 3.2vw, 2.5rem);
+}
+
+.knowhow-card p {
+  position: relative;
+  z-index: 1;
+  margin: 0 0 22px;
+  color: var(--trip-muted);
+  font-size: .9rem;
+}
+
+.knowhow-card--feature p {
+  max-width: 720px;
+  color: rgba(255,255,255,.75);
+  font-size: 1rem;
+}
+
+.knowhow-stat {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+  align-items: baseline;
+  margin: 2px 0 24px;
+}
+
+.knowhow-stat bdi {
+  color: var(--trip-sun);
+  font-size: clamp(1.35rem, 3vw, 2rem);
+  font-weight: 850;
+}
+
+.knowhow-stat span {
+  color: rgba(255,255,255,.58);
+  font-size: .75rem;
+}
+
+.source-link {
+  position: relative;
+  z-index: 1;
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  color: var(--trip-pine);
+  font-size: .78rem;
+  font-weight: 850;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+}
+
+.knowhow-card--feature .source-link {
+  color: var(--trip-sun);
+}
+
+.source-link svg {
+  width: 16px;
+  height: 16px;
+  transition: transform .2s ease;
+}
+
+.source-link:hover svg {
+  transform: translateX(-3px);
 }
 
 .trip-map-section {
@@ -1506,6 +1667,14 @@ html {
     grid-template-columns: minmax(240px, 1fr) minmax(220px, 1fr);
   }
 
+  .knowhow-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .knowhow-card--feature {
+    grid-column: span 2;
+  }
+
   .hotel-cost {
     text-align: right;
   }
@@ -1565,8 +1734,14 @@ html {
   }
 
   .flight-grid,
-  .hotel-booking {
+  .hotel-booking,
+  .knowhow-grid {
     grid-template-columns: 1fr;
+  }
+
+  .knowhow-card--feature {
+    grid-column: auto;
+    grid-template-columns: 52px minmax(0, 1fr);
   }
 
   .hotel-booking {
@@ -1660,6 +1835,23 @@ html {
 
   .trip-bookings > .section-heading {
     margin-bottom: 42px;
+  }
+
+  .trip-knowhow > .section-heading {
+    margin-bottom: 42px;
+  }
+
+  .knowhow-card,
+  .knowhow-card--feature {
+    min-height: 0;
+  }
+
+  .knowhow-card--feature {
+    display: flex;
+  }
+
+  .knowhow-card--feature .knowhow-card__icon {
+    margin-bottom: 24px;
   }
 
   .booking-group__heading {
