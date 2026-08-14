@@ -11,6 +11,9 @@ Static personal website for private pages and section catalogues.
   /trips/
     /bulgaria-2026/
       index.html
+  /health/
+    /fmd-5-day-guide/
+      index.html        # Vegan 5-day FMD guide (Hebrew)
   /interviews/
     index.html
     /pagaya-ai-lead/
@@ -68,5 +71,6 @@ Prepare separate Cloudflare Access applications or policies for private sections
 
 - `/trips/*`
 - `/interviews/*`
+- `/health/*`
 
 Later, add more users to specific sections using Cloudflare Access policies instead of changing the site code.
