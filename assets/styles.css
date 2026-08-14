@@ -211,6 +211,12 @@ p {
     var(--surface);
 }
 
+.health-card {
+  background:
+    linear-gradient(135deg, oklch(99% 0.004 215), color-mix(in oklch, var(--surface) 70%, var(--green-soft))),
+    var(--surface);
+}
+
 .catalog-card h3,
 .prep-card h2,
 .empty-panel h3 {
