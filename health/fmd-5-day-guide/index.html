@@ -4,6 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#eef4ef" />
+  <meta name="description" content="מדריך FMD טבעוני אישי לחמישה ימים עם תפריט יומי, טיפים, מעקב התקדמות וחזרה הדרגתית לאכילה רגילה." />
   <title>תוכנית FMD טבעונית — 5 ימים</title>
   <style>
     :root{
@@ -124,8 +125,10 @@
       .day{break-inside:avoid}
     }
   </style>
+  <link rel="stylesheet" href="fmd.css" />
 </head>
 <body>
+<a class="skip-link" href="#before">דלג לתוכן המרכזי</a>
 <div class="wrap">
   <a class="home-link" href="/" aria-label="חזרה לדף הבית">← חזרה ל־itamarlev.com</a>
   <header>
@@ -133,10 +136,11 @@
       <div class="badge">FMD טבעוני · 5 ימים</div>
       <h1>המדריך היומי שלך</h1>
       <p class="lead">תוכנית קצרה ומעשית שמרכזת מה לאכול, מה לעשות באימון, למה לצפות ואיך לעבור כל יום בלי לקבל החלטות תוך כדי.</p>
+      <p class="hero-note">חמישה צעדים. יום אחד בכל פעם.</p>
     </div>
     <div class="progressbox card">
-      <div class="progresslabel"><span>התקדמות</span><b id="progressText">0 מתוך 5</b></div>
-      <div class="bar"><div id="progressBar"></div></div>
+      <div class="progresslabel"><span>התקדמות</span><b id="progressText" aria-live="polite">0 מתוך 5</b></div>
+      <div class="bar" role="progressbar" aria-label="התקדמות בתוכנית" aria-valuemin="0" aria-valuemax="5" aria-valuenow="0"><div id="progressBar"></div></div>
       <div style="margin-top:10px"><button id="resetBtn">איפוס סימונים</button></div>
     </div>
   </header>
@@ -146,6 +150,30 @@
     <div class="stat"><b>~1,050</b><span>קק"ל ביום 1</span></div>
     <div class="stat"><b>~750–800</b><span>קק"ל בימים 2–5</span></div>
     <div class="stat"><b>קל</b><span>עומס אימון בתקופה</span></div>
+  </div>
+
+  <div class="visual-story" aria-label="אווירת התוכנית">
+    <figure>
+      <img src="assets/vegetables.webp" alt="מבחר צבעוני של ירקות טריים" width="1400" height="2117" loading="eager" />
+      <figcaption>הכנה אחת טובה מורידה עשרות החלטות</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/meal.webp" alt="ארוחה צמחית צבעונית ומסודרת" width="1400" height="933" loading="lazy" />
+      <figcaption>פשוט, מדוד וצמחי</figcaption>
+    </figure>
+    <figure>
+      <img src="assets/hero.webp" alt="קערה צבעונית של ירקות ומזון צמחי" width="1800" height="1200" loading="lazy" />
+      <figcaption>המטרה היא עקביות, לא שלמות</figcaption>
+    </figure>
+  </div>
+
+  <div class="journey-map" aria-label="מסלול חמשת הימים">
+    <div class="journey-line" aria-hidden="true"><span id="journeyProgress"></span></div>
+    <a class="journey-step" href="#day1"><b>1</b><span>כניסה</span></a>
+    <a class="journey-step" href="#day2"><b>2</b><span>קצב</span></a>
+    <a class="journey-step" href="#day3"><b>3</b><span>מיקוד</span></a>
+    <a class="journey-step" href="#day4"><b>4</b><span>שגרה</span></a>
+    <a class="journey-step" href="#day5"><b>5</b><span>סיום</span></a>
   </div>
 
   <nav>
@@ -187,7 +215,7 @@
   </section>
 
   <section class="day" id="day1">
-    <div class="card">
+    <div class="card" data-day-number="1">
       <div class="dayhead">
         <div><div class="daynum">יום 1 · כניסה הדרגתית</div><h2>להוריד הילוך</h2></div>
         <div class="kcal">כ־1,050–1,100 קק"ל</div>
@@ -208,7 +236,7 @@
   </section>
 
   <section class="day" id="day2">
-    <div class="card">
+    <div class="card" data-day-number="2">
       <div class="dayhead">
         <div><div class="daynum">יום 2 · ההגבלה מתחילה</div><h2>פשטות וקצב איטי</h2></div>
         <div class="kcal">כ־750–800 קק"ל</div>
@@ -229,7 +257,7 @@
   </section>
 
   <section class="day" id="day3">
-    <div class="card">
+    <div class="card" data-day-number="3">
       <div class="dayhead">
         <div><div class="daynum">יום 3 · יום שיכול להיות מאתגר</div><h2>להגן על האנרגיה</h2></div>
         <div class="kcal">כ־750 קק"ל</div>
@@ -250,7 +278,7 @@
   </section>
 
   <section class="day" id="day4">
-    <div class="card">
+    <div class="card" data-day-number="4">
       <div class="dayhead">
         <div><div class="daynum">יום 4 · לשמור על שגרה</div><h2>בלי להקצין</h2></div>
         <div class="kcal">כ־750–800 קק"ל</div>
@@ -271,7 +299,7 @@
   </section>
 
   <section class="day" id="day5">
-    <div class="card">
+    <div class="card" data-day-number="5">
       <div class="dayhead">
         <div><div class="daynum">יום 5 · סיום המחזור</div><h2>לסיים, לא לפצות</h2></div>
         <div class="kcal">כ־750–800 קק"ל</div>
@@ -340,32 +368,19 @@
 
   <footer>
     תוכנית FMD טבעונית · גרסה אישית לשימוש עצמי · הנתונים הקלוריים משוערים ועשויים להשתנות לפי מוצר ואופן הכנה.
+    <span class="photo-credit">צילומים: <a href="https://unsplash.com/" target="_blank" rel="noopener">Unsplash</a></span>
   </footer>
 </div>
 
-<script>
-  const checks=[...document.querySelectorAll('.daycheck')];
-  const bar=document.getElementById('progressBar');
-  const text=document.getElementById('progressText');
+<div class="celebration" id="celebration" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="celebrationTitle">
+  <div class="celebration-card">
+    <div class="celebration-mark" aria-hidden="true">5</div>
+    <h2 id="celebrationTitle">סיימת את חמשת הימים</h2>
+    <p>ההישג הוא לא רק הסיום. בנית חמישה ימים של החלטות עקביות. עכשיו עוברים ליום 6 בהדרגה.</p>
+    <button id="celebrationClose" type="button">להמשיך ליום 6</button>
+  </div>
+</div>
 
-  function update(){
-    const done=checks.filter(c=>c.checked).length;
-    bar.style.width=(done/5*100)+'%';
-    text.textContent=done+' מתוך 5';
-    checks.forEach(c=>localStorage.setItem('fmd-day-'+c.dataset.day, c.checked?'1':'0'));
-  }
-
-  checks.forEach(c=>{
-    c.checked=localStorage.getItem('fmd-day-'+c.dataset.day)==='1';
-    c.addEventListener('change',update);
-  });
-
-  document.getElementById('resetBtn').addEventListener('click',()=>{
-    checks.forEach(c=>c.checked=false);
-    update();
-  });
-
-  update();
-</script>
+<script src="fmd.js"></script>
 </body>
 </html>
