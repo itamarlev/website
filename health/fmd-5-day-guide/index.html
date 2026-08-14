@@ -1,0 +1,371 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#eef4ef" />
+  <title>תוכנית FMD טבעונית — 5 ימים</title>
+  <style>
+    :root{
+      --bg:#f5f7f4;
+      --card:#ffffff;
+      --ink:#1d2922;
+      --muted:#617068;
+      --line:#dce5de;
+      --accent:#2f6b4f;
+      --accent-soft:#e7f0ea;
+      --warn:#8a5b16;
+      --warn-bg:#fff5df;
+      --danger:#8b2f2f;
+      --danger-bg:#fff0f0;
+      --shadow:0 10px 30px rgba(23,48,34,.07);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      background:linear-gradient(180deg,#edf3ee 0,#f7f8f6 240px,#f5f7f4 100%);
+      color:var(--ink);
+      font-family:Arial,"Noto Sans Hebrew",sans-serif;
+      line-height:1.65;
+    }
+    .wrap{max-width:1040px;margin:auto;padding:24px}
+    header{
+      padding:38px 0 18px;
+      display:grid;
+      grid-template-columns:1fr auto;
+      gap:20px;
+      align-items:end;
+    }
+    h1{font-size:clamp(32px,6vw,58px);line-height:1.05;margin:0 0 14px;letter-spacing:-1.5px}
+    h2{font-size:28px;line-height:1.2;margin:0 0 16px}
+    h3{font-size:20px;margin:0 0 8px}
+    p{margin:0 0 12px}
+    .lead{font-size:18px;color:var(--muted);max-width:720px}
+    .badge{
+      display:inline-flex;align-items:center;gap:8px;
+      background:var(--accent-soft);color:var(--accent);
+      border:1px solid #cfe0d5;border-radius:999px;
+      padding:8px 12px;font-weight:700;font-size:14px;margin-bottom:16px
+    }
+    .summary{
+      display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0 30px
+    }
+    .stat{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:var(--shadow)}
+    .stat b{display:block;font-size:22px}
+    .stat span{font-size:13px;color:var(--muted)}
+    nav{
+      position:sticky;top:0;z-index:10;
+      background:rgba(245,247,244,.92);backdrop-filter:blur(10px);
+      border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+      margin:0 calc(50% - 50vw);padding:10px calc(50vw - 50%);
+    }
+    .navinner{display:flex;gap:8px;overflow:auto;max-width:1040px;margin:auto;padding:0 24px}
+    nav a{
+      flex:0 0 auto;text-decoration:none;color:var(--ink);background:#fff;
+      border:1px solid var(--line);padding:9px 13px;border-radius:999px;font-size:14px;font-weight:700
+    }
+    nav a:hover{border-color:#a9c1b0;color:var(--accent)}
+    section{margin:34px 0}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow)}
+    .day{scroll-margin-top:82px}
+    .dayhead{display:flex;justify-content:space-between;gap:16px;align-items:start;margin-bottom:18px}
+    .daynum{font-size:13px;font-weight:800;color:var(--accent);letter-spacing:.2px}
+    .kcal{background:var(--accent-soft);color:var(--accent);border-radius:999px;padding:6px 11px;font-weight:800;white-space:nowrap}
+    .meals{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .meal{border:1px solid var(--line);border-radius:14px;padding:16px;background:#fcfdfc}
+    .meal ul{margin:8px 0 0;padding-right:20px}
+    .tipgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+    .tip{background:#f7faf8;border:1px solid var(--line);border-radius:14px;padding:15px}
+    .tip strong{display:block;margin-bottom:5px}
+    .checkrow{
+      display:flex;align-items:center;gap:10px;margin-top:18px;
+      background:#f3f7f4;border-radius:13px;padding:13px
+    }
+    input[type=checkbox]{width:20px;height:20px;accent-color:var(--accent)}
+    .progressbox{min-width:210px}
+    .progresslabel{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-bottom:7px}
+    .bar{height:10px;background:#dfe8e2;border-radius:999px;overflow:hidden}
+    .bar>div{height:100%;width:0;background:var(--accent);transition:.25s}
+    .callout{border-radius:16px;padding:17px 18px;margin:16px 0}
+    .callout.warn{background:var(--warn-bg);border:1px solid #eed8ad;color:#5b421b}
+    .callout.danger{background:var(--danger-bg);border:1px solid #edcaca;color:#642727}
+    .callout.good{background:var(--accent-soft);border:1px solid #cfe0d5}
+    .routine{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+    table{width:100%;border-collapse:collapse;background:#fff;border-radius:14px;overflow:hidden}
+    th,td{text-align:right;padding:12px;border-bottom:1px solid var(--line)}
+    th{background:#f3f7f4}
+    .small{font-size:13px;color:var(--muted)}
+    .sources a{color:var(--accent)}
+    footer{color:var(--muted);font-size:13px;padding:16px 0 50px}
+    button{
+      border:1px solid var(--line);background:#fff;border-radius:10px;padding:9px 12px;
+      font-weight:700;color:var(--ink);cursor:pointer
+    }
+    button:hover{border-color:#a9c1b0}
+    .home-link{
+      display:inline-flex;align-items:center;gap:7px;margin-bottom:20px;
+      color:var(--accent);font-weight:700;text-decoration:none
+    }
+    .home-link:hover{text-decoration:underline}
+    @media(max-width:760px){
+      header{grid-template-columns:1fr}
+      .summary{grid-template-columns:repeat(2,1fr)}
+      .meals,.routine,.tipgrid{grid-template-columns:1fr}
+      .wrap{padding:18px}
+      .navinner{padding:0 18px}
+      .progressbox{min-width:0}
+    }
+    @media print{
+      nav,button,.progressbox{display:none!important}
+      body{background:#fff}
+      .card,.stat{box-shadow:none}
+      .day{break-inside:avoid}
+    }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <a class="home-link" href="/" aria-label="חזרה לדף הבית">← חזרה ל־itamarlev.com</a>
+  <header>
+    <div>
+      <div class="badge">FMD טבעוני · 5 ימים</div>
+      <h1>המדריך היומי שלך</h1>
+      <p class="lead">תוכנית קצרה ומעשית שמרכזת מה לאכול, מה לעשות באימון, למה לצפות ואיך לעבור כל יום בלי לקבל החלטות תוך כדי.</p>
+    </div>
+    <div class="progressbox card">
+      <div class="progresslabel"><span>התקדמות</span><b id="progressText">0 מתוך 5</b></div>
+      <div class="bar"><div id="progressBar"></div></div>
+      <div style="margin-top:10px"><button id="resetBtn">איפוס סימונים</button></div>
+    </div>
+  </header>
+
+  <div class="summary">
+    <div class="stat"><b>5 ימים</b><span>מחזור FMD אחד</span></div>
+    <div class="stat"><b>~1,050</b><span>קק"ל ביום 1</span></div>
+    <div class="stat"><b>~750–800</b><span>קק"ל בימים 2–5</span></div>
+    <div class="stat"><b>קל</b><span>עומס אימון בתקופה</span></div>
+  </div>
+
+  <nav>
+    <div class="navinner">
+      <a href="#before">לפני שמתחילים</a>
+      <a href="#day1">יום 1</a>
+      <a href="#day2">יום 2</a>
+      <a href="#day3">יום 3</a>
+      <a href="#day4">יום 4</a>
+      <a href="#day5">יום 5</a>
+      <a href="#day6">יום 6</a>
+      <a href="#insights">תובנות</a>
+    </div>
+  </nav>
+
+  <section id="before">
+    <div class="card">
+      <h2>לפני שמתחילים</h2>
+      <div class="routine">
+        <div>
+          <h3>המטרה</h3>
+          <p>ליצור חמישה ימים של הגבלת אנרגיה וחלבון תוך שמירה על תזונה צמחית. במחקרים אנושיים, מחזורים תקופתיים של FMD נקשרו לשיפור בחלק ממדדי הסיכון הקרדיו־מטבוליים. אין כיום הוכחה ש-FMD מאריך חיים בבני אדם.</p>
+        </div>
+        <div>
+          <h3>הגישה השבוע</h3>
+          <p>התייחס לשבוע הזה כאל שבוע Deload. אל תנסה לשלב מחסור אנרגטי משמעותי עם אימוני כוח כבדים, ריצות ארוכות או HIIT.</p>
+        </div>
+      </div>
+
+      <div class="callout warn">
+        <strong>FMD הוא פרוטוקול מגביל.</strong>
+        אם יש לך סוכרת, טיפול תרופתי שמושפע מאוכל או לחץ דם, מחלת כליות/כבד, היסטוריה של הפרעת אכילה או מצב רפואי משמעותי — כדאי לבצע אותו רק לאחר התאמה עם רופא או דיאטן/ית.
+      </div>
+
+      <h3>הכנה בערב שלפני</h3>
+      <p>הכן סיר מרק ירקות גדול ללא שמן. חלק לקופסאות של כ־500 גרם. את שמן הזית הוסף לכל מנה בנפרד כדי לשלוט בכמות.</p>
+      <p class="small">שתייה לאורך כל התוכנית: מים, סודה ללא תוספות, תה צמחים, תה ירוק וקפה ללא סוכר. אל תגביל מים.</p>
+    </div>
+  </section>
+
+  <section class="day" id="day1">
+    <div class="card">
+      <div class="dayhead">
+        <div><div class="daynum">יום 1 · כניסה הדרגתית</div><h2>להוריד הילוך</h2></div>
+        <div class="kcal">כ־1,050–1,100 קק"ל</div>
+      </div>
+      <div class="meals">
+        <div class="meal"><h3>בוקר</h3><ul><li>30 גרם אגוזי מלך</li><li>תפוח קטן, כ־120 גרם</li><li>קפה או תה ללא סוכר</li></ul></div>
+        <div class="meal"><h3>צהריים</h3><ul><li>500 גרם מרק ירקות</li><li>100 גרם עדשים מבושלות</li><li>15 גרם שמן זית</li><li>סלט ירקות, כ־250 גרם</li></ul></div>
+        <div class="meal"><h3>ביניים</h3><ul><li>15 גרם שקדים</li><li>8 זיתים</li></ul></div>
+        <div class="meal"><h3>ערב</h3><ul><li>150 גרם ברוקולי</li><li>150 גרם קישוא</li><li>100 גרם פטריות</li><li>60 גרם אבוקדו</li><li>5 גרם שמן זית</li></ul></div>
+      </div>
+      <div class="tipgrid">
+        <div class="tip"><strong>אימון</strong>אם מתאמנים, בצע אימון קצר וקל. אל תנסה לשמור על נפח או משקלים רגילים.</div>
+        <div class="tip"><strong>רעב</strong>הגדל נפח בעזרת מים, תה ומרק. אל "תנשנש" אגוזים מעבר לכמות כי הקלוריות מצטברות מהר.</div>
+        <div class="tip"><strong>מנטלית</strong>אל תחשוב על חמישה ימים. המטרה היום היא רק לסיים את יום 1 לפי התוכנית.</div>
+      </div>
+      <label class="checkrow"><input class="daycheck" data-day="1" type="checkbox"><span>סיימתי את יום 1 לפי התוכנית</span></label>
+    </div>
+  </section>
+
+  <section class="day" id="day2">
+    <div class="card">
+      <div class="dayhead">
+        <div><div class="daynum">יום 2 · ההגבלה מתחילה</div><h2>פשטות וקצב איטי</h2></div>
+        <div class="kcal">כ־750–800 קק"ל</div>
+      </div>
+      <div class="meals">
+        <div class="meal"><h3>בוקר</h3><ul><li>20 גרם אגוזי מלך</li><li>תה או קפה</li></ul></div>
+        <div class="meal"><h3>צהריים</h3><ul><li>500 גרם מרק ירקות</li><li>70 גרם עדשים מבושלות</li><li>10 גרם שמן זית</li></ul></div>
+        <div class="meal"><h3>ביניים</h3><ul><li>10 זיתים</li></ul></div>
+        <div class="meal"><h3>ערב</h3><ul><li>150 גרם ברוקולי</li><li>150 גרם כרובית</li><li>150 גרם קישוא</li><li>70 גרם אבוקדו</li><li>5 גרם שמן זית</li></ul></div>
+      </div>
+      <div class="tipgrid">
+        <div class="tip"><strong>פעילות</strong>הליכה רגועה של 30–45 דקות מתאימה יותר מאימון עצים.</div>
+        <div class="tip"><strong>אנרגיה</strong>ייתכן שתרגיש ירידה בביצועים. זה צפוי במחסור אנרגטי ואינו סימן שצריך "לפצות" באימון.</div>
+        <div class="tip"><strong>שגרה</strong>קבע מראש שעות לארוחות. זה מצמצם החלטות סביב אוכל.</div>
+      </div>
+      <label class="checkrow"><input class="daycheck" data-day="2" type="checkbox"><span>סיימתי את יום 2 לפי התוכנית</span></label>
+    </div>
+  </section>
+
+  <section class="day" id="day3">
+    <div class="card">
+      <div class="dayhead">
+        <div><div class="daynum">יום 3 · יום שיכול להיות מאתגר</div><h2>להגן על האנרגיה</h2></div>
+        <div class="kcal">כ־750 קק"ל</div>
+      </div>
+      <div class="meals">
+        <div class="meal"><h3>בוקר</h3><ul><li>20 גרם שקדים</li><li>תה ירוק או קפה</li></ul></div>
+        <div class="meal"><h3>צהריים</h3><ul><li>550 גרם מרק ירקות</li><li>50 גרם חומוס מבושל</li><li>10 גרם שמן זית</li></ul></div>
+        <div class="meal"><h3>ערב</h3><ul><li>סלט גדול, כ־300 גרם</li><li>70 גרם אבוקדו</li><li>8 זיתים</li><li>200 גרם ירקות אפויים</li></ul></div>
+        <div class="meal"><h3>היום אין צורך "להשלים"</h3><p>אין שייק חלבון, BCAA/EAA או חטיף חלבון. החלבון הנמוך הוא חלק מהמבנה של ה-FMD.</p></div>
+      </div>
+      <div class="tipgrid">
+        <div class="tip"><strong>אימון</strong>מנוחה או הליכה קלה בלבד.</div>
+        <div class="tip"><strong>תכנון</strong>אם יש לך יום עבודה עמוס, שמור את הארוחה הגדולה יותר לשעות שבהן הרעב מפריע לך ביותר.</div>
+        <div class="tip"><strong>שינה</strong>תן עדיפות לשינה. אל תוסיף קפה מאוחר רק כדי להתגבר על עייפות.</div>
+      </div>
+      <label class="checkrow"><input class="daycheck" data-day="3" type="checkbox"><span>סיימתי את יום 3 לפי התוכנית</span></label>
+    </div>
+  </section>
+
+  <section class="day" id="day4">
+    <div class="card">
+      <div class="dayhead">
+        <div><div class="daynum">יום 4 · לשמור על שגרה</div><h2>בלי להקצין</h2></div>
+        <div class="kcal">כ־750–800 קק"ל</div>
+      </div>
+      <div class="meals">
+        <div class="meal"><h3>בוקר</h3><ul><li>20 גרם אגוזי מלך</li><li>תה או קפה</li></ul></div>
+        <div class="meal"><h3>צהריים</h3><ul><li>500 גרם מרק ירקות</li><li>60 גרם עדשים מבושלות</li><li>10 גרם שמן זית</li></ul></div>
+        <div class="meal"><h3>ביניים</h3><ul><li>8 זיתים</li></ul></div>
+        <div class="meal"><h3>ערב</h3><ul><li>150 גרם ברוקולי</li><li>150 גרם כרובית</li><li>150 גרם פטריות</li><li>70 גרם אבוקדו</li><li>5 גרם שמן זית</li></ul></div>
+      </div>
+      <div class="tipgrid">
+        <div class="tip"><strong>פעילות</strong>הליכה או שחייה קלה. שמור את הדופק והמאמץ נמוכים.</div>
+        <div class="tip"><strong>לא "לשפר" את הצום</strong>אין צורך להפחית עוד קלוריות. המטרה אינה לראות כמה מעט אפשר לאכול.</div>
+        <div class="tip"><strong>פרספקטיבה</strong>המשקל יכול לרדת מהר בגלל גליקוגן ומים. אל תפרש את כל הירידה כשומן.</div>
+      </div>
+      <label class="checkrow"><input class="daycheck" data-day="4" type="checkbox"><span>סיימתי את יום 4 לפי התוכנית</span></label>
+    </div>
+  </section>
+
+  <section class="day" id="day5">
+    <div class="card">
+      <div class="dayhead">
+        <div><div class="daynum">יום 5 · סיום המחזור</div><h2>לסיים, לא לפצות</h2></div>
+        <div class="kcal">כ־750–800 קק"ל</div>
+      </div>
+      <div class="meals">
+        <div class="meal"><h3>בוקר</h3><ul><li>20 גרם אגוזי מלך</li><li>קיווי אחד</li></ul></div>
+        <div class="meal"><h3>צהריים</h3><ul><li>500 גרם מרק ירקות</li><li>50 גרם חומוס מבושל</li><li>10 גרם שמן זית</li></ul></div>
+        <div class="meal"><h3>ערב</h3><ul><li>סלט גדול, כ־300 גרם</li><li>200 גרם ירקות מאודים/אפויים</li><li>60 גרם אבוקדו</li><li>6 זיתים</li></ul></div>
+        <div class="meal"><h3>אחרי הערב</h3><p>אל תפתח "ארוחת ניצחון". יום 6 הוא חזרה הדרגתית לאכילה רגילה.</p></div>
+      </div>
+      <div class="tipgrid">
+        <div class="tip"><strong>פעילות</strong>מנוחה.</div>
+        <div class="tip"><strong>מדידה</strong>אם נשקלים, רשום את המספר בלי להסיק מסקנות. בדיקה מעניינת יותר תהיה אחרי שבועיים–שלושה.</div>
+        <div class="tip"><strong>המשך</strong>המטרה מחר היא refeed הדרגתי, לא המשך צום.</div>
+      </div>
+      <label class="checkrow"><input class="daycheck" data-day="5" type="checkbox"><span>סיימתי את יום 5 לפי התוכנית</span></label>
+    </div>
+  </section>
+
+  <section id="day6">
+    <div class="card">
+      <h2>יום 6 — החזרה לאכילה רגילה</h2>
+      <p>זה אינו יום FMD נוסף. חזור בהדרגה למזון מלא ולחלבון טבעוני רגיל.</p>
+      <table>
+        <tr><th>ארוחה</th><th>כיוון</th></tr>
+        <tr><td>בוקר</td><td>50–60 גרם שיבולת שועל + פרי + מעט אגוזים</td></tr>
+        <tr><td>צהריים</td><td>אורז מלא או קינואה + עדשים/שעועית + הרבה ירקות</td></tr>
+        <tr><td>ערב</td><td>טופו + ירקות + תפוח אדמה/אורז</td></tr>
+      </table>
+      <div class="callout good">ביום 7 אפשר לחזור כמעט לחלוטין לתזונה הרגילה ולאימונים בהדרגה. לטווח הארוך, שמירה על מסת שריר, כושר לב־ריאה, שינה, לחץ דם ותזונה איכותית חשובה יותר מ"FMD מושלם".</div>
+    </div>
+  </section>
+
+  <section id="insights">
+    <div class="card">
+      <h2>תובנות שיעזרו לאורך הדרך</h2>
+      <div class="tipgrid">
+        <div class="tip"><strong>רעב בא בגלים</strong>לפני שאתה משנה את התוכנית, שתה מים/תה והמתן מעט. לעיתים התחושה נחלשת.</div>
+        <div class="tip"><strong>נפח מזון עוזר</strong>מרקים, ירקות ועלים ירוקים מאפשרים יותר נפח בלי להעלות מאוד את הקלוריות.</div>
+        <div class="tip"><strong>מדוד שומן מרוכז</strong>אגוזים, שמן זית ואבוקדו מצוינים, אבל הכמות משנה מאוד את סך הקלוריות.</div>
+        <div class="tip"><strong>אל תרדוף אחרי קטוזיס</strong>אין צורך למדוד קטונים כדי "להצליח" בתוכנית הזאת.</div>
+        <div class="tip"><strong>אל תצפה לקסם</strong>המחקר בבני אדם מראה שינויים בחלק ממדדי הסיכון, לא הוכחה להארכת חיים.</div>
+        <div class="tip"><strong>שריר נשאר יעד</strong>אחרי המחזור, חזור לצריכת חלבון מספקת ולאימוני התנגדות. FMD אינו תפריט חלבון נמוך קבוע.</div>
+      </div>
+
+      <div class="callout danger">
+        <strong>מתי לעצור:</strong>
+        עילפון, בלבול, חולשה חריגה שמפריעה לתפקוד, הקאות חוזרות, כאב בחזה או סימנים חריגים אחרים הם סיבה להפסיק את הפרוטוקול ולקבל הערכה רפואית.
+      </div>
+
+      <h3>מה שווה לעקוב אחריו</h3>
+      <p>לבריאות ארוכת טווח, מדדים כמו היקף מותניים, לחץ דם, HbA1c, פרופיל שומנים/ApoB וכושר גופני שימושיים יותר מהמשקל בסוף יום 5 בלבד.</p>
+    </div>
+  </section>
+
+  <section class="sources">
+    <div class="card">
+      <h2>על מה מבוסס המדריך</h2>
+      <p>הפרוטוקול כאן הוא התאמה ביתית של העקרונות שנחקרו, ולא שכפול של מוצר FMD מסחרי. המחקר האנושי המרכזי בדק שלושה מחזורים חודשיים בני 5 ימים ומצא ירידה במשקל, היקף מותניים, לחץ דם ו-IGF-1, עם השפעות גדולות יותר בחלק מהמדדים אצל משתתפים שהיו בסיכון גבוה יותר בתחילת המחקר.</p>
+      <p><a href="https://pubmed.ncbi.nlm.nih.gov/28202779/" target="_blank" rel="noopener">Wei et al., Science Translational Medicine, 2017</a></p>
+      <p>ניתוח נוסף שפורסם ב-2024 דיווח על שינויים במדדים הקשורים לתנגודת לאינסולין, שומן כבדי ומדדים משוערים של גיל ביולוגי לאחר מחזורי FMD. אלה מדדי ביניים, לא הוכחה להארכת תוחלת החיים בבני אדם.</p>
+      <p><a href="https://pubmed.ncbi.nlm.nih.gov/38378685/" target="_blank" rel="noopener">Brandhorst et al., Nature Communications, 2024</a></p>
+      <p class="small">התפריט באתר מיועד לאדם בוגר בריא ואינו תחליף להתאמה רפואית או תזונתית אישית.</p>
+    </div>
+  </section>
+
+  <footer>
+    תוכנית FMD טבעונית · גרסה אישית לשימוש עצמי · הנתונים הקלוריים משוערים ועשויים להשתנות לפי מוצר ואופן הכנה.
+  </footer>
+</div>
+
+<script>
+  const checks=[...document.querySelectorAll('.daycheck')];
+  const bar=document.getElementById('progressBar');
+  const text=document.getElementById('progressText');
+
+  function update(){
+    const done=checks.filter(c=>c.checked).length;
+    bar.style.width=(done/5*100)+'%';
+    text.textContent=done+' מתוך 5';
+    checks.forEach(c=>localStorage.setItem('fmd-day-'+c.dataset.day, c.checked?'1':'0'));
+  }
+
+  checks.forEach(c=>{
+    c.checked=localStorage.getItem('fmd-day-'+c.dataset.day)==='1';
+    c.addEventListener('change',update);
+  });
+
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    checks.forEach(c=>c.checked=false);
+    update();
+  });
+
+  update();
+</script>
+</body>
+</html>
