@@ -125,7 +125,8 @@ p, li { overflow-wrap: anywhere; }
 .share-mode-button { grid-column: 1 / -1; width: fit-content; min-height: 44px; border: 1px solid rgba(255,255,255,.32); border-radius: 999px; padding: 8px 15px; background: transparent; color: #fff; font-weight: 800; transition: background var(--motion-fast); }
 .share-mode-button:hover { background: rgba(255,255,255,.1); }
 .standard-only { display: none !important; }
-.diet-standard .standard-only { display: initial !important; }
+.diet-standard span.standard-only { display: inline !important; }
+.diet-standard p.standard-only { display: block !important; }
 .diet-standard .vegan-only { display: none !important; }
 
 .lifestyle-section { background: #f8f3f5; }
