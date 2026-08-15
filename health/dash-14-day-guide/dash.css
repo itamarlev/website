@@ -217,8 +217,8 @@ tbody tr:last-child td { border-bottom: 0; }
 .completion-mark { width: 100px; height: 100px; margin: 0 auto 24px; display: grid; place-items: center; border-radius: 34px; color: var(--plum-950); background: var(--citrus); font-size: 2.6rem; font-weight: 900; transform: rotate(-5deg); }
 .completion-card h2 { font-size: 2.6rem; }
 
-.js .reveal { opacity: 0; transform: translateY(22px); }
-.js .reveal.visible { opacity: 1; transform: none; transition: opacity 600ms ease, transform 600ms ease; }
+.reveal-ready .reveal { opacity: 0; transform: translateY(22px); }
+.reveal-ready .reveal.visible { opacity: 1; transform: none; transition: opacity 600ms ease, transform 600ms ease; }
 
 @media (max-width: 920px) {
   .hero-inner { grid-template-columns: 1fr; }
@@ -273,7 +273,7 @@ tbody tr:last-child td { border-bottom: 0; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-  .js .reveal { opacity: 1; transform: none; }
+  .reveal-ready .reveal { opacity: 1; transform: none; }
 }
 
 @media print {
@@ -287,5 +287,5 @@ tbody tr:last-child td { border-bottom: 0; }
   .target-grid article { color: #000; background: #fff; }
   .target-grid p, .light-heading p, .after-layout > div > p:last-child, .continuation-list p { color: #333; }
   .day-card, .feature-card, .bp-form, .source-grid a, .exercise-plan, .exercise-details article { box-shadow: none; break-inside: avoid; }
-  .js .reveal { opacity: 1; transform: none; }
+  .reveal-ready .reveal { opacity: 1; transform: none; }
 }

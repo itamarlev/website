@@ -1,5 +1,3 @@
-document.documentElement.classList.add('js');
-
 const STORAGE_PREFIX = 'dash-guide-v1';
 const checks = [...document.querySelectorAll('.daycheck')];
 const progressBar = document.getElementById('progressBar');
@@ -122,21 +120,23 @@ function setDietMode(value, updateUrl = true) {
   }
 }
 
-const requestedDiet = new URLSearchParams(window.location.search).get('diet');
-const savedDiet = localStorage.getItem(`${STORAGE_PREFIX}-diet-mode`) || 'vegan';
-const initialDiet = requestedDiet === 'standard' ? 'standard' : requestedDiet === 'vegan' ? 'vegan' : savedDiet;
-setDietMode(initialDiet);
-dietOptions.forEach((option) => option.addEventListener('change', () => setDietMode(option.value)));
+if (dietOptions.length && dietModeText) {
+  const requestedDiet = new URLSearchParams(window.location.search).get('diet');
+  const savedDiet = localStorage.getItem(`${STORAGE_PREFIX}-diet-mode`) || 'vegan';
+  const initialDiet = requestedDiet === 'standard' ? 'standard' : requestedDiet === 'vegan' ? 'vegan' : savedDiet;
+  setDietMode(initialDiet);
+  dietOptions.forEach((option) => option.addEventListener('change', () => setDietMode(option.value)));
 
-copyDietLink.addEventListener('click', async () => {
-  try {
-    await navigator.clipboard.writeText(window.location.href);
-    copyDietLink.textContent = 'הקישור הועתק';
-  } catch {
-    copyDietLink.textContent = 'העתק את הכתובת משורת הדפדפן';
-  }
-  window.setTimeout(() => { copyDietLink.textContent = 'העתקת קישור לגרסה המוצגת'; }, 3000);
-});
+  copyDietLink?.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(window.location.href);
+      copyDietLink.textContent = 'הקישור הועתק';
+    } catch {
+      copyDietLink.textContent = 'העתק את הכתובת משורת הדפדפן';
+    }
+    window.setTimeout(() => { copyDietLink.textContent = 'העתקת קישור לגרסה המוצגת'; }, 3000);
+  });
+}
 
 const bpForm = document.getElementById('bpForm');
 const bpRows = document.getElementById('bpRows');
@@ -210,7 +210,9 @@ bpRows.addEventListener('click', (event) => {
 });
 
 const revealTargets = [...document.querySelectorAll('.reveal')];
-if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+if ('IntersectionObserver' in window && !prefersReducedMotion) {
+  document.documentElement.classList.add('reveal-ready');
   const revealObserver = new IntersectionObserver((entries, observer) => {
     entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
