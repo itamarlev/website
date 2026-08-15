@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#3b3151" />
+  <meta name="description" content="מדריך DASH טבעוני ל־14 יום עם תפריט יומי, הפחתת נתרן, מעקב לחץ דם והתקדמות הנשמרת בדפדפן." />
+  <title>DASH טבעוני — תוכנית 14 יום</title>
+  <link rel="stylesheet" href="dash.css" />
+</head>
+<body>
+  <a class="skip-link" href="#before">דלג לתוכן המרכזי</a>
+
+  <header class="hero">
+    <div class="hero-media" aria-hidden="true">
+      <img src="assets/vegetables.webp" alt="" width="1400" height="2117" />
+    </div>
+    <div class="hero-shade"></div>
+    <div class="shell hero-inner">
+      <a class="home-link" href="/" aria-label="חזרה לדף הבית">← חזרה ל־itamarlev.com</a>
+      <div class="hero-copy">
+        <p class="eyebrow">DASH טבעוני · 14 ימים להתחלה</p>
+        <h1>פחות לחץ.<br><span>יותר שגרה.</span></h1>
+        <p class="lead">תוכנית מעשית שמתרגמת את DASH לקניות, ארוחות טבעוניות, פחות נתרן ומדידה נכונה של לחץ הדם. יום אחד בכל פעם.</p>
+        <a class="primary-link" href="#before">מתחילים מהבסיס</a>
+      </div>
+      <aside class="hero-progress" aria-label="התקדמות בתוכנית">
+        <div class="progress-top"><span>המסלול שלך</span><strong id="progressText" aria-live="polite">0 מתוך 14</strong></div>
+        <div class="progress-track" role="progressbar" aria-label="התקדמות בתוכנית" aria-valuemin="0" aria-valuemax="14" aria-valuenow="0"><span id="progressBar"></span></div>
+        <p>הסימונים נשמרים במכשיר הזה.</p>
+        <button class="quiet-button" id="resetBtn" type="button">איפוס התוכנית</button>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <section class="quick-facts shell" aria-label="עקרונות DASH">
+      <article><b>4–5</b><span>מנות ירק ביום</span></article>
+      <article><b>4–5</b><span>מנות פרי ביום</span></article>
+      <article><b>2,300</b><span>מ״ג נתרן, גבול התחלתי</span></article>
+      <article><b>1,500</b><span>מ״ג נתרן, יעד מופחת</span></article>
+    </section>
+
+    <section class="ribbon-section shell" aria-labelledby="ribbonTitle">
+      <div class="section-heading">
+        <p class="eyebrow dark">מסלול ההרגלים</p>
+        <h2 id="ribbonTitle">14 ימים שמתחברים לשגרה אחת</h2>
+      </div>
+      <div class="pressure-ribbon" id="pressureRibbon" aria-label="מסלול 14 הימים"></div>
+    </section>
+
+    <nav class="sticky-nav" aria-label="ניווט במדריך">
+      <div class="nav-inner shell">
+        <a href="#before">לפני שמתחילים</a>
+        <a href="#targets">היעדים</a>
+        <a href="#week1">שבוע 1</a>
+        <a href="#week2">שבוע 2</a>
+        <a href="#bp-log">מעקב לחץ דם</a>
+        <a href="#after">אחרי יום 14</a>
+        <a href="#science">המחקר</a>
+      </div>
+    </nav>
+
+    <section id="before" class="section shell reveal">
+      <div class="section-heading split-heading">
+        <div>
+          <p class="eyebrow dark">לפני שמתחילים</p>
+          <h2>DASH אינו דיאטה זמנית</h2>
+        </div>
+        <p>DASH הוא דפוס אכילה גמיש שנועד להפוך לדרך קבועה לאכול. אין בו מזון מיוחד, צום או שלב יציאה. התוכנית בת 14 הימים היא רק דרך מסודרת להיכנס אליו.</p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card accent-card">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 13c4-8 12-8 16-4-1 7-7 11-13 8"/><path d="M7 17c3-3 6-5 11-7"/></svg>
+          <h3>מה אוכלים</h3>
+          <p>ירקות, פירות, דגנים מלאים, קטניות, טופו, אגוזים וזרעים. במשקאות ובתחליפי חלב בוחרים מוצרים לא ממותקים ומועשרים בסידן.</p>
+        </article>
+        <article class="feature-card">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M7 8h10M9 16h6"/><circle cx="12" cy="12" r="9"/></svg>
+          <h3>מה מפחיתים</h3>
+          <p>נתרן, מזון אולטרה־מעובד, משקאות ממותקים, מתוקים ושומן רווי. גם מלח ים ומלח הימלאיה מכילים נתרן.</p>
+        </article>
+        <article class="feature-card">
+          <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 17l4-5 4 3 4-8 4 4"/><path d="M4 20h16"/></svg>
+          <h3>מה מודדים</h3>
+          <p>מגמה של מדידות ביתיות עקביות. לא משנים תרופה בגלל מספר יחיד, ולא מפסיקים טיפול ללא הרופא או הרופאה.</p>
+        </article>
+      </div>
+
+      <div class="callout caution">
+        <strong>בדיקה רפואית לפני שינוי משמעותי</strong>
+        <p>אם יש מחלת כליות, מצב שמשפיע על אשלגן, או טיפול כמו ACE inhibitors, ARBs או תרופות אחרות שמשפיעות על אשלגן ולחץ דם, יש להתאים את העלייה באשלגן ואת תחליפי המלח עם איש מקצוע.</p>
+      </div>
+    </section>
+
+    <section id="targets" class="section targets-section reveal">
+      <div class="shell">
+        <div class="section-heading split-heading light-heading">
+          <div>
+            <p class="eyebrow">הצלחת היומית</p>
+            <h2>יעדי DASH ל־2,000 קלוריות</h2>
+          </div>
+          <p>הכמויות הן נקודת ייחוס. הצורך הקלורי משתנה לפי גיל, גוף ופעילות. בתוכנית הטבעונית, מקורות הסידן והחלבון מגיעים מסויה מועשרת, טופו, קטניות, אגוזים וזרעים.</p>
+        </div>
+
+        <div class="target-grid">
+          <article><span class="target-number">6–8</span><h3>דגנים</h3><p>רובם מלאים. מנה: פרוסת לחם או חצי כוס דגן מבושל.</p></article>
+          <article><span class="target-number">4–5</span><h3>ירקות</h3><p>מנה: כוס עלים או חצי כוס ירק חתוך.</p></article>
+          <article><span class="target-number">4–5</span><h3>פירות</h3><p>מנה: פרי בינוני או חצי כוס פרי חתוך.</p></article>
+          <article><span class="target-number">2–3</span><h3>סויה מועשרת</h3><p>כוס משקה או יוגורט סויה לא ממותק ומועשר בסידן.</p></article>
+          <article><span class="target-number">יומי</span><h3>חלבון צמחי</h3><p>קטניות, טופו או טמפה בכל יום. אגוזים וזרעים ללא מלח במנות מדודות.</p></article>
+          <article><span class="target-number">2–3</span><h3>שומנים</h3><p>שמן זית, טחינה, אבוקדו ואגוזים. שמן קוקוס נשאר חריג, לא בסיס.</p></article>
+        </div>
+
+        <fieldset class="sodium-switcher">
+          <legend>בחר יעד נתרן למדריך</legend>
+          <label><input type="radio" name="sodium" value="2300" checked><span><b>2,300 מ״ג</b> התחלה מעשית</span></label>
+          <label><input type="radio" name="sodium" value="1500"><span><b>1,500 מ״ג</b> הפחתה עמוקה יותר</span></label>
+          <p id="sodiumAdvice" aria-live="polite">התחל בקריאת תוויות ובהפחתת מזון מוכן. אין צורך להגיע ליעד ביום אחד.</p>
+        </fieldset>
+      </div>
+    </section>
+
+    <section id="week1" class="section shell reveal">
+      <div class="week-intro">
+        <div><p class="eyebrow dark">שבוע 1</p><h2>לראות את הנתרן</h2></div>
+        <p>השבוע הראשון אינו דורש שלמות. בכל יום מחליפים מקור אחד של נתרן ומוסיפים מזון אחד עשיר באשלגן, מגנזיום או סידן.</p>
+      </div>
+      <div class="days-grid">
+        <article class="day-card" id="day1" data-day-card="1">
+          <div class="day-top"><span>יום 1</span><b>קו בסיס</b></div>
+          <h3>מודדים לפני שמשנים</h3>
+          <ul class="meals"><li><b>בוקר:</b> שיבולת שועל, משקה סויה מועשר, תפוח וקינמון</li><li><b>צהריים:</b> קערת קינואה, עדשים, ירקות וטחינה מדוללת</li><li><b>ביניים:</b> פרי ו־20 גרם אגוזים ללא מלח</li><li><b>ערב:</b> טופו, תפוח אדמה וברוקולי בתנור</li></ul>
+          <p class="day-task"><b>משימת היום:</b> רשום לחץ דם לפי ההנחיות וצלם שלוש תוויות ממוצרים קבועים.</p>
+          <label class="day-check"><input class="daycheck" type="checkbox" data-day="1"><span>סיימתי את יום 1</span></label>
+        </article>
+
+        <article class="day-card" id="day2" data-day-card="2">
+          <div class="day-top"><span>יום 2</span><b>תוויות</b></div>
+          <h3>משווים נתרן למנה</h3>
+          <ul class="meals"><li><b>בוקר:</b> לחם מלא דל נתרן, אבוקדו, עגבנייה ופרי</li><li><b>צהריים:</b> סלט חומוס ביתי, בורגול והרבה ירקות</li><li><b>ביניים:</b> יוגורט סויה מועשר ופירות יער</li><li><b>ערב:</b> מרק עדשים כתומות ללא אבקת מרק וסלט</li></ul>
+          <p class="day-task"><b>משימת היום:</b> בחר מוצר אחד שבו גרסת נתרן נמוכה חוסכת לפחות 100 מ״ג למנה.</p>
+          <label class="day-check"><input class="daycheck" type="checkbox" data-day="2"><span>סיימתי את יום 2</span></label>
+        </article>
+
+        <article class="day-card" id="day3" data-day-card="3">
+          <div class="day-top"><span>יום 3</span><b>טעם</b></div>
+          <h3>בונים טעם בלי מלח</h3>
+          <ul class="meals"><li><b>בוקר:</b> דייסת דוחן, אגס, פשתן טחון ומשקה סויה</li><li><b>צהריים:</b> שעועית לבנה, אורז מלא, לימון ועשבי תיבול</li><li><b>ביניים:</b> ירקות חתוכים וממרח עדשים</li><li><b>ערב:</b> פסטה מלאה עם עגבניות ללא תוספת מלח ופטריות</li></ul>
+          <p class="day-task"><b>משימת היום:</b> הכין תערובת לימון, שום, פפריקה, כמון ועשבי תיבול לשימוש השבוע.</p>
+          <label class="day-check"><input class="daycheck" type="checkbox" data-day="3"><span>סיימתי את יום 3</span></label>
+        </article>
+
+        <article class="day-card" id="day4" data-day-card="4">
+          <div class="day-top"><span>יום 4</span><b>קטניות</b></div>
+          <h3>שוטפים את השימורים</h3>
+          <ul class="meals"><li><b>בוקר:</b> מוזלי ללא סוכר, יוגורט סויה, בננה וזרעי צ׳יה</li><li><b>צהריים:</b> שעועית משומרת שטופה, בטטה, כרוב וסלסה ביתית</li><li><b>ביניים:</b> תפוז ושקדים ללא מלח</li><li><b>ערב:</b> תבשיל חומוס, תרד ועגבניות עם קוסקוס מלא</li></ul>
+          <p class="day-task"><b>משימת היום:</b> העדף קטניות ללא מלח. אם משתמשים בשימורים, מסננים ושוטפים היטב.</p>
+          <label class="day-check"><input class="daycheck" type="checkbox" data-day="4"><span>סיימתי את יום 4</span></label>
+        </article>
+
+        <article class="day-card" id="day5" data-day-card="5">
+          <div class="day-top"><span>יום 5</span><b>סידן</b></div>
+          <h3>מחזקים את הגרסה הטבעונית</h3>
+          <ul class="meals"><li><b>בוקר:</b> שייק משקה סויה מועשר, שיבולת שועל, בננה וטחינה</li><li><b>צהריים:</b> טופו בסידן, כוסמת, קייל ופלפל</li><li><b>ביניים:</b> יוגורט סויה מועשר ופרי</li><li><b>ערב:</b> קציצות עדשים ביתיות, סלט ותפוח אדמה</li></ul>
+          <p class="day-task"><b>משימת היום:</b> בדוק שעל משקה הסויה מופיעים סידן ו־B12. נער את האריזה לפני המזיגה.</p>
+          <label class="day-check"><input class="daycheck" type="checkbox" data-day="5"><span>סיימתי את יום 5</span></label>
+        </article>
+
+        <article class="day-card" id="day6" data-day-card="6">
+          <div class="day-top"><span>יום 6</span><b>בחוץ</b></div>
+          <h3>מזמינים עם שליטה</h3>
+          <ul class="meals"><li><b>בוקר:</b> דייסת שיבולת שועל ופרי בבית</li><li><b>צהריים בחוץ:</b> קערת דגן, קטניות וירקות, רוטב בצד</li><li><b>ביניים:</b> פרי ואגוזים מהבית</li><li><b>ערב:</b> סלט גדול, טופו צרוב ולחם מלא</li></ul>
+          <p class="day-task"><b>משימת היום:</b> בקש רוטב בצד וללא הוספת מלח. חמוצים, זיתים ורטבים נספרים כמקורות נתרן.</p>
+          <label class="day-check"><input class="daycheck" type="checkbox" data-day="6"><span>סיימתי את יום 6</span></label>
+        </article>
+
+        <article class="day-card wide" id="day7" data-day-card="7">
+          <div class="day-top"><span>יום 7</span><b>סיכום שבוע</b></div>
+          <h3>מסתכלים על המגמה</h3>
+          <div class="wide-content">
+            <ul class="meals"><li><b>בוקר:</b> לחם מלא, חמאת בוטנים ללא מלח, בננה</li><li><b>צהריים:</b> מג׳דרה מאורז מלא ועדשים עם סלט</li><li><b>ביניים:</b> פרי ויוגורט סויה</li><li><b>ערב:</b> ירקות מוקפצים, אדממה ואטריות כוסמת</li></ul>
+            <p class="day-task"><b>בדיקת שבוע:</b> מה היה מקור הנתרן הגדול ביותר? איזו ארוחה תרצה לחזור עליה? בדוק ממוצע לחץ דם, לא קריאה בודדת.</p>
+          </div>
+          <label class="day-check"><input class="daycheck" type="checkbox" data-day="7"><span>סיימתי את שבוע 1</span></label>
+        </article>
+      </div>
+    </section>
+
+    <section id="week2" class="section week-two reveal">
+      <div class="shell">
+        <div class="week-intro">
+          <div><p class="eyebrow dark">שבוע 2</p><h2>להפוך בחירה לברירת מחדל</h2></div>
+          <p>השבוע השני עובר מהיכרות למערכת קבועה: בישול כפול, הזמנה חכמה, פעילות עקבית ותוכנית לשבוע הבא.</p>
+        </div>
+        <div class="days-grid">
+          <article class="day-card" id="day8" data-day-card="8">
+            <div class="day-top"><span>יום 8</span><b>הכנה כפולה</b></div><h3>מבשלים פעם, אוכלים פעמיים</h3>
+            <ul class="meals"><li><b>בוקר:</b> Overnight oats עם תפוח, קינמון וצ׳יה</li><li><b>צהריים:</b> צ׳ילי שעועית ביתי ואורז מלא</li><li><b>ביניים:</b> גזר, מלפפון וממרח שעועית</li><li><b>ערב:</b> שארית צ׳ילי על בטטה וסלט</li></ul>
+            <p class="day-task"><b>משימת היום:</b> הכפל תבשיל אחד והקפא שתי מנות.</p><label class="day-check"><input class="daycheck" type="checkbox" data-day="8"><span>סיימתי את יום 8</span></label>
+          </article>
+          <article class="day-card" id="day9" data-day-card="9">
+            <div class="day-top"><span>יום 9</span><b>אשלגן</b></div><h3>מוסיפים מהאוכל</h3>
+            <ul class="meals"><li><b>בוקר:</b> שיבולת שועל, בננה ומשקה סויה</li><li><b>צהריים:</b> תפוח אדמה, שעועית, עגבנייה ותרד</li><li><b>ביניים:</b> משמשים ואגוזי מלך ללא מלח</li><li><b>ערב:</b> קארי עדשים וירקות ללא אבקת מרק</li></ul>
+            <p class="day-task"><b>משימת היום:</b> בחר שלושה מקורות אשלגן ממזון. אין להוסיף תוסף או תחליף מלח ללא התאמה רפואית.</p><label class="day-check"><input class="daycheck" type="checkbox" data-day="9"><span>סיימתי את יום 9</span></label>
+          </article>
+          <article class="day-card" id="day10" data-day-card="10">
+            <div class="day-top"><span>יום 10</span><b>תנועה</b></div><h3>מחברים אוכל לפעילות</h3>
+            <ul class="meals"><li><b>בוקר:</b> טוסט מלא, טחינה דלילה, עגבנייה ופרי</li><li><b>צהריים:</b> קינואה, אפונה, טופו וירקות</li><li><b>ביניים:</b> יוגורט סויה ופירות יער</li><li><b>ערב:</b> מרק מינסטרונה ביתי ללא אבקת מרק</li></ul>
+            <p class="day-task"><b>משימת היום:</b> 30 דקות הליכה בקצב בינוני, אם אין מגבלה רפואית אחרת.</p><label class="day-check"><input class="daycheck" type="checkbox" data-day="10"><span>סיימתי את יום 10</span></label>
+          </article>
+          <article class="day-card" id="day11" data-day-card="11">
+            <div class="day-top"><span>יום 11</span><b>מזווה</b></div><h3>מסדרים את הבחירות הקלות</h3>
+            <ul class="meals"><li><b>בוקר:</b> דייסת כוסמת, אגס ומשקה סויה</li><li><b>צהריים:</b> פיתה מלאה, פלאפל אפוי וסלט ללא חמוצים</li><li><b>ביניים:</b> תפוח וחמאת בוטנים ללא מלח</li><li><b>ערב:</b> טמפה, אורז חום ושעועית ירוקה</li></ul>
+            <p class="day-task"><b>משימת היום:</b> הנח מקדימה שיבולת שועל, קטניות יבשות, דגנים מלאים ואגוזים ללא מלח.</p><label class="day-check"><input class="daycheck" type="checkbox" data-day="11"><span>סיימתי את יום 11</span></label>
+          </article>
+          <article class="day-card" id="day12" data-day-card="12">
+            <div class="day-top"><span>יום 12</span><b>רטבים</b></div><h3>מטפלים בנתרן הנסתר</h3>
+            <ul class="meals"><li><b>בוקר:</b> יוגורט סויה, מוזלי ללא סוכר ופירות</li><li><b>צהריים:</b> סלט אטריות סובה, אדממה ורוטב לימון־ג׳ינג׳ר</li><li><b>ביניים:</b> פרי וזרעי דלעת ללא מלח</li><li><b>ערב:</b> טופו וירקות ברוטב בוטנים ביתי מדולל</li></ul>
+            <p class="day-task"><b>משימת היום:</b> מדוד סויה, מיסו, קטשופ ורטבים בכף. “טבעוני” אינו אומר “דל נתרן”.</p><label class="day-check"><input class="daycheck" type="checkbox" data-day="12"><span>סיימתי את יום 12</span></label>
+          </article>
+          <article class="day-card" id="day13" data-day-card="13">
+            <div class="day-top"><span>יום 13</span><b>גמישות</b></div><h3>יום שלא הלך לפי התוכנית</h3>
+            <ul class="meals"><li><b>בוקר:</b> פרי, לחם מלא ומשקה סויה</li><li><b>צהריים:</b> הבחירה הזמינה עם הכי הרבה ירקות ורוטב בצד</li><li><b>ביניים:</b> אגוזים ללא מלח מהתיק</li><li><b>ערב:</b> עדשים קפואות/מוכנות, אורז וירקות קפואים</li></ul>
+            <p class="day-task"><b>משימת היום:</b> בנה ארוחת חירום של 10 דקות. יום פחות מדויק אינו דורש פיצוי או צום.</p><label class="day-check"><input class="daycheck" type="checkbox" data-day="13"><span>סיימתי את יום 13</span></label>
+          </article>
+          <article class="day-card wide" id="day14" data-day-card="14">
+            <div class="day-top"><span>יום 14</span><b>המשך</b></div><h3>מסיימים את ההתחלה</h3>
+            <div class="wide-content"><ul class="meals"><li><b>בוקר:</b> הארוחה שהצליחה לך ביותר</li><li><b>צהריים:</b> דגן מלא, קטנייה ושני ירקות</li><li><b>ביניים:</b> פרי ואגוזים ללא מלח</li><li><b>ערב:</b> טופו או טמפה, ירקות ותפוח אדמה</li></ul><p class="day-task"><b>סיכום:</b> רשום שלוש ארוחות קבועות, שני מוצרים שהחלפת והרגל אחד שימשיך. שתף ממוצע מדידות עם הרופא לפי התוכנית שנקבעה.</p></div>
+            <label class="day-check"><input class="daycheck" type="checkbox" data-day="14"><span>סיימתי את 14 הימים</span></label>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="bp-log" class="section shell reveal">
+      <div class="section-heading split-heading">
+        <div><p class="eyebrow dark">מעקב ביתי</p><h2>מודדים באותה צורה</h2></div>
+        <p>מנוחה של 5 דקות, גב נתמך, רגליים על הרצפה, זרוע חשופה בגובה הלב. בלי קפה, עישון או אימון ב־30 הדקות שלפני. בכל פעם לוקחים שתי מדידות בהפרש של דקה.</p>
+      </div>
+
+      <div class="bp-layout">
+        <form class="bp-form" id="bpForm">
+          <h3>הוספת מדידה</h3>
+          <div class="form-grid">
+            <label>תאריך<input id="bpDate" name="date" type="date" required></label>
+            <label>זמן<select id="bpPeriod" name="period"><option value="בוקר">בוקר</option><option value="ערב">ערב</option></select></label>
+            <label>סיסטולי<input id="bpSystolic" name="systolic" type="number" inputmode="numeric" min="60" max="260" placeholder="לדוגמה 128" required></label>
+            <label>דיאסטולי<input id="bpDiastolic" name="diastolic" type="number" inputmode="numeric" min="35" max="160" placeholder="לדוגמה 78" required></label>
+          </div>
+          <p class="form-help">הזן את ממוצע שתי המדידות. הנתונים נשמרים רק בדפדפן במכשיר הזה.</p>
+          <p class="form-error" id="bpError" role="alert"></p>
+          <button class="primary-button" type="submit">שמירת מדידה</button>
+        </form>
+
+        <div class="bp-summary" aria-live="polite">
+          <p>ממוצע המדידות השמורות</p>
+          <strong id="bpAverage">— / —</strong>
+          <span id="bpCount">אין עדיין מדידות</span>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>תאריך</th><th>זמן</th><th>לחץ דם</th><th><span class="sr-only">פעולות</span></th></tr></thead>
+          <tbody id="bpRows"><tr class="empty-row"><td colspan="4">המדידה הראשונה תופיע כאן.</td></tr></tbody>
+        </table>
+      </div>
+
+      <div class="callout emergency">
+        <strong>מתי זו דחיפות רפואית</strong>
+        <p>אם מתקבלת קריאה מעל 180/120, המתן דקה ומדוד שוב. אם היא עדיין גבוהה, פנה מיד לאיש מקצוע. אם יש גם כאב בחזה, קוצר נשימה, כאב גב, חולשה או נימול, שינוי בראייה או קושי בדיבור — מתקשרים למד״א 101.</p>
+      </div>
+    </section>
+
+    <section id="after" class="section after-section reveal">
+      <div class="shell after-layout">
+        <div><p class="eyebrow">אחרי יום 14</p><h2>שומרים על מערכת קטנה שעובדת</h2><p>בחר מספר מצומצם של ברירות מחדל. החלפה קבועה אחת משפיעה יותר מרשימת כללים שאי אפשר לתחזק.</p></div>
+        <ol class="continuation-list">
+          <li><span>01</span><div><h3>שלוש ארוחות קבועות</h3><p>בוקר אחד, צהריים אחד וערב אחד שאפשר להכין בלי לחשוב.</p></div></li>
+          <li><span>02</span><div><h3>בישול בסיס שבועי</h3><p>דגן מלא, קטנייה, ירקות אפויים ורוטב ביתי דל נתרן.</p></div></li>
+          <li><span>03</span><div><h3>בדיקת תוויות ממוקדת</h3><p>לחם, תחליפי בשר, מרקים, רטבים, שימורים וחטיפים.</p></div></li>
+          <li><span>04</span><div><h3>מעקב שנקבע מראש</h3><p>מודד לחץ דם בתדירות שסיכמת עם איש המקצוע, לא מתוך חרדה סביב מספר יחיד.</p></div></li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="science" class="section shell sources reveal">
+      <div class="section-heading split-heading">
+        <div><p class="eyebrow dark">הבסיס המדעי</p><h2>מה המחקר כן אומר</h2></div>
+        <p>בניסויי ההאכלה המבוקרים, DASH הוריד לחץ דם גם בלי ירידה במשקל. הפחתת נתרן הוסיפה השפעה, והשילוב של DASH עם 1,500 מ״ג נתרן יצר את הירידה הגדולה ביותר.</p>
+      </div>
+      <div class="source-grid">
+        <a href="https://www.nhlbi.nih.gov/health/dash-eating-plan" target="_blank" rel="noopener"><span>NHLBI · 2026</span><b>עקרונות ויעדי DASH הרשמיים</b></a>
+        <a href="https://www.nhlbi.nih.gov/health/dash/health-benefits" target="_blank" rel="noopener"><span>NHLBI</span><b>סקירת ניסויי DASH ו־DASH-Sodium</b></a>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/11136953/" target="_blank" rel="noopener"><span>NEJM · 2001</span><b>ניסוי DASH-Sodium, ‏412 משתתפים</b></a>
+        <a href="https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings/monitoring-your-blood-pressure-at-home" target="_blank" rel="noopener"><span>AHA · 2025</span><b>מדידת לחץ דם נכונה בבית</b></a>
+      </div>
+      <p class="source-note">הגרסה הטבעונית היא התאמה מעשית לדפוס DASH. ניסויי DASH המקוריים לא היו טבעוניים. המדריך מיועד לשימוש אישי ואינו מחליף אבחון, טיפול תרופתי או התאמה אצל רופא/ה או דיאטן/ית.</p>
+    </section>
+  </main>
+
+  <footer class="footer"><div class="shell"><span>DASH טבעוני · מדריך אישי ל־14 יום · צילום: <a href="https://unsplash.com/" target="_blank" rel="noopener">Unsplash</a></span><span>המגמה חשובה יותר מיום מושלם.</span></div></footer>
+
+  <div class="completion" id="completion" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="completionTitle">
+    <div class="completion-card">
+      <div class="completion-mark" aria-hidden="true">14</div>
+      <h2 id="completionTitle">סיימת את ההתחלה</h2>
+      <p>עכשיו בחר שלוש ארוחות קבועות והרגל נתרן אחד שימשיך איתך לשבוע הבא.</p>
+      <button class="primary-button" id="completionClose" type="button">מעבר לתוכנית ההמשך</button>
+    </div>
+  </div>
+
+  <script src="dash.js"></script>
+</body>
+</html>
