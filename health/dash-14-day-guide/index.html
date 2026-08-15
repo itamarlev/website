@@ -4,8 +4,8 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#3b3151" />
-  <meta name="description" content="מדריך DASH טבעוני ל־14 יום עם תפריט יומי, הפחתת נתרן, מעקב לחץ דם והתקדמות הנשמרת בדפדפן." />
-  <title>DASH טבעוני — תוכנית 14 יום</title>
+  <meta name="description" content="מדריך DASH ל־14 יום עם גרסה טבעונית ורגילה, תפריט יומי, תוכנית פעילות, הרגלי חיים, הפחתת נתרן ומעקב לחץ דם." />
+  <title>DASH — תוכנית 14 יום ללחץ דם בריא</title>
   <link rel="stylesheet" href="dash.css" />
 </head>
 <body>
@@ -19,9 +19,9 @@
     <div class="shell hero-inner">
       <a class="home-link" href="/" aria-label="חזרה לדף הבית">← חזרה ל־itamarlev.com</a>
       <div class="hero-copy">
-        <p class="eyebrow">DASH טבעוני · 14 ימים להתחלה</p>
+        <p class="eyebrow">DASH · שתי גרסאות · 14 ימים להתחלה</p>
         <h1>פחות לחץ.<br><span>יותר שגרה.</span></h1>
-        <p class="lead">תוכנית מעשית שמתרגמת את DASH לקניות, ארוחות טבעוניות, פחות נתרן ומדידה נכונה של לחץ הדם. יום אחד בכל פעם.</p>
+        <p class="lead">תוכנית מעשית שמתרגמת את DASH לקניות, ארוחות, פעילות, פחות נתרן ומדידה נכונה של לחץ הדם. יום אחד בכל פעם.</p>
         <a class="primary-link" href="#before">מתחילים מהבסיס</a>
       </div>
       <aside class="hero-progress" aria-label="התקדמות בתוכנית">
@@ -53,6 +53,7 @@
       <div class="nav-inner shell">
         <a href="#before">לפני שמתחילים</a>
         <a href="#targets">היעדים</a>
+        <a href="#lifestyle">אורח חיים ופעילות</a>
         <a href="#week1">שבוע 1</a>
         <a href="#week2">שבוע 2</a>
         <a href="#bp-log">מעקב לחץ דם</a>
@@ -67,14 +68,14 @@
           <p class="eyebrow dark">לפני שמתחילים</p>
           <h2>DASH אינו דיאטה זמנית</h2>
         </div>
-        <p>DASH הוא דפוס אכילה גמיש שנועד להפוך לדרך קבועה לאכול. אין בו מזון מיוחד, צום או שלב יציאה. התוכנית בת 14 הימים היא רק דרך מסודרת להיכנס אליו.</p>
+          <p>DASH הוא דפוס אכילה גמיש שנועד להפוך לדרך קבועה לאכול. אין בו מזון מיוחד, צום או שלב יציאה. התוכנית בת 14 הימים משלבת אוכל, פעילות, שינה, ניהול לחץ ומדידה נכונה.</p>
       </div>
 
       <div class="feature-grid">
         <article class="feature-card accent-card">
           <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M4 13c4-8 12-8 16-4-1 7-7 11-13 8"/><path d="M7 17c3-3 6-5 11-7"/></svg>
           <h3>מה אוכלים</h3>
-          <p>ירקות, פירות, דגנים מלאים, קטניות, טופו, אגוזים וזרעים. במשקאות ובתחליפי חלב בוחרים מוצרים לא ממותקים ומועשרים בסידן.</p>
+            <p>הבסיס הוא ירקות, פירות, דגנים מלאים, קטניות, אגוזים וזרעים. אפשר לבחור גרסה טבעונית או DASH רגיל עם חלב דל שומן, ביצים, דגים ועוף רזה.</p>
         </article>
         <article class="feature-card">
           <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M5 12h14M7 8h10M9 16h6"/><circle cx="12" cy="12" r="9"/></svg>
@@ -101,15 +102,23 @@
             <p class="eyebrow">הצלחת היומית</p>
             <h2>יעדי DASH ל־2,000 קלוריות</h2>
           </div>
-          <p>הכמויות הן נקודת ייחוס. הצורך הקלורי משתנה לפי גיל, גוף ופעילות. בתוכנית הטבעונית, מקורות הסידן והחלבון מגיעים מסויה מועשרת, טופו, קטניות, אגוזים וזרעים.</p>
+          <p>הכמויות הן נקודת ייחוס. הצורך הקלורי משתנה לפי גיל, גוף ופעילות. בחר את סגנון האכילה שמתאים לך, והמדריך יציג את ההחלפות הרלוונטיות.</p>
         </div>
+
+        <fieldset class="diet-switcher" id="dietSwitcher">
+          <legend>איזו גרסת DASH להציג?</legend>
+          <label><input type="radio" name="dietMode" value="vegan" checked><span><b>טבעוני</b> סויה מועשרת, טופו וקטניות</span></label>
+          <label><input type="radio" name="dietMode" value="standard"><span><b>DASH רגיל</b> כולל חלב דל שומן, ביצים, דגים ועוף</span></label>
+          <p id="dietModeText" aria-live="polite">מוצגת כרגע הגרסה הטבעונית.</p>
+          <button class="share-mode-button" id="copyDietLink" type="button">העתקת קישור לגרסה המוצגת</button>
+        </fieldset>
 
         <div class="target-grid">
           <article><span class="target-number">6–8</span><h3>דגנים</h3><p>רובם מלאים. מנה: פרוסת לחם או חצי כוס דגן מבושל.</p></article>
           <article><span class="target-number">4–5</span><h3>ירקות</h3><p>מנה: כוס עלים או חצי כוס ירק חתוך.</p></article>
           <article><span class="target-number">4–5</span><h3>פירות</h3><p>מנה: פרי בינוני או חצי כוס פרי חתוך.</p></article>
-          <article><span class="target-number">2–3</span><h3>סויה מועשרת</h3><p>כוס משקה או יוגורט סויה לא ממותק ומועשר בסידן.</p></article>
-          <article><span class="target-number">יומי</span><h3>חלבון צמחי</h3><p>קטניות, טופו או טמפה בכל יום. אגוזים וזרעים ללא מלח במנות מדודות.</p></article>
+          <article><span class="target-number">2–3</span><h3><span class="vegan-only">סויה מועשרת</span><span class="standard-only">חלב דל שומן</span></h3><p><span class="vegan-only">כוס משקה או יוגורט סויה לא ממותק ומועשר בסידן.</span><span class="standard-only">כוס חלב או יוגורט דל שומן. אפשר גם סויה מועשרת.</span></p></article>
+          <article><span class="target-number">יומי</span><h3>מקורות חלבון</h3><p><span class="vegan-only">קטניות, טופו או טמפה בכל יום. אגוזים וזרעים ללא מלח במנות מדודות.</span><span class="standard-only">קטניות בתדירות גבוהה, לצד דגים, עוף ללא עור או ביצים. מצמצמים בשר אדום ומעובד.</span></p></article>
           <article><span class="target-number">2–3</span><h3>שומנים</h3><p>שמן זית, טחינה, אבוקדו ואגוזים. שמן קוקוס נשאר חריג, לא בסיס.</p></article>
         </div>
 
@@ -119,6 +128,62 @@
           <label><input type="radio" name="sodium" value="1500"><span><b>1,500 מ״ג</b> הפחתה עמוקה יותר</span></label>
           <p id="sodiumAdvice" aria-live="polite">התחל בקריאת תוויות ובהפחתת מזון מוכן. אין צורך להגיע ליעד ביום אחד.</p>
         </fieldset>
+      </div>
+    </section>
+
+    <section id="lifestyle" class="section lifestyle-section reveal">
+      <div class="shell">
+        <div class="section-heading split-heading">
+          <div>
+            <p class="eyebrow dark">מעבר לצלחת</p>
+            <h2>שישה מנופים ללחץ דם בריא</h2>
+          </div>
+          <p>הנחיות 2025 מדגישות שילוב: תזונה, פעילות, משקל מתאים, ניהול לחץ ופחות אלכוהול. שינה טובה ועקבית תומכת בבריאות הלב, ומעקב ביתי מראה אם התוכנית עובדת.</p>
+        </div>
+
+        <div class="lifestyle-grid">
+          <article><span>01</span><h3>פעילות</h3><p>לפחות 75–150 דקות בשבוע לפי הנחיות לחץ הדם. לתוכנית פשוטה: 30 דקות הליכה מהירה, שחייה או רכיבה ברוב ימות השבוע, ועוד שני אימוני כוח.</p></article>
+          <article><span>02</span><h3>משקל</h3><p>למי שחי עם עודף משקל, ירידה ראשונית של כ־5% יכולה לתמוך בהפחתת לחץ הדם. אין יעד ירידה למי שאינו זקוק לכך.</p></article>
+          <article><span>03</span><h3>שינה</h3><p>רוב המבוגרים זקוקים ל־7–9 שעות. שעת שינה קבועה חשובה. נחירות חזקות, הפסקות נשימה או ישנוניות ביום מצדיקות בירור לדום נשימה בשינה.</p></article>
+          <article><span>04</span><h3>ויסות לחץ</h3><p>5–10 דקות ביום של נשימה איטית, מדיטציה או יוגה הן תוספת סבירה. הן תומכות בתוכנית, אך אינן מחליפות תזונה, פעילות או טיפול.</p></article>
+          <article><span>05</span><h3>אלכוהול</h3><p>אפס אלכוהול הוא היעד המועדף בהנחיות החדשות. אם בוחרים לשתות, לא עוברים שתי מנות ביום לגבר או מנה אחת לאישה.</p></article>
+          <article><span>06</span><h3>עישון וטיפול</h3><p>לא מעשנים. ממשיכים תרופות בדיוק לפי ההנחיה. ירידה במדידות הבית אינה סיבה לשנות מינון לבד.</p></article>
+        </div>
+
+        <div class="exercise-plan">
+          <div class="exercise-intro">
+            <p class="eyebrow">תוכנית שבועית</p>
+            <h2>פעילות שאפשר לחזור עליה</h2>
+            <p>עצימות בינונית פירושה שהנשימה מהירה יותר, אבל עדיין אפשר לומר משפט קצר. מתחילים בהדרגה אם לא התאמנת לאחרונה.</p>
+          </div>
+          <div class="exercise-week">
+            <article><b>יום א׳</b><span>הליכה מהירה</span><strong>30 דקות</strong></article>
+            <article><b>יום ב׳</b><span>כוח לכל הגוף</span><strong>30–40 דקות</strong></article>
+            <article><b>יום ג׳</b><span>שחייה, רכיבה או הליכה</span><strong>30 דקות</strong></article>
+            <article><b>יום ד׳</b><span>הליכה קלה + נשימה</span><strong>20 + 10 דקות</strong></article>
+            <article><b>יום ה׳</b><span>כוח לכל הגוף</span><strong>30–40 דקות</strong></article>
+            <article><b>יום ו׳</b><span>אירובי לבחירה</span><strong>30–40 דקות</strong></article>
+            <article><b>שבת</b><span>טיול, ניידות או מנוחה</span><strong>לפי ההרגשה</strong></article>
+          </div>
+        </div>
+
+        <div class="exercise-details">
+          <article>
+            <h3>אימון כוח: 6 תנועות</h3>
+            <p>סקוואט או קימה מכיסא, hip hinge, חתירה, שכיבות סמיכה או לחיצה, step-up והרמת עקבים. בצע 1–3 סטים של 8–12 חזרות בעצימות בינונית.</p>
+            <p class="detail-note">נושפים בזמן המאמץ. לא עוצרים נשימה ולא רודפים אחרי משקל מרבי.</p>
+          </article>
+          <article>
+            <h3>אפשרות מחקרית: אחיזה איזומטרית</h3>
+            <p>עם מד־אחיזה שמציג עצימות: 4 סטים של 2 דקות בכ־30–40% מהכוח המרבי, דקת מנוחה בין הסטים, 3 פעמים בשבוע למשך 8–10 שבועות.</p>
+            <p class="detail-note">זהו תרגול משלים, לא תחליף לאירובי וכוח. יש להתאים אותו עם איש מקצוע אם לחץ הדם אינו מאוזן או קיימת מחלת לב.</p>
+          </article>
+        </div>
+
+        <div class="callout caution exercise-safety">
+          <strong>מתי לא מתחילים אימון</strong>
+          <p>אם לחץ הדם מעל 180/120, מודדים שוב ופועלים לפי הנחיות החירום שבהמשך. כאב בחזה, קוצר נשימה חריג, סחרחורת, חולשה או תסמין נוירולוגי בזמן פעילות מחייבים עצירה וקבלת עזרה רפואית.</p>
+        </div>
       </div>
     </section>
 
@@ -132,6 +197,8 @@
           <div class="day-top"><span>יום 1</span><b>קו בסיס</b></div>
           <h3>מודדים לפני שמשנים</h3>
           <ul class="meals"><li><b>בוקר:</b> שיבולת שועל, משקה סויה מועשר, תפוח וקינמון</li><li><b>צהריים:</b> קערת קינואה, עדשים, ירקות וטחינה מדוללת</li><li><b>ביניים:</b> פרי ו־20 גרם אגוזים ללא מלח</li><li><b>ערב:</b> טופו, תפוח אדמה וברוקולי בתנור</li></ul>
+          <p class="diet-swap standard-only"><b>בגרסת DASH הרגילה:</b> חלב דל שומן במקום משקה סויה וסלמון אפוי במקום הטופו.</p>
+          <p class="movement-task"><b>פעילות:</b> הליכה נוחה של 20 דקות + 5 דקות נשימה איטית.</p>
           <p class="day-task"><b>משימת היום:</b> רשום לחץ דם לפי ההנחיות וצלם שלוש תוויות ממוצרים קבועים.</p>
           <label class="day-check"><input class="daycheck" type="checkbox" data-day="1"><span>סיימתי את יום 1</span></label>
         </article>
@@ -140,6 +207,8 @@
           <div class="day-top"><span>יום 2</span><b>תוויות</b></div>
           <h3>משווים נתרן למנה</h3>
           <ul class="meals"><li><b>בוקר:</b> לחם מלא דל נתרן, אבוקדו, עגבנייה ופרי</li><li><b>צהריים:</b> סלט חומוס ביתי, בורגול והרבה ירקות</li><li><b>ביניים:</b> יוגורט סויה מועשר ופירות יער</li><li><b>ערב:</b> מרק עדשים כתומות ללא אבקת מרק וסלט</li></ul>
+          <p class="diet-swap standard-only"><b>בגרסת DASH הרגילה:</b> יוגורט טבעי דל שומן במקום יוגורט הסויה. שאר היום נשאר צמחי.</p>
+          <p class="movement-task"><b>פעילות:</b> הליכה מהירה של 30 דקות בקצב שמאפשר משפט קצר.</p>
           <p class="day-task"><b>משימת היום:</b> בחר מוצר אחד שבו גרסת נתרן נמוכה חוסכת לפחות 100 מ״ג למנה.</p>
           <label class="day-check"><input class="daycheck" type="checkbox" data-day="2"><span>סיימתי את יום 2</span></label>
         </article>
@@ -148,6 +217,8 @@
           <div class="day-top"><span>יום 3</span><b>טעם</b></div>
           <h3>בונים טעם בלי מלח</h3>
           <ul class="meals"><li><b>בוקר:</b> דייסת דוחן, אגס, פשתן טחון ומשקה סויה</li><li><b>צהריים:</b> שעועית לבנה, אורז מלא, לימון ועשבי תיבול</li><li><b>ביניים:</b> ירקות חתוכים וממרח עדשים</li><li><b>ערב:</b> פסטה מלאה עם עגבניות ללא תוספת מלח ופטריות</li></ul>
+          <p class="diet-swap standard-only"><b>בגרסת DASH הרגילה:</b> חלב דל שומן בדייסה; אפשר להוסיף בערב חזה עוף צלוי ללא תערובת תיבול מלוחה.</p>
+          <p class="movement-task"><b>פעילות:</b> אימון כוח של 30–40 דקות לפי שש התנועות שבמדריך.</p>
           <p class="day-task"><b>משימת היום:</b> הכין תערובת לימון, שום, פפריקה, כמון ועשבי תיבול לשימוש השבוע.</p>
           <label class="day-check"><input class="daycheck" type="checkbox" data-day="3"><span>סיימתי את יום 3</span></label>
         </article>
@@ -156,6 +227,8 @@
           <div class="day-top"><span>יום 4</span><b>קטניות</b></div>
           <h3>שוטפים את השימורים</h3>
           <ul class="meals"><li><b>בוקר:</b> מוזלי ללא סוכר, יוגורט סויה, בננה וזרעי צ׳יה</li><li><b>צהריים:</b> שעועית משומרת שטופה, בטטה, כרוב וסלסה ביתית</li><li><b>ביניים:</b> תפוז ושקדים ללא מלח</li><li><b>ערב:</b> תבשיל חומוס, תרד ועגבניות עם קוסקוס מלא</li></ul>
+          <p class="diet-swap standard-only"><b>בגרסת DASH הרגילה:</b> יוגורט דל שומן בבוקר; אפשר להוסיף ביצה מבושלת לארוחת הערב.</p>
+          <p class="movement-task"><b>פעילות:</b> שחייה, רכיבה או הליכה מהירה במשך 30 דקות.</p>
           <p class="day-task"><b>משימת היום:</b> העדף קטניות ללא מלח. אם משתמשים בשימורים, מסננים ושוטפים היטב.</p>
           <label class="day-check"><input class="daycheck" type="checkbox" data-day="4"><span>סיימתי את יום 4</span></label>
         </article>
@@ -164,6 +237,8 @@
           <div class="day-top"><span>יום 5</span><b>סידן</b></div>
           <h3>מחזקים את הגרסה הטבעונית</h3>
           <ul class="meals"><li><b>בוקר:</b> שייק משקה סויה מועשר, שיבולת שועל, בננה וטחינה</li><li><b>צהריים:</b> טופו בסידן, כוסמת, קייל ופלפל</li><li><b>ביניים:</b> יוגורט סויה מועשר ופרי</li><li><b>ערב:</b> קציצות עדשים ביתיות, סלט ותפוח אדמה</li></ul>
+          <p class="diet-swap standard-only"><b>בגרסת DASH הרגילה:</b> חלב ויוגורט דלי שומן; דג אפוי יכול להחליף את הטופו בצהריים.</p>
+          <p class="movement-task"><b>התאוששות:</b> הליכה קלה של 20 דקות + 10 דקות יוגה או נשימה.</p>
           <p class="day-task"><b>משימת היום:</b> בדוק שעל משקה הסויה מופיעים סידן ו־B12. נער את האריזה לפני המזיגה.</p>
           <label class="day-check"><input class="daycheck" type="checkbox" data-day="5"><span>סיימתי את יום 5</span></label>
         </article>
@@ -172,6 +247,8 @@
           <div class="day-top"><span>יום 6</span><b>בחוץ</b></div>
           <h3>מזמינים עם שליטה</h3>
           <ul class="meals"><li><b>בוקר:</b> דייסת שיבולת שועל ופרי בבית</li><li><b>צהריים בחוץ:</b> קערת דגן, קטניות וירקות, רוטב בצד</li><li><b>ביניים:</b> פרי ואגוזים מהבית</li><li><b>ערב:</b> סלט גדול, טופו צרוב ולחם מלא</li></ul>
+          <p class="diet-swap standard-only"><b>בגרסת DASH הרגילה:</b> אפשר לבחור עוף צלוי ללא עור בקערה או חביתה קטנה במקום הטופו בערב.</p>
+          <p class="movement-task"><b>פעילות:</b> אימון אירובי לבחירה במשך 30–40 דקות.</p>
           <p class="day-task"><b>משימת היום:</b> בקש רוטב בצד וללא הוספת מלח. חמוצים, זיתים ורטבים נספרים כמקורות נתרן.</p>
           <label class="day-check"><input class="daycheck" type="checkbox" data-day="6"><span>סיימתי את יום 6</span></label>
         </article>
@@ -181,6 +258,8 @@
           <h3>מסתכלים על המגמה</h3>
           <div class="wide-content">
             <ul class="meals"><li><b>בוקר:</b> לחם מלא, חמאת בוטנים ללא מלח, בננה</li><li><b>צהריים:</b> מג׳דרה מאורז מלא ועדשים עם סלט</li><li><b>ביניים:</b> פרי ויוגורט סויה</li><li><b>ערב:</b> ירקות מוקפצים, אדממה ואטריות כוסמת</li></ul>
+            <p class="diet-swap standard-only"><b>בגרסת DASH הרגילה:</b> יוגורט דל שומן בביניים ודג לבן צלוי לצד הירקות בערב.</p>
+            <p class="movement-task"><b>פעילות:</b> טיול או הליכה של 40 דקות בקצב נוח, ואז 5 דקות מתיחות.</p>
             <p class="day-task"><b>בדיקת שבוע:</b> מה היה מקור הנתרן הגדול ביותר? איזו ארוחה תרצה לחזור עליה? בדוק ממוצע לחץ דם, לא קריאה בודדת.</p>
           </div>
           <label class="day-check"><input class="daycheck" type="checkbox" data-day="7"><span>סיימתי את שבוע 1</span></label>
@@ -198,36 +277,48 @@
           <article class="day-card" id="day8" data-day-card="8">
             <div class="day-top"><span>יום 8</span><b>הכנה כפולה</b></div><h3>מבשלים פעם, אוכלים פעמיים</h3>
             <ul class="meals"><li><b>בוקר:</b> Overnight oats עם תפוח, קינמון וצ׳יה</li><li><b>צהריים:</b> צ׳ילי שעועית ביתי ואורז מלא</li><li><b>ביניים:</b> גזר, מלפפון וממרח שעועית</li><li><b>ערב:</b> שארית צ׳ילי על בטטה וסלט</li></ul>
+            <p class="diet-swap standard-only"><b>בגרסת DASH הרגילה:</b> מכינים את שיבולת השועל עם חלב דל שומן; אפשר להוסיף מעט הודו טחון רזה לצ׳ילי.</p>
+            <p class="movement-task"><b>פעילות:</b> הליכה מהירה של 30 דקות.</p>
             <p class="day-task"><b>משימת היום:</b> הכפל תבשיל אחד והקפא שתי מנות.</p><label class="day-check"><input class="daycheck" type="checkbox" data-day="8"><span>סיימתי את יום 8</span></label>
           </article>
           <article class="day-card" id="day9" data-day-card="9">
             <div class="day-top"><span>יום 9</span><b>אשלגן</b></div><h3>מוסיפים מהאוכל</h3>
             <ul class="meals"><li><b>בוקר:</b> שיבולת שועל, בננה ומשקה סויה</li><li><b>צהריים:</b> תפוח אדמה, שעועית, עגבנייה ותרד</li><li><b>ביניים:</b> משמשים ואגוזי מלך ללא מלח</li><li><b>ערב:</b> קארי עדשים וירקות ללא אבקת מרק</li></ul>
+            <p class="diet-swap standard-only"><b>בגרסת DASH הרגילה:</b> חלב דל שומן בדייסה; אפשר לשלב בקארי עוף ללא עור במקום חלק מהעדשים.</p>
+            <p class="movement-task"><b>פעילות:</b> אימון כוח של 30–40 דקות. נושפים בזמן המאמץ.</p>
             <p class="day-task"><b>משימת היום:</b> בחר שלושה מקורות אשלגן ממזון. אין להוסיף תוסף או תחליף מלח ללא התאמה רפואית.</p><label class="day-check"><input class="daycheck" type="checkbox" data-day="9"><span>סיימתי את יום 9</span></label>
           </article>
           <article class="day-card" id="day10" data-day-card="10">
             <div class="day-top"><span>יום 10</span><b>תנועה</b></div><h3>מחברים אוכל לפעילות</h3>
             <ul class="meals"><li><b>בוקר:</b> טוסט מלא, טחינה דלילה, עגבנייה ופרי</li><li><b>צהריים:</b> קינואה, אפונה, טופו וירקות</li><li><b>ביניים:</b> יוגורט סויה ופירות יער</li><li><b>ערב:</b> מרק מינסטרונה ביתי ללא אבקת מרק</li></ul>
-            <p class="day-task"><b>משימת היום:</b> 30 דקות הליכה בקצב בינוני, אם אין מגבלה רפואית אחרת.</p><label class="day-check"><input class="daycheck" type="checkbox" data-day="10"><span>סיימתי את יום 10</span></label>
+            <p class="diet-swap standard-only"><b>בגרסת DASH הרגילה:</b> דג או חזה עוף צלוי במקום הטופו ויוגורט דל שומן בביניים.</p>
+            <p class="movement-task"><b>פעילות:</b> 30 דקות הליכה בקצב בינוני, שחייה או רכיבה.</p>
+            <p class="day-task"><b>משימת היום:</b> קבע ביומן שני חלונות פעילות לשבוע הבא והכן מראש נעליים או ציוד.</p><label class="day-check"><input class="daycheck" type="checkbox" data-day="10"><span>סיימתי את יום 10</span></label>
           </article>
           <article class="day-card" id="day11" data-day-card="11">
             <div class="day-top"><span>יום 11</span><b>מזווה</b></div><h3>מסדרים את הבחירות הקלות</h3>
             <ul class="meals"><li><b>בוקר:</b> דייסת כוסמת, אגס ומשקה סויה</li><li><b>צהריים:</b> פיתה מלאה, פלאפל אפוי וסלט ללא חמוצים</li><li><b>ביניים:</b> תפוח וחמאת בוטנים ללא מלח</li><li><b>ערב:</b> טמפה, אורז חום ושעועית ירוקה</li></ul>
+            <p class="diet-swap standard-only"><b>בגרסת DASH הרגילה:</b> חלב דל שומן בדייסה ובערב עוף ללא עור במקום הטמפה.</p>
+            <p class="movement-task"><b>התאוששות:</b> הליכה קלה של 20 דקות + 10 דקות מדיטציה או נשימה.</p>
             <p class="day-task"><b>משימת היום:</b> הנח מקדימה שיבולת שועל, קטניות יבשות, דגנים מלאים ואגוזים ללא מלח.</p><label class="day-check"><input class="daycheck" type="checkbox" data-day="11"><span>סיימתי את יום 11</span></label>
           </article>
           <article class="day-card" id="day12" data-day-card="12">
             <div class="day-top"><span>יום 12</span><b>רטבים</b></div><h3>מטפלים בנתרן הנסתר</h3>
             <ul class="meals"><li><b>בוקר:</b> יוגורט סויה, מוזלי ללא סוכר ופירות</li><li><b>צהריים:</b> סלט אטריות סובה, אדממה ורוטב לימון־ג׳ינג׳ר</li><li><b>ביניים:</b> פרי וזרעי דלעת ללא מלח</li><li><b>ערב:</b> טופו וירקות ברוטב בוטנים ביתי מדולל</li></ul>
+            <p class="diet-swap standard-only"><b>בגרסת DASH הרגילה:</b> יוגורט דל שומן בבוקר; דג לבן יכול להחליף את הטופו, בלי להוסיף רוטב מוכן.</p>
+            <p class="movement-task"><b>פעילות:</b> אימון כוח של 30–40 דקות. בלי עצירת נשימה ובלי סטים מרביים.</p>
             <p class="day-task"><b>משימת היום:</b> מדוד סויה, מיסו, קטשופ ורטבים בכף. “טבעוני” אינו אומר “דל נתרן”.</p><label class="day-check"><input class="daycheck" type="checkbox" data-day="12"><span>סיימתי את יום 12</span></label>
           </article>
           <article class="day-card" id="day13" data-day-card="13">
             <div class="day-top"><span>יום 13</span><b>גמישות</b></div><h3>יום שלא הלך לפי התוכנית</h3>
             <ul class="meals"><li><b>בוקר:</b> פרי, לחם מלא ומשקה סויה</li><li><b>צהריים:</b> הבחירה הזמינה עם הכי הרבה ירקות ורוטב בצד</li><li><b>ביניים:</b> אגוזים ללא מלח מהתיק</li><li><b>ערב:</b> עדשים קפואות/מוכנות, אורז וירקות קפואים</li></ul>
+            <p class="diet-swap standard-only"><b>בגרסת DASH הרגילה:</b> חלב דל שומן בבוקר ובצהריים דג או עוף צלוי, בלי בשר מעובד ועם רוטב בצד.</p>
+            <p class="movement-task"><b>פעילות:</b> אירובי קל של 20–30 דקות. יום עמוס אינו יום אפס.</p>
             <p class="day-task"><b>משימת היום:</b> בנה ארוחת חירום של 10 דקות. יום פחות מדויק אינו דורש פיצוי או צום.</p><label class="day-check"><input class="daycheck" type="checkbox" data-day="13"><span>סיימתי את יום 13</span></label>
           </article>
           <article class="day-card wide" id="day14" data-day-card="14">
             <div class="day-top"><span>יום 14</span><b>המשך</b></div><h3>מסיימים את ההתחלה</h3>
-            <div class="wide-content"><ul class="meals"><li><b>בוקר:</b> הארוחה שהצליחה לך ביותר</li><li><b>צהריים:</b> דגן מלא, קטנייה ושני ירקות</li><li><b>ביניים:</b> פרי ואגוזים ללא מלח</li><li><b>ערב:</b> טופו או טמפה, ירקות ותפוח אדמה</li></ul><p class="day-task"><b>סיכום:</b> רשום שלוש ארוחות קבועות, שני מוצרים שהחלפת והרגל אחד שימשיך. שתף ממוצע מדידות עם הרופא לפי התוכנית שנקבעה.</p></div>
+            <div class="wide-content"><div><ul class="meals"><li><b>בוקר:</b> הארוחה שהצליחה לך ביותר</li><li><b>צהריים:</b> דגן מלא, קטנייה ושני ירקות</li><li><b>ביניים:</b> פרי ואגוזים ללא מלח</li><li><b>ערב:</b> <span class="vegan-only">טופו או טמפה</span><span class="standard-only">דג, עוף ללא עור, טופו או טמפה</span>, ירקות ותפוח אדמה</li></ul><p class="diet-swap standard-only"><b>בגרסת DASH הרגילה:</b> שמור קטניות ברוב הימים והשתמש בדגים, עוף וביצים כאפשרויות — לא כבסיס לכל ארוחה.</p><p class="movement-task"><b>פעילות:</b> 30 דקות מהפעילות שנהנית ממנה ביותר במהלך התוכנית.</p></div><p class="day-task"><b>סיכום:</b> רשום שלוש ארוחות קבועות, שני מוצרים שהחלפת והרגל אחד שימשיך. שתף ממוצע מדידות עם הרופא לפי התוכנית שנקבעה.</p></div>
             <label class="day-check"><input class="daycheck" type="checkbox" data-day="14"><span>סיימתי את 14 הימים</span></label>
           </article>
         </div>
@@ -289,19 +380,23 @@
     <section id="science" class="section shell sources reveal">
       <div class="section-heading split-heading">
         <div><p class="eyebrow dark">הבסיס המדעי</p><h2>מה המחקר כן אומר</h2></div>
-        <p>בניסויי ההאכלה המבוקרים, DASH הוריד לחץ דם גם בלי ירידה במשקל. הפחתת נתרן הוסיפה השפעה, והשילוב של DASH עם 1,500 מ״ג נתרן יצר את הירידה הגדולה ביותר.</p>
+        <p>בניסויי ההאכלה המבוקרים, DASH הוריד לחץ דם גם בלי ירידה במשקל. הנחיות 2025 מוסיפות המלצה חזקה על פעילות, משקל מתאים, ניהול לחץ והפחתה או הימנעות מאלכוהול.</p>
       </div>
       <div class="source-grid">
         <a href="https://www.nhlbi.nih.gov/health/dash-eating-plan" target="_blank" rel="noopener"><span>NHLBI · 2026</span><b>עקרונות ויעדי DASH הרשמיים</b></a>
         <a href="https://www.nhlbi.nih.gov/health/dash/health-benefits" target="_blank" rel="noopener"><span>NHLBI</span><b>סקירת ניסויי DASH ו־DASH-Sodium</b></a>
         <a href="https://pubmed.ncbi.nlm.nih.gov/11136953/" target="_blank" rel="noopener"><span>NEJM · 2001</span><b>ניסוי DASH-Sodium, ‏412 משתתפים</b></a>
         <a href="https://www.heart.org/en/health-topics/high-blood-pressure/understanding-blood-pressure-readings/monitoring-your-blood-pressure-at-home" target="_blank" rel="noopener"><span>AHA · 2025</span><b>מדידת לחץ דם נכונה בבית</b></a>
+        <a href="https://www.acc.org/about-acc/press-releases/2025/08/13/20/03/new-high-blood-pressure-guideline-emphasizes-prevention-early-treatment-to-reduce-cvd-risk" target="_blank" rel="noopener"><span>ACC/AHA · 2025</span><b>הנחיות אורח חיים ופעילות ללחץ דם</b></a>
+        <a href="https://www.ahajournals.org/doi/10.1161/CIR.0000000000001189" target="_blank" rel="noopener"><span>AHA · 2024</span><b>הצהרה מדעית על אימוני התנגדות</b></a>
+        <a href="https://www.ahajournals.org/doi/10.1161/JAHA.119.013596" target="_blank" rel="noopener"><span>JAHA · 2020</span><b>מחקר על אימון אחיזה איזומטרי</b></a>
+        <a href="https://newsroom.heart.org/news/sleep-matters-duration-timing-quality-and-more-may-affect-cardiovascular-disease-risk" target="_blank" rel="noopener"><span>AHA · 2025</span><b>שינה ובריאות קרדיו־מטבולית</b></a>
       </div>
-      <p class="source-note">הגרסה הטבעונית היא התאמה מעשית לדפוס DASH. ניסויי DASH המקוריים לא היו טבעוניים. המדריך מיועד לשימוש אישי ואינו מחליף אבחון, טיפול תרופתי או התאמה אצל רופא/ה או דיאטן/ית.</p>
+      <p class="source-note">הגרסה הטבעונית היא התאמה מעשית לדפוס DASH. ניסויי DASH המקוריים כללו גם מוצרי חלב ומזון מן החי. המדריך אינו מחליף אבחון, טיפול תרופתי או התאמה אצל רופא/ה, דיאטן/ית או איש/ת מקצוע בתחום הפעילות.</p>
     </section>
   </main>
 
-  <footer class="footer"><div class="shell"><span>DASH טבעוני · מדריך אישי ל־14 יום · צילום: <a href="https://unsplash.com/" target="_blank" rel="noopener">Unsplash</a></span><span>המגמה חשובה יותר מיום מושלם.</span></div></footer>
+  <footer class="footer"><div class="shell"><span>DASH · מדריך ל־14 יום · גרסה טבעונית או רגילה · צילום: <a href="https://unsplash.com/" target="_blank" rel="noopener">Unsplash</a></span><span>המגמה חשובה יותר מיום מושלם.</span></div></footer>
 
   <div class="completion" id="completion" role="dialog" aria-modal="true" aria-hidden="true" aria-labelledby="completionTitle">
     <div class="completion-card">

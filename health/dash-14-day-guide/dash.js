@@ -101,6 +101,43 @@ sodiumOptions.forEach((option) => {
 });
 setSodiumTarget(savedSodium);
 
+const dietOptions = [...document.querySelectorAll('input[name="dietMode"]')];
+const dietModeText = document.getElementById('dietModeText');
+const copyDietLink = document.getElementById('copyDietLink');
+
+function setDietMode(value, updateUrl = true) {
+  const mode = value === 'standard' ? 'standard' : 'vegan';
+  document.documentElement.classList.toggle('diet-standard', mode === 'standard');
+  localStorage.setItem(`${STORAGE_PREFIX}-diet-mode`, mode);
+  dietOptions.forEach((option) => { option.checked = option.value === mode; });
+  dietModeText.textContent = mode === 'standard'
+    ? 'מוצגת כרגע גרסת DASH הרגילה. התפריט נשאר עשיר במזון צמחי ומציג החלפות מן החי.'
+    : 'מוצגת כרגע הגרסה הטבעונית.';
+
+  if (updateUrl && window.history?.replaceState) {
+    const url = new URL(window.location.href);
+    if (mode === 'standard') url.searchParams.set('diet', 'standard');
+    else url.searchParams.delete('diet');
+    window.history.replaceState({}, '', url);
+  }
+}
+
+const requestedDiet = new URLSearchParams(window.location.search).get('diet');
+const savedDiet = localStorage.getItem(`${STORAGE_PREFIX}-diet-mode`) || 'vegan';
+const initialDiet = requestedDiet === 'standard' ? 'standard' : requestedDiet === 'vegan' ? 'vegan' : savedDiet;
+setDietMode(initialDiet);
+dietOptions.forEach((option) => option.addEventListener('change', () => setDietMode(option.value)));
+
+copyDietLink.addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(window.location.href);
+    copyDietLink.textContent = 'הקישור הועתק';
+  } catch {
+    copyDietLink.textContent = 'העתק את הכתובת משורת הדפדפן';
+  }
+  window.setTimeout(() => { copyDietLink.textContent = 'העתקת קישור לגרסה המוצגת'; }, 3000);
+});
+
 const bpForm = document.getElementById('bpForm');
 const bpRows = document.getElementById('bpRows');
 const bpAverage = document.getElementById('bpAverage');
