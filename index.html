@@ -3,77 +3,170 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Personal catalogue for itamarlev.com pages.">
-  <title>itamarlev.com | Personal Catalogue</title>
+  <meta name="description" content="Itamar Lev's personal lab for family travel plans, practical health guides, and interview preparation.">
+  <meta name="theme-color" content="#08110f">
+  <title>itamarlev.com | Personal Lab</title>
   <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/home.css">
 </head>
-<body class="catalog-page">
-  <header class="site-hero">
-    <nav class="top-nav" aria-label="Primary navigation">
-      <a class="brand-link" href="/">itamarlev.com</a>
-    </nav>
-    <div class="hero-layout">
-      <div>
-        <p class="eyebrow">Personal catalogue</p>
-        <h1>Plans and pages in one quiet place.</h1>
-        <p class="hero-copy">
-          A personal index for travel plans, health guides, and future reference pages on itamarlev.com.
-        </p>
+<body class="home-page">
+  <header>
+    <div class="home-shell">
+      <nav class="home-nav" aria-label="Primary navigation">
+        <a class="home-brand" href="/" aria-label="itamarlev.com home">
+          <span class="home-brand__mark" aria-hidden="true">IL</span>
+          <span>itamarlev.com</span>
+        </a>
+        <div class="home-nav__links">
+          <a href="#work">Explore</a>
+          <a href="/trips/bulgaria-2026/">Trips</a>
+          <a href="/health/fmd-5-day-guide/">Health</a>
+          <a href="/interviews/">Interview Lab</a>
+        </div>
+      </nav>
+
+      <section class="home-hero" aria-labelledby="home-title">
+        <div class="home-hero__grid">
+          <div>
+            <p class="home-kicker">Personal lab · plans that get used</p>
+            <h1 id="home-title">Ideas become<br><em>useful systems.</em></h1>
+            <p class="home-hero__copy">
+              A living collection of family travel plans, practical health programs, and focused preparation tools — designed to be clear when they matter most.
+            </p>
+            <div class="home-hero__actions">
+              <a class="home-action home-action--primary" href="#work">Explore the collection</a>
+              <a class="home-action home-action--ghost" href="/trips/zurich-black-forest-alsace-2026/">Open the next trip →</a>
+            </div>
+          </div>
+
+          <article class="home-now" aria-labelledby="now-title">
+            <div class="home-now__content">
+              <div class="home-now__topline">
+                <p class="home-now__label">Now planning</p>
+                <span class="home-now__date">22 Sep — 2 Oct 2026</span>
+              </div>
+              <h2 id="now-title">Zurich, Black Forest &amp; Alsace</h2>
+              <p>Three generations, three countries, and eleven days shaped around scenery, family time, and smart split days.</p>
+              <div class="home-now__route" aria-label="Trip route">
+                <span>Zurich</span>
+                <span>Offenburg</span>
+                <span>Black Forest</span>
+                <span>Strasbourg</span>
+                <span>Alsace</span>
+              </div>
+              <a class="home-now__link" href="/trips/zurich-black-forest-alsace-2026/">Enter the trip atlas <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <div class="home-stats" aria-label="Site overview">
+        <div class="home-stat"><strong>3 collections</strong><span>Travel · Health · Interview preparation</span></div>
+        <div class="home-stat"><strong>5 featured pages</strong><span>Built for planning, reference, and everyday use</span></div>
+        <div class="home-stat"><strong>One principle</strong><span>Make the next useful action obvious</span></div>
       </div>
-      <aside class="status-panel" aria-label="Site status">
-        <span class="status-label">Current sections</span>
-        <strong>3</strong>
-        <span>Trips, health guides, and interview preparation.</span>
-      </aside>
     </div>
   </header>
 
-  <main class="site-main">
-    <section class="catalog-section" aria-labelledby="trips-title">
-      <div class="section-heading">
-        <p class="section-kicker">Travel</p>
-        <h2 id="trips-title">Trips</h2>
-      </div>
-      <div class="card-grid">
-        <article class="catalog-card featured-card">
+  <main class="home-main" id="work">
+    <div class="home-shell">
+      <section class="home-section" aria-labelledby="collection-title">
+        <div class="home-section__head">
           <div>
-            <p class="card-label">Family trip</p>
-            <h3>Bulgaria Family Trip 2026</h3>
-            <p>Family travel plan and itinerary.</p>
+            <p class="home-section__kicker">The collection</p>
+            <h2 id="collection-title">Built to be opened again.</h2>
           </div>
-          <a class="card-action" href="/trips/bulgaria-2026/">Open trip plan</a>
-        </article>
-      </div>
-    </section>
+          <p>Not a portfolio of screenshots. Each page is a working tool with routes, decisions, plans, or knowledge meant to be used in the real world.</p>
+        </div>
 
-    <section class="catalog-section" aria-labelledby="health-title">
-      <div class="section-heading">
-        <p class="section-kicker">Wellbeing</p>
-        <h2 id="health-title">Health</h2>
-      </div>
-      <div class="card-grid">
-        <article class="catalog-card health-card">
-          <div>
-            <p class="card-label">5-day plan · Hebrew</p>
-            <h3>Vegan FMD Guide</h3>
-            <p>A day-by-day fasting-mimicking diet plan with meals, practical tips, progress tracking, and a gradual return to regular eating.</p>
+        <div class="project-grid">
+          <a class="project-card project-card--wide project-card--travel" href="/trips/zurich-black-forest-alsace-2026/">
+            <div class="project-card__top">
+              <span class="project-card__number">01</span>
+              <p class="project-card__label">Featured · Travel atlas</p>
+              <h3>Zurich, Black Forest &amp; Alsace 2026</h3>
+              <p>An 11-day three-generation road trip with flights, stays, route logic, split-day options, daily maps, and a pace designed for the whole family.</p>
+            </div>
+            <div class="project-card__bottom">
+              <div class="project-card__meta"><span>11 days</span><span>3 countries</span><span>Family planning</span></div>
+              <span class="project-card__cta">Open trip plan →</span>
+            </div>
+          </a>
+
+          <a class="project-card project-card--tall project-card--bulgaria" href="/trips/bulgaria-2026/">
+            <div class="project-card__top">
+              <span class="project-card__number">02</span>
+              <p class="project-card__label">Travel atlas</p>
+              <h3>Bulgaria Family Trip 2026</h3>
+              <p>A practical family route through Varna, Arbanasi, Veliko Tarnovo and Shumen, with day-by-day navigation and map links.</p>
+            </div>
+            <div class="project-card__bottom">
+              <div class="project-card__meta"><span>11 days</span><span>Route atlas</span></div>
+              <span class="project-card__cta">Open Bulgaria →</span>
+            </div>
+          </a>
+
+          <a class="project-card project-card--half project-card--health" href="/health/fmd-5-day-guide/">
+            <div class="project-card__top">
+              <span class="project-card__number">03</span>
+              <p class="project-card__label">Health · Hebrew</p>
+              <h3>Vegan FMD Guide</h3>
+              <p>A five-day fasting-mimicking program organized around meals, practical guidance, progress, and the transition back to regular eating.</p>
+            </div>
+            <div class="project-card__bottom">
+              <div class="project-card__meta"><span>5-day program</span><span>Vegan</span></div>
+              <span class="project-card__cta">Open FMD guide →</span>
+            </div>
+          </a>
+
+          <a class="project-card project-card--half project-card--health" href="/health/dash-14-day-guide/">
+            <div class="project-card__top">
+              <span class="project-card__number">04</span>
+              <p class="project-card__label">Health · Hebrew</p>
+              <h3>DASH Blood Pressure Guide</h3>
+              <p>A 14-day DASH program combining meal options, movement, lifestyle habits, sodium guidance, progress tracking, and an on-device blood-pressure log.</p>
+            </div>
+            <div class="project-card__bottom">
+              <div class="project-card__meta"><span>14-day program</span><span>Daily tracking</span></div>
+              <span class="project-card__cta">Open DASH guide →</span>
+            </div>
+          </a>
+
+          <a class="project-card project-card--wide project-card--interview" href="/interviews/">
+            <div class="project-card__top">
+              <span class="project-card__number">05</span>
+              <p class="project-card__label">Career · Preparation</p>
+              <h3>Interview Lab</h3>
+              <p>Structured preparation material for technical and leadership interviews: company-specific context, system design, behavioral stories, and focused review.</p>
+            </div>
+            <div class="project-card__bottom">
+              <div class="project-card__meta"><span>System design</span><span>Leadership</span><span>Company prep</span></div>
+              <span class="project-card__cta">Enter Interview Lab →</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <section class="home-section home-manifesto" aria-labelledby="manifesto-title">
+        <div>
+          <p class="home-section__kicker">How this site works</p>
+          <h2 id="manifesto-title">Useful first.<br>Beautiful too.</h2>
+        </div>
+        <div class="home-manifesto__copy">
+          <p>Each page starts with a real need: navigate a family trip, follow a health program, or prepare for a difficult conversation. The design exists to make that need easier to act on.</p>
+          <div class="home-manifesto__principles">
+            <div><strong>Clear</strong><span>The important thing is visible first.</span></div>
+            <div><strong>Practical</strong><span>Links, routes, steps, and decisions stay close.</span></div>
+            <div><strong>Calm</strong><span>Enough visual energy to engage, never enough to distract.</span></div>
           </div>
-          <a class="card-action" href="/health/fmd-5-day-guide/">Open FMD guide</a>
-        </article>
-        <article class="catalog-card health-card">
-          <div>
-            <p class="card-label">14-day plan · Hebrew</p>
-            <h3>DASH Blood Pressure Guide</h3>
-            <p>A 14-day DASH program with vegan and standard meal options, exercise, lifestyle habits, sodium targets, progress tracking, and an on-device blood-pressure log.</p>
-          </div>
-          <a class="card-action" href="/health/dash-14-day-guide/">Open DASH guide</a>
-        </article>
-      </div>
-    </section>
+        </div>
+      </section>
+    </div>
   </main>
 
-  <footer class="site-footer">
-    <span>Personal pages on itamarlev.com.</span>
+  <footer class="home-shell home-footer">
+    <span>itamarlev.com · a personal collection of useful systems</span>
+    <a href="#top" onclick="window.scrollTo({top:0,behavior:'smooth'}); return false;">Back to top ↑</a>
   </footer>
 </body>
 </html>
