@@ -62,8 +62,8 @@
       white-space:nowrap;
     }
     .provider-link:hover { background:var(--trip-sky); color:var(--trip-navy); }
-    .provider-link--apple::before { content:""; margin-inline-end:6px; font-size:.92rem; }
-    .provider-link--waze::before { content:"◉"; margin-inline-end:6px; color:var(--trip-pine); }
+    .provider-link--apple::before { content:"Apple"; margin-inline-end:6px; font-size:.62rem; opacity:.72; }
+    .provider-link--waze::before { content:"W"; margin-inline-end:6px; font-size:.7rem; color:var(--trip-pine); }
     .route-provider-links {
       margin-top:10px;
       padding:12px 14px;
