@@ -259,3 +259,9 @@ document.documentElement.classList.add("js");
     }, { once: true });
   }
 })();
+
+if (window.location.pathname.includes("/trips/zurich-black-forest-alsace-2026/")) {
+  const guideScript = document.createElement("script");
+  guideScript.src = "../../assets/zurich-location-guides.js";
+  document.head.append(guideScript);
+}
