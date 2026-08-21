@@ -104,7 +104,7 @@
 
   if (!document.querySelector('script[data-zurich-map-options]')) {
     const mapOptionsScript = document.createElement("script");
-    mapOptionsScript.src = "../../assets/zurich-map-options.js?v=20260821-1";
+    mapOptionsScript.src = "../../assets/zurich-map-options.js?v=20260821-2";
     mapOptionsScript.dataset.zurichMapOptions = "true";
     document.head.append(mapOptionsScript);
   }
