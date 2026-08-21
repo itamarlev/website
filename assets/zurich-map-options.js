@@ -85,7 +85,23 @@
       margin-top:0;
       padding-top:0;
     }
-    .hotel-links .provider-link,
+    .hotel-map-inline {
+      display:inline-flex;
+      flex:0 0 auto;
+      gap:5px;
+      align-items:center;
+      white-space:nowrap;
+    }
+    .hotel-map-inline > a:first-child { margin:0; }
+    .hotel-map-inline .provider-link {
+      width:26px;
+      height:26px;
+      min-height:26px;
+      flex-basis:26px;
+      border-radius:8px;
+    }
+    .hotel-map-inline .provider-link img { width:14px; height:14px; }
+    .hotel-map-inline .provider-link--waze img { width:15px; height:15px; }
     .map-actions .provider-link {
       width:30px;
       height:30px;
@@ -97,6 +113,9 @@
       .provider-link { width:28px; height:28px; flex-basis:28px; }
       .provider-link img { width:15px; height:15px; }
       .place-title-row { gap:5px; }
+      .hotel-map-inline .provider-link { width:24px; height:24px; min-height:24px; flex-basis:24px; }
+      .hotel-map-inline .provider-link img { width:13px; height:13px; }
+      .hotel-map-inline .provider-link--waze img { width:14px; height:14px; }
     }
   `;
   document.head.append(style);
@@ -225,7 +244,22 @@
     }
   };
 
-  document.querySelectorAll(".hotel-links a[href*='google.com/maps'], .map-actions a[href*='google.com/maps']").forEach((googleLink) => {
+  document.querySelectorAll(".hotel-links a[href*='google.com/maps']").forEach((googleLink) => {
+    if (googleLink.closest(".hotel-map-inline")) return;
+    const destination = queryFromGoogle(googleLink.href, googleLink.textContent.trim());
+    if (!destination) return;
+
+    const inlineGroup = document.createElement("span");
+    inlineGroup.className = "hotel-map-inline";
+    googleLink.insertAdjacentElement("beforebegin", inlineGroup);
+    inlineGroup.append(
+      googleLink,
+      appleLink(appleDirections({ destination })),
+      wazeLink(wazeDirections(destination))
+    );
+  });
+
+  document.querySelectorAll(".map-actions a[href*='google.com/maps']").forEach((googleLink) => {
     const parent = googleLink.parentElement;
     if (!parent || parent.querySelector(".provider-link--apple")) return;
     const destination = queryFromGoogle(googleLink.href, googleLink.textContent.trim());
