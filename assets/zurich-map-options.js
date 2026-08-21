@@ -34,61 +34,69 @@
       font-size:.82rem;
       font-weight:850;
     }
-    .provider-links {
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      align-items:center;
-      margin-top:10px;
-    }
-    .provider-links__label {
-      color:var(--trip-muted);
-      font-size:.74rem;
-      font-weight:800;
-    }
     .provider-link {
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:38px;
-      padding:0 12px;
-      border:1px solid color-mix(in srgb, var(--trip-pine) 30%, var(--trip-line));
-      border-radius:999px;
+      display:inline-grid;
+      width:30px;
+      height:30px;
+      flex:0 0 30px;
+      place-items:center;
+      padding:0;
+      border:1px solid color-mix(in srgb, var(--trip-pine) 28%, var(--trip-line));
+      border-radius:9px;
       background:var(--trip-paper-bright);
       color:var(--trip-navy);
-      font-size:.76rem;
-      font-weight:850;
       text-decoration:none;
-      white-space:nowrap;
+      box-shadow:0 3px 10px rgba(35,42,73,.07);
+      transition:transform .16s ease, background-color .16s ease, border-color .16s ease;
     }
-    .provider-link:hover { background:var(--trip-sky); color:var(--trip-navy); }
-    .provider-link--apple::before { content:"Apple"; margin-inline-end:6px; font-size:.62rem; opacity:.72; }
-    .provider-link--waze::before { content:"W"; margin-inline-end:6px; font-size:.7rem; color:var(--trip-pine); }
-    .route-provider-links {
-      margin-top:10px;
-      padding:12px 14px;
-      border:1px solid var(--trip-line);
-      border-radius:14px;
-      background:color-mix(in srgb, var(--trip-sky) 42%, var(--trip-paper-bright));
+    .provider-link:hover,
+    .provider-link:focus-visible {
+      border-color:color-mix(in srgb, var(--trip-pine) 58%, var(--trip-line));
+      background:var(--trip-sky);
+      color:var(--trip-navy);
+      transform:translateY(-1px);
     }
-    .route-provider-note {
-      flex-basis:100%;
-      margin:0;
-      color:var(--trip-muted);
-      font-size:.68rem;
-      line-height:1.45;
+    .provider-link img {
+      display:block;
+      width:16px;
+      height:16px;
+      object-fit:contain;
     }
-    .point-provider-links {
-      grid-column:1 / -1;
-      margin-top:4px;
+    .provider-link--waze img { width:17px; height:17px; }
+    .place-title-row {
+      grid-column:1;
+      display:flex;
+      min-width:0;
+      gap:6px;
+      align-items:center;
+      flex-wrap:wrap;
     }
-    .point-provider-links .provider-link { min-height:32px; padding:0 10px; font-size:.7rem; }
+    .place-title-row > a:first-child { min-width:0; }
+    .route-map-row {
+      display:flex;
+      width:100%;
+      gap:7px;
+      align-items:center;
+      flex-wrap:wrap;
+      margin-top:auto;
+      padding-top:20px;
+    }
+    .route-map-row .route-button {
+      margin-top:0;
+      padding-top:0;
+    }
     .hotel-links .provider-link,
-    .map-actions .provider-link { min-height:36px; }
+    .map-actions .provider-link {
+      width:30px;
+      height:30px;
+      min-height:30px;
+      padding:0;
+    }
     @media(max-width:520px) {
       .day-nav__track a .day-weekday-nav { font-size:.62rem; }
-      .provider-links { gap:6px; }
-      .provider-link { min-height:36px; padding:0 10px; }
+      .provider-link { width:28px; height:28px; flex-basis:28px; }
+      .provider-link img { width:15px; height:15px; }
+      .place-title-row { gap:5px; }
     }
   `;
   document.head.append(style);
@@ -131,15 +139,36 @@
     return `https://waze.com/ul?${params.toString()}`;
   };
 
-  const providerLink = (href, label, className) => {
+  const providerLink = (href, label, className, iconUrl) => {
     const link = document.createElement("a");
     link.className = `provider-link ${className}`;
     link.href = href;
     link.target = "_blank";
     link.rel = "noopener noreferrer";
-    link.textContent = label;
+    link.setAttribute("aria-label", label);
+    link.title = label;
+
+    const icon = document.createElement("img");
+    icon.src = iconUrl;
+    icon.alt = "";
+    icon.setAttribute("aria-hidden", "true");
+    link.append(icon);
     return link;
   };
+
+  const appleLink = (href) => providerLink(
+    href,
+    "פתחו ב-Apple Maps",
+    "provider-link--apple",
+    "https://cdn.simpleicons.org/apple/273256"
+  );
+
+  const wazeLink = (href) => providerLink(
+    href,
+    "פתחו ב-Waze",
+    "provider-link--waze",
+    "https://cdn.simpleicons.org/waze/33CCFF"
+  );
 
   const routeDataFromGoogle = (href) => {
     try {
@@ -155,44 +184,36 @@
   };
 
   document.querySelectorAll(".day-chapter .route-button[href*='google.com/maps/dir']").forEach((googleLink) => {
-    if (googleLink.nextElementSibling?.classList.contains("route-provider-links")) return;
+    if (googleLink.closest(".route-map-row")) return;
     const data = routeDataFromGoogle(googleLink.href);
     if (!data?.destination) return;
 
     const row = document.createElement("div");
-    row.className = "provider-links route-provider-links";
-    const label = document.createElement("span");
-    label.className = "provider-links__label";
-    label.textContent = "אותו מסלול גם ב:";
-    row.append(label);
-    row.append(providerLink(appleDirections(data), "Apple Maps", "provider-link--apple"));
-    row.append(providerLink(wazeDirections(data.destination), "Waze", "provider-link--waze"));
-
+    row.className = "route-map-row";
+    googleLink.insertAdjacentElement("beforebegin", row);
+    row.append(googleLink);
+    row.append(appleLink(appleDirections(data)));
+    const waze = wazeLink(wazeDirections(data.destination));
     if (data.waypoints.length) {
-      const note = document.createElement("p");
-      note.className = "route-provider-note";
-      note.textContent = "Apple Maps שומר את עצירות הביניים. Waze נפתח ליעד האחרון בלבד; השתמשו בקישורי הנקודות למעבר בין העצירות.";
-      row.append(note);
+      waze.title = "פתחו ב-Waze ליעד האחרון; לעצירות הביניים השתמשו באייקונים ליד כל מקום";
+      waze.setAttribute("aria-label", waze.title);
     }
-    googleLink.insertAdjacentElement("afterend", row);
+    row.append(waze);
   });
 
   document.querySelectorAll(".day-points li").forEach((item) => {
-    if (item.querySelector(".point-provider-links")) return;
+    if (item.querySelector(".place-title-row")) return;
     const googleLink = item.querySelector(":scope > a[href*='google.com/maps']");
     if (!googleLink) return;
     const destination = googleLink.textContent.trim();
     if (!destination) return;
 
-    const row = document.createElement("div");
-    row.className = "provider-links point-provider-links";
-    const label = document.createElement("span");
-    label.className = "provider-links__label";
-    label.textContent = "ניווט:";
-    row.append(label);
-    row.append(providerLink(appleDirections({ destination }), "Apple Maps", "provider-link--apple"));
-    row.append(providerLink(wazeDirections(destination), "Waze", "provider-link--waze"));
-    item.append(row);
+    const titleRow = document.createElement("div");
+    titleRow.className = "place-title-row";
+    googleLink.insertAdjacentElement("beforebegin", titleRow);
+    titleRow.append(googleLink);
+    titleRow.append(appleLink(appleDirections({ destination })));
+    titleRow.append(wazeLink(wazeDirections(destination)));
   });
 
   const queryFromGoogle = (href, fallback = "") => {
@@ -209,7 +230,9 @@
     if (!parent || parent.querySelector(".provider-link--apple")) return;
     const destination = queryFromGoogle(googleLink.href, googleLink.textContent.trim());
     if (!destination) return;
-    parent.append(providerLink(appleDirections({ destination }), "Apple Maps", "provider-link--apple"));
-    parent.append(providerLink(wazeDirections(destination), "Waze", "provider-link--waze"));
+    googleLink.after(
+      appleLink(appleDirections({ destination })),
+      wazeLink(wazeDirections(destination))
+    );
   });
 })();
