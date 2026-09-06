@@ -3,34 +3,101 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#08110f">
-<title>המחשבות שלי | itamarlev.com</title>
-<link rel="stylesheet" href="app.css?v=20260906">
+<meta name="theme-color" content="#f7f7f4">
+<title>המחשבות שלי</title>
+<link rel="stylesheet" href="app.css?v=20260906b">
 </head>
 <body>
-<header class="hero">
-  <div class="shell">
-    <nav class="nav"><a class="brand" href="/"><span class="brandmark">IL</span><span>itamarlev.com</span></a><div class="navactions"><a class="navbtn" href="/">← <span data-t="home">דף הבית</span></a><button id="lang" class="navbtn">EN</button></div></nav>
-    <div class="heroText"><p class="kicker" data-t="kicker">מקום אחד לכל מה שלא בא לך לשכוח</p><h1 data-t="title">מה עובר לך<br>בראש?</h1><p data-t="subtitle">לכתוב, לדבר, לתזמן — ולתת למחשבות החשובות לחזור בזמן הנכון.</p></div>
-  </div>
+<div class="app-shell">
+<header class="topbar">
+  <a class="back" href="/">←</a>
+  <div class="brand"><span class="brand-dot"></span><span data-t="appName">המחשבות שלי</span></div>
+  <button id="lang" class="icon-btn">EN</button>
 </header>
-<main class="main shell">
-  <section class="capture">
-    <div class="captureTop"><div class="inputWrap"><textarea id="newText" data-ph="placeholder" placeholder="כתוב מחשבה, משימה או משהו שתרצה לזכור..."></textarea><span class="inputHint" data-t="inputHint">אפשר גם פשוט לדבר</span></div><button id="voice" class="mic" aria-label="הקלטה קולית" title="הקלטה קולית"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4M8 21h8"/></svg></button></div>
-    <div id="voiceState" class="voiceState"><span class="dot"></span><span id="voiceLabel">מקשיב… דבר עכשיו</span></div>
-    <div id="audioDraft" class="audioDraft"><audio id="draftAudio" controls></audio><button id="removeAudio" type="button">×</button></div>
-    <div class="captureMeta"><label class="typeField"><span data-t="itemType">סוג פריט</span><select id="newType"><option value="thought" data-t="typeThought">מחשבה / משימה</option><option value="event" data-t="typeEvent">אירוע</option><option value="friend" data-t="typeFriend">חבר / אדם</option></select></label></div>
-    <div id="pending" class="pending"><span>◷</span><span id="pendingText"></span><button id="clearPending" type="button">×</button></div>
-    <div class="captureActions"><button id="scheduleNew" class="btn secondary" data-t="schedule">תזמון</button><button id="add" class="btn primary"><span>＋</span>&nbsp;<span data-t="add">הוספת פריט</span></button></div>
+
+<main class="main">
+  <section class="welcome">
+    <p class="eyebrow" data-t="eyebrow">המקום שלך לזכור</p>
+    <h1 data-t="headline">מה עובר לך בראש?</h1>
+    <p data-t="subhead">לכתוב, לדבר, לתזמן — ולחזור לזה בדיוק בזמן.</p>
   </section>
-  <section class="stats"><div class="stat"><strong id="activeCount">0</strong><span data-t="activeStat">פריטים פעילים</span></div><div class="stat"><strong id="scheduledCount">0</strong><span data-t="scheduledStat">מתוזמנים</span></div><div class="stat"><strong id="dueCount">0</strong><span data-t="dueStat">מחכים עכשיו</span></div></section>
-  <section><div class="toolbar"><div><h2 class="sectionTitle" data-t="yourThoughts">הפריטים שלך</h2><p class="sectionSub" data-t="yourThoughtsSub">מה שחשוב עכשיו נשאר קרוב.</p></div><div class="tabs"><button class="tab active" data-filter="active" data-t="active">פעילים</button><button class="tab" data-filter="archived" data-t="archived">ארכיון</button><button class="tab" data-filter="all" data-t="all">הכול</button></div></div><div id="list" class="list"></div><div id="empty" class="empty hidden"><div class="emptyIcon">✓</div><strong data-t="emptyTitle">הכול שקט כאן</strong><div data-t="empty">הפריט הבא שלך יכול להתחיל למעלה.</div></div></section>
-  <div class="hint" data-t="local">הפריטים נשמרים מקומית במכשיר הזה.</div>
+
+  <section class="composer-card">
+    <div class="composer-row">
+      <textarea id="newText" data-ph="placeholder" placeholder="כתוב משהו שלא תרצה לשכוח..."></textarea>
+      <button id="voice" class="voice-btn" aria-label="הקלטה קולית" title="הקלטה קולית">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4M8 21h8"/></svg>
+      </button>
+    </div>
+    <div id="voiceState" class="voice-state"><span class="pulse-dot"></span><span id="voiceLabel"></span></div>
+    <div id="audioDraft" class="audio-draft"><audio id="draftAudio" controls></audio><button id="removeAudio" type="button">×</button></div>
+
+    <div class="composer-options">
+      <select id="newType" aria-label="סוג פריט">
+        <option value="thought" data-t="typeThought">מחשבה / משימה</option>
+        <option value="event" data-t="typeEvent">אירוע</option>
+        <option value="friend" data-t="typeFriend">חבר / אדם</option>
+      </select>
+      <button id="scheduleNew" class="soft-btn" data-t="schedule">תזמון</button>
+    </div>
+
+    <div id="pending" class="pending"><span>◷</span><span id="pendingText"></span><button id="clearPending" type="button">×</button></div>
+    <button id="add" class="add-btn"><span>＋</span><span data-t="add">הוסף</span></button>
+  </section>
+
+  <section class="quick-stats">
+    <div><strong id="activeCount">0</strong><span data-t="activeStat">פעילים</span></div>
+    <div><strong id="scheduledCount">0</strong><span data-t="scheduledStat">מתוזמנים</span></div>
+    <div><strong id="dueCount">0</strong><span data-t="dueStat">עכשיו</span></div>
+  </section>
+
+  <section id="migrationBox" class="migration-box hidden">
+    <div><strong data-t="migrationTitle">מצאתי מחשבות מהאפליקציה הישנה</strong><p data-t="migrationText">אפשר למזג אותן לכאן בלי למחוק שום דבר שקיים באתר.</p></div>
+    <button id="migrateBtn" class="mini-primary" data-t="migrate">ייבוא</button>
+  </section>
+
+  <section class="items-section">
+    <div class="section-head">
+      <div><h2 data-t="yourThoughts">המחשבות שלך</h2><p data-t="yourThoughtsSub">מה שחשוב נשאר קרוב.</p></div>
+      <div class="tabs">
+        <button class="tab active" data-filter="active" data-t="active">פעילים</button>
+        <button class="tab" data-filter="archived" data-t="archived">ארכיון</button>
+        <button class="tab" data-filter="all" data-t="all">הכול</button>
+      </div>
+    </div>
+    <div id="list" class="list"></div>
+    <div id="empty" class="empty hidden"><span>✓</span><strong data-t="emptyTitle">הכול מסודר</strong><p data-t="empty">הפריט הבא שלך מתחיל למעלה.</p></div>
+  </section>
+
+  <section class="data-tools">
+    <button id="importBtn" class="text-btn" data-t="import">ייבוא מהאפליקציה הישנה</button>
+    <button id="exportBtn" class="text-btn" data-t="export">גיבוי המחשבות</button>
+  </section>
+  <p class="storage-note" data-t="local">המחשבות נשמרות במכשיר הזה.</p>
 </main>
-<dialog id="scheduleDlg"><form id="scheduleForm" class="modal"><div class="modalHead"><h2 data-t="scheduleTitle">מתי להזכיר לך?</h2><button type="button" class="close" data-close="scheduleDlg">×</button></div><div class="grid2"><div class="field"><label data-t="date">תאריך</label><input id="date" type="date"></div><div class="field"><label data-t="time">שעה</label><input id="time" type="time"></div></div><div class="field"><label data-t="repeat">חזרה</label><select id="repeat"><option value="none" data-t="none">ללא חזרה</option><option value="daily" data-t="daily">פעם ביום</option><option value="3days" data-t="threeDays">פעם בשלושה ימים</option><option value="weekly" data-t="weekly">פעם בשבוע</option><option value="biweekly" data-t="biweekly">פעם בשבועיים</option><option value="monthly" data-t="monthly">פעם בחודש</option><option value="bimonthly" data-t="bimonthly">פעם בחודשיים</option></select></div><div class="switch"><div><strong data-t="random">להפתיע אותי מדי פעם</strong><p data-t="randomHelp">הפריט יחזור במועד אקראי לפי התדירות שתבחר.</p></div><input id="randomOn" type="checkbox"></div><div id="randomWrap" class="field hidden"><label data-t="frequency">באיזו תדירות?</label><select id="frequency"><option value="daily" data-t="daily">פעם ביום</option><option value="3days" data-t="threeDays">פעם בשלושה ימים</option><option value="weekly" data-t="weekly">פעם בשבוע</option><option value="biweekly" data-t="biweekly">פעם בשבועיים</option></select></div><div class="modalActions"><button type="button" id="clearSchedule" class="btn ghost" data-t="clear">ללא תזמון</button><button class="btn primary" data-t="save">שמירה</button></div></form></dialog>
-<dialog id="editDlg"><form id="editForm" class="modal"><div class="modalHead"><h2 data-t="editTitle">עריכת פריט</h2><button type="button" class="close" data-close="editDlg">×</button></div><div class="field"><label data-t="itemType">סוג פריט</label><select id="editType"><option value="thought" data-t="typeThought">מחשבה / משימה</option><option value="event" data-t="typeEvent">אירוע</option><option value="friend" data-t="typeFriend">חבר / אדם</option></select></div><div class="field"><textarea id="editText"></textarea></div><div class="modalActions"><button type="button" id="editSchedule" class="btn secondary" data-t="changeSchedule">שינוי תזמון</button><button class="btn primary" data-t="saveChanges">שמירת שינויים</button></div></form></dialog>
-<dialog id="deleteDlg"><div class="modal"><div class="modalHead"><h2 data-t="deleteTitle">למחוק את הפריט?</h2><button type="button" class="close" data-close="deleteDlg">×</button></div><p style="color:var(--muted);line-height:1.6" data-t="deleteHelp">המחיקה סופית. אם אולי תרצה לחזור אליו, אפשר להעביר אותו לארכיון.</p><div class="modalActions"><button id="cancelDelete" class="btn ghost" data-t="cancel">ביטול</button><button id="confirmDelete" class="btn danger" data-t="delete">מחיקה</button></div></div></dialog>
+</div>
+
+<dialog id="scheduleDlg"><form id="scheduleForm" class="modal">
+  <div class="modal-head"><h2 data-t="scheduleTitle">מתי להזכיר לך?</h2><button type="button" class="close" data-close="scheduleDlg">×</button></div>
+  <div class="grid2"><label><span data-t="date">תאריך</span><input id="date" type="date"></label><label><span data-t="time">שעה</span><input id="time" type="time"></label></div>
+  <label><span data-t="repeat">חזרה</span><select id="repeat"><option value="none" data-t="none">ללא חזרה</option><option value="daily" data-t="daily">כל יום</option><option value="3days" data-t="threeDays">כל 3 ימים</option><option value="weekly" data-t="weekly">כל שבוע</option><option value="biweekly" data-t="biweekly">כל שבועיים</option><option value="monthly" data-t="monthly">כל חודש</option><option value="bimonthly" data-t="bimonthly">כל חודשיים</option></select></label>
+  <label class="switch-row"><span><strong data-t="random">להפתיע אותי</strong><small data-t="randomHelp">להחזיר את הפריט בזמן אקראי לפי התדירות.</small></span><input id="randomOn" type="checkbox"></label>
+  <label id="randomWrap" class="hidden"><span data-t="frequency">תדירות</span><select id="frequency"><option value="daily" data-t="daily">כל יום</option><option value="3days" data-t="threeDays">כל 3 ימים</option><option value="weekly" data-t="weekly">כל שבוע</option><option value="biweekly" data-t="biweekly">כל שבועיים</option></select></label>
+  <div class="modal-actions"><button type="button" id="clearSchedule" class="ghost-btn" data-t="clear">ללא תזמון</button><button class="modal-primary" data-t="save">שמירה</button></div>
+</form></dialog>
+
+<dialog id="editDlg"><form id="editForm" class="modal">
+  <div class="modal-head"><h2 data-t="editTitle">עריכת פריט</h2><button type="button" class="close" data-close="editDlg">×</button></div>
+  <label><span data-t="itemType">סוג פריט</span><select id="editType"><option value="thought" data-t="typeThought">מחשבה / משימה</option><option value="event" data-t="typeEvent">אירוע</option><option value="friend" data-t="typeFriend">חבר / אדם</option></select></label>
+  <label><span data-t="content">תוכן</span><textarea id="editText"></textarea></label>
+  <div class="modal-actions"><button type="button" id="editSchedule" class="ghost-btn" data-t="changeSchedule">שינוי תזמון</button><button class="modal-primary" data-t="saveChanges">שמירה</button></div>
+</form></dialog>
+
+<dialog id="deleteDlg"><div class="modal"><div class="modal-head"><h2 data-t="deleteTitle">למחוק?</h2><button type="button" class="close" data-close="deleteDlg">×</button></div><p class="modal-copy" data-t="deleteHelp">המחיקה סופית. אפשר להעביר לארכיון במקום.</p><div class="modal-actions"><button id="cancelDelete" class="ghost-btn" data-t="cancel">ביטול</button><button id="confirmDelete" class="danger-btn" data-t="delete">מחיקה</button></div></div></dialog>
+
+<dialog id="importDlg"><form id="importForm" class="modal"><div class="modal-head"><h2 data-t="importTitle">ייבוא מחשבות</h2><button type="button" class="close" data-close="importDlg">×</button></div><p class="modal-copy" data-t="importHelp">הדבק כאן JSON שיוצא מהאפליקציה הישנה. פריטים קיימים לא יימחקו.</p><textarea id="importText" class="import-text" placeholder='[{"text":"..."}]'></textarea><div class="modal-actions"><button type="button" class="ghost-btn" data-close="importDlg" data-t="cancel">ביטול</button><button class="modal-primary" data-t="importNow">ייבוא עכשיו</button></div></form></dialog>
+
 <div id="toast" class="toast"></div>
-<script src="app.js?v=20260906"></script>
+<script src="app.js?v=20260906b"></script>
 </body>
 </html>
