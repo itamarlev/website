@@ -1,6 +1,6 @@
 # itamarlev.com
 
-Static personal website for private pages and section catalogues.
+Private personal website for pages, trip journals, and section catalogues. Most pages are static; the shared trip journal uses Cloudflare Pages Functions.
 
 ## Structure
 
@@ -43,6 +43,30 @@ Use Cloudflare Pages with:
 - Build command: empty
 - Build output directory: `/`
 - Production domain: `itamarlev.com`
+
+### Shared trip memories
+
+The Zurich / Black Forest / Alsace page has a shared journal for every trip day. Notes and photo metadata are stored in D1; image files are stored in R2.
+
+Create the resources once:
+
+```sh
+npx wrangler d1 create trip-memories
+npx wrangler r2 bucket create trip-memories
+```
+
+Use these exact binding names under **Workers & Pages → the Pages project → Settings → Bindings**, then redeploy:
+
+- D1 database: `TRIP_MEMORIES_DB`
+- R2 bucket: `TRIP_MEMORIES_BUCKET`
+
+Apply `migrations/0001_trip_memories.sql` in the D1 dashboard console. If your local Wrangler configuration already contains the D1 binding, the equivalent command is:
+
+```sh
+npx wrangler d1 execute TRIP_MEMORIES_DB --remote --file ./migrations/0001_trip_memories.sql
+```
+
+The root `_routes.json` limits Function invocations to `/api/trip-memories/*`. Keep that API path inside the same Cloudflare Access application as the trip page so only invited family members can read or change memories.
 
 ## Authentication
 
