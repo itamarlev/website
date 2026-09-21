@@ -102,10 +102,22 @@
     prepGrid.prepend(prep);
   }
 
-  if (!document.querySelector('script[data-zurich-map-options]')) {
+  const loadMapOptions = () => {
+    if (document.querySelector('script[data-zurich-map-options]')) return;
     const mapOptionsScript = document.createElement("script");
-    mapOptionsScript.src = "../../assets/zurich-map-options.js?v=20260821-2";
+    mapOptionsScript.src = "../../assets/zurich-map-options.js?v=20260821-3";
     mapOptionsScript.dataset.zurichMapOptions = "true";
     document.head.append(mapOptionsScript);
+  };
+
+  if (!document.querySelector('script[data-zurich-offenburg-stay]')) {
+    const offenburgScript = document.createElement("script");
+    offenburgScript.src = "../../assets/zurich-offenburg-stay.js?v=20260921-1";
+    offenburgScript.dataset.zurichOffenburgStay = "true";
+    offenburgScript.addEventListener("load", loadMapOptions, { once: true });
+    offenburgScript.addEventListener("error", loadMapOptions, { once: true });
+    document.head.append(offenburgScript);
+  } else {
+    loadMapOptions();
   }
 })();
