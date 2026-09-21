@@ -112,7 +112,7 @@
 
   if (!document.querySelector('script[data-zurich-offenburg-stay]')) {
     const offenburgScript = document.createElement("script");
-    offenburgScript.src = "../../assets/zurich-offenburg-stay.js?v=20260921-1";
+    offenburgScript.src = "../../assets/zurich-offenburg-stay.js?v=20260921-2";
     offenburgScript.dataset.zurichOffenburgStay = "true";
     offenburgScript.addEventListener("load", loadMapOptions, { once: true });
     offenburgScript.addEventListener("error", loadMapOptions, { once: true });
