@@ -265,7 +265,7 @@ if (window.location.pathname.includes("/trips/zurich-black-forest-alsace-2026/")
   guideScript.src = "../../assets/zurich-location-guides.js?v=20260821-4";
   guideScript.addEventListener("load", () => {
     const rentalScript = document.createElement("script");
-    rentalScript.src = "../../assets/zurich-rental-update.js?v=20260821-1";
+    rentalScript.src = "../../assets/zurich-rental-update.js?v=20260922-1";
     document.head.append(rentalScript);
   }, { once: true });
   document.head.append(guideScript);
