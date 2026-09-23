@@ -40,7 +40,8 @@
       speechUnsupported:'הכתבה ישירה אינה זמינה כאן. אפשר להשתמש במיקרופון של מקלדת האייפון.', speechListening:'מקשיב…', speechError:'לא הצלחתי להפעיל הכתבה קולית. אפשר להשתמש במיקרופון של המקלדת.',
       allowNotif:'אפשר להפעיל התראות בדפדפן כדי לקבל תזכורות בזמן שהאפליקציה פעילה.', showReminders:'הצג תזכורות', dueListTitle:'התזכורות שמחכות לך', close:'סגור', transferToSite:'העבר לאתר', transferred:'המחשבות מוכנות להעברה לאתר.',
       exportBackup:'ייצוא גיבוי', importBackup:'ייבוא גיבוי', importTitle:'בדיקת הגיבוי לפני ייבוא', confirmImport:'מזג נתונים',
-      backupReady:'קובץ הגיבוי נוצר.', importInvalid:'לא הצלחתי לקרוא את קובץ הגיבוי.', importComplete:'הייבוא הושלם בלי למחוק נתונים קיימים.'
+      backupReady:'קובץ הגיבוי נוצר.', importInvalid:'לא הצלחתי לקרוא את קובץ הגיבוי.', importComplete:'הייבוא הושלם בלי למחוק נתונים קיימים.',
+      notificationTitle:'התראות מערכת', enableNotifications:'הפעל', notificationEnabled:'התראות מערכת מאושרות בדפדפן הזה.', notificationDenied:'ההתראות חסומות בהגדרות הדפדפן/המכשיר.', notificationUnsupported:'הדפדפן הזה לא תומך בהתראות מערכת.', notificationPrompt:'לחץ הפעל כדי לאשר התראות מערכת.', notificationHomeScreen:'באייפון, להתראות כשהאתר אינו פתוח יש להוסיף את האתר למסך הבית ולאשר התראות משם.', notificationGrantedToast:'ההתראות הופעלו.', notificationDeniedToast:'לא ניתן להפעיל התראות בלי הרשאה.'
     },
     en: {
       title:'My Thoughts', subtitle:'Remember, schedule, and return to what matters',
@@ -65,7 +66,8 @@
       speechUnsupported:'Direct dictation is unavailable here. You can use the iPhone keyboard microphone.', speechListening:'Listening…', speechError:'Could not start voice dictation. You can use the keyboard microphone instead.',
       allowNotif:'You can enable browser notifications to receive reminders while the app is active.', showReminders:'Show reminders', dueListTitle:'Reminders waiting for you', close:'Close', transferToSite:'Transfer to website', transferred:'Your thoughts are ready to transfer.',
       exportBackup:'Export backup', importBackup:'Import backup', importTitle:'Review backup before import', confirmImport:'Merge data',
-      backupReady:'Backup file created.', importInvalid:'Could not read the backup file.', importComplete:'Import finished without deleting existing data.'
+      backupReady:'Backup file created.', importInvalid:'Could not read the backup file.', importComplete:'Import finished without deleting existing data.',
+      notificationTitle:'System notifications', enableNotifications:'Enable', notificationEnabled:'System notifications are allowed in this browser.', notificationDenied:'Notifications are blocked in browser/device settings.', notificationUnsupported:'System notifications are not supported in this browser.', notificationPrompt:'Tap Enable to allow system notifications.', notificationHomeScreen:'On iPhone, for notifications while the site is closed, add it to the Home Screen and allow notifications there.', notificationGrantedToast:'Notifications enabled.', notificationDeniedToast:'Notifications cannot be enabled without permission.'
     }
   };
 
@@ -83,6 +85,7 @@
     document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n));
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => el.placeholder = t(el.dataset.i18nPlaceholder));
     $('langBtn').textContent = lang === 'he' ? 'EN' : 'עברית';
+    updateNotificationUI();
     render();
   }
 
@@ -545,6 +548,63 @@
     advanceScheduledOccurrence(item);
   }
 
+  function isStandaloneDisplay(){
+    return window.matchMedia?.('(display-mode: standalone)').matches || window.navigator.standalone === true;
+  }
+
+  function isLikelyIOS(){
+    return /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  }
+
+  function updateNotificationUI(){
+    const status = $('notificationStatus');
+    const button = $('notificationBtn');
+    if(!status || !button) return;
+
+    if(!('Notification' in window)){
+      status.textContent = t('notificationUnsupported');
+      button.disabled = true;
+      return;
+    }
+
+    button.disabled = Notification.permission === 'granted' || Notification.permission === 'denied';
+
+    if(Notification.permission === 'granted'){
+      status.textContent = t('notificationEnabled');
+      return;
+    }
+    if(Notification.permission === 'denied'){
+      status.textContent = t('notificationDenied');
+      return;
+    }
+
+    status.textContent = isLikelyIOS() && !isStandaloneDisplay()
+      ? t('notificationHomeScreen')
+      : t('notificationPrompt');
+  }
+
+  async function requestNotificationPermission(){
+    if(!('Notification' in window)){
+      updateNotificationUI();
+      return;
+    }
+    try{
+      const permission = await Notification.requestPermission();
+      updateNotificationUI();
+      toast(permission === 'granted' ? t('notificationGrantedToast') : t('notificationDeniedToast'));
+    }catch(e){
+      updateNotificationUI();
+      toast(t('notificationDeniedToast'));
+    }
+  }
+
+  async function registerServiceWorker(){
+    if(!('serviceWorker' in navigator)) return;
+    try{ await navigator.serviceWorker.register('./sw.js', {scope:'./'}); }
+    catch(e){ console.warn('Service worker registration failed', e); }
+  }
+
   function maybeNotify(){
     const materialized = materializeDueOccurrences();
     const dueItems = state.items.filter(x => !x.archived && isDue(x));
@@ -753,6 +813,7 @@
   });
 
   $('langBtn').addEventListener('click', () => setLanguage(state.lang === 'he' ? 'en':'he'));
+  $('notificationBtn').addEventListener('click', requestNotificationPermission);
 
   function focusForNativeDictation(messageKey='speechUnsupported'){
     const input = $('thoughtInput');
@@ -803,6 +864,7 @@
   window.addEventListener('focus', maybeNotify);
   setInterval(maybeNotify, 60000);
 
+  registerServiceWorker();
   load();
   importFromHash();
   if(location.hostname === 'itamarlev.com' || location.hostname.endsWith('.itamarlev.com')) $('transferBtn').style.display='none';

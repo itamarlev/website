@@ -1,0 +1,12 @@
+{
+  "name": "My Thoughts",
+  "short_name": "Thoughts",
+  "id": "/thoughts-assistant/",
+  "start_url": "/thoughts-assistant/",
+  "scope": "/thoughts-assistant/",
+  "display": "standalone",
+  "background_color": "#f2f4f8",
+  "theme_color": "#f6f7fb",
+  "lang": "he",
+  "dir": "rtl"
+}

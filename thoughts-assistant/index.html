@@ -4,6 +4,10 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content" />
   <meta name="theme-color" content="#f6f7fb" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="המחשבות שלי" />
+  <link rel="manifest" href="manifest.webmanifest" />
   <title>המחשבות שלי</title>
   <link rel="stylesheet" href="app.css" />
 </head>
@@ -41,6 +45,14 @@
     <button class="tab" data-filter="archived" data-i18n="archived">ארכיון</button>
     <button class="tab" data-filter="all" data-i18n="all">הכול</button>
   </div>
+
+  <section id="notificationPanel" class="notification-panel">
+    <div>
+      <strong data-i18n="notificationTitle">התראות מערכת</strong>
+      <div id="notificationStatus" class="sub"></div>
+    </div>
+    <button id="notificationBtn" class="notification-btn" type="button" data-i18n="enableNotifications">הפעל</button>
+  </section>
 
   <div id="dueBar" class="due-bar"><strong id="dueSummary"></strong><button id="showDueBtn" type="button" data-i18n="showReminders">הצג תזכורות</button></div>
   <div id="list" class="list"></div>
