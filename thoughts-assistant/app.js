@@ -22,7 +22,7 @@
     he: {
       title:'המחשבות שלי', subtitle:'לזכור, לתזמן, ולחזור למה שחשוב',
       placeholder:'מה עובר לך בראש?', schedule:'תזמון', add:'הוספה', itemType:'סוג פריט', typeThought:'מחשבה / משימה', typeFriend:'חבר / אדם',
-      active:'פעילות', friends:'חברים', archived:'ארכיון', all:'הכול', empty:'אין כאן מחשבות כרגע.',
+      active:'פעילות', friends:'חברים', archived:'ארכיון', all:'הכול', empty:'אין כאן מחשבות כרגע.', settingsAndData:'הגדרות ונתונים',
       savedLocal:'המידע נשמר מקומית במכשיר הזה.', scheduleTitle:'תזמון',
       date:'תאריך', time:'שעה', repeat:'חזרה', repeatNone:'ללא חזרה',
       repeatWeekly:'פעם בשבוע', repeatBiweekly:'פעם בשבועיים',
@@ -48,7 +48,7 @@
     en: {
       title:'My Thoughts', subtitle:'Remember, schedule, and return to what matters',
       placeholder:'What is on your mind?', schedule:'Schedule', add:'Add', itemType:'Item type', typeThought:'Thought / task', typeFriend:'Friend / person',
-      active:'Active', friends:'Friends', archived:'Archive', all:'All', empty:'No thoughts here right now.',
+      active:'Active', friends:'Friends', archived:'Archive', all:'All', empty:'No thoughts here right now.', settingsAndData:'Settings & data',
       savedLocal:'Your data is stored locally on this device.', scheduleTitle:'Schedule',
       date:'Date', time:'Time', repeat:'Repeat', repeatNone:'No repeat',
       repeatWeekly:'Once a week', repeatBiweekly:'Every two weeks',
@@ -447,6 +447,16 @@
     });
 
     listEl.innerHTML = '';
+    const sectionTitle = $('sectionTitle');
+    const sectionCount = $('sectionCount');
+    const filterLabel = state.filter === 'friends' ? t('friends')
+      : state.filter === 'archived' ? t('archived')
+      : state.filter === 'all' ? t('all')
+      : t('active');
+    sectionTitle.textContent = filterLabel;
+    sectionCount.textContent = state.lang === 'he'
+      ? `${filtered.length} פריטים`
+      : `${filtered.length} items`;
     emptyEl.classList.toggle('hidden', filtered.length !== 0);
     if(!filtered.length){
       emptyEl.textContent = state.filter === 'friends'
@@ -658,6 +668,7 @@
     $('thoughtInput').value = '';
     state.pendingSchedule = null;
     save(); render(); toast(t('added'));
+    $('thoughtInput').focus({preventScroll:true});
   });
 
   $('scheduleNewBtn').addEventListener('click', () => openSchedule());

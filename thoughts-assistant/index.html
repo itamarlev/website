@@ -39,6 +39,8 @@
     </div>
   </section>
 
+  <div id="dueBar" class="due-bar"><strong id="dueSummary"></strong><button id="showDueBtn" type="button" data-i18n="showReminders">הצג תזכורות</button></div>
+
   <div class="tabs">
     <button class="tab active" data-filter="active" data-i18n="active">פעילות</button>
     <button class="tab" data-filter="friends" data-i18n="friends">חברים</button>
@@ -46,26 +48,35 @@
     <button class="tab" data-filter="all" data-i18n="all">הכול</button>
   </div>
 
-  <section id="notificationPanel" class="notification-panel">
+  <div class="section-head">
     <div>
-      <strong data-i18n="notificationTitle">התראות מערכת</strong>
-      <div id="notificationStatus" class="sub"></div>
+      <div id="sectionTitle" class="section-title"></div>
+      <div id="sectionCount" class="section-count"></div>
     </div>
-    <button id="notificationBtn" class="notification-btn" type="button" data-i18n="enableNotifications">הפעל</button>
-  </section>
+  </div>
 
-  <div id="dueBar" class="due-bar"><strong id="dueSummary"></strong><button id="showDueBtn" type="button" data-i18n="showReminders">הצג תזכורות</button></div>
   <div id="list" class="list"></div>
   <div id="empty" class="empty hidden" data-i18n="empty">אין כאן מחשבות כרגע.</div>
 
-  <div class="transfer-row data-tools">
-    <button id="exportBtn" class="transfer-btn" type="button" data-i18n="exportBackup">ייצוא גיבוי</button>
-    <button id="importBtn" class="transfer-btn" type="button" data-i18n="importBackup">ייבוא גיבוי</button>
-    <button id="migrationHelpBtn" class="transfer-btn" type="button" data-i18n="migrationHelp">מעבר מהאתר הישן</button>
-    <button id="transferBtn" class="transfer-btn" type="button" data-i18n="transferToSite">העבר לאתר</button>
-  </div>
-  <input id="importFile" type="file" accept="application/json,.json" hidden>
-  <div class="footer-hint" data-i18n="savedLocal">המידע נשמר מקומית במכשיר הזה.</div>
+  <details class="secondary-panel">
+    <summary data-i18n="settingsAndData">הגדרות ונתונים</summary>
+    <section id="notificationPanel" class="notification-panel secondary-block">
+      <div>
+        <strong data-i18n="notificationTitle">התראות מערכת</strong>
+        <div id="notificationStatus" class="sub"></div>
+      </div>
+      <button id="notificationBtn" class="notification-btn" type="button" data-i18n="enableNotifications">הפעל</button>
+    </section>
+
+    <div class="transfer-row data-tools">
+      <button id="exportBtn" class="transfer-btn" type="button" data-i18n="exportBackup">ייצוא גיבוי</button>
+      <button id="importBtn" class="transfer-btn" type="button" data-i18n="importBackup">ייבוא גיבוי</button>
+      <button id="migrationHelpBtn" class="transfer-btn" type="button" data-i18n="migrationHelp">מעבר מהאתר הישן</button>
+      <button id="transferBtn" class="transfer-btn" type="button" data-i18n="transferToSite">העבר לאתר</button>
+    </div>
+    <input id="importFile" type="file" accept="application/json,.json" hidden>
+    <div class="footer-hint" data-i18n="savedLocal">המידע נשמר מקומית במכשיר הזה.</div>
+  </details>
 </div>
 
 <dialog id="scheduleDialog">
