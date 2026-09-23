@@ -2,6 +2,8 @@
   const STORAGE_KEY = 'thoughts_app_v2';
   const META_KEY = 'thoughts_app_meta_v1';
   const SCHEMA_VERSION = 2;
+  const RANDOM_DAY_START_HOUR = 9;
+  const RANDOM_DAY_END_HOUR = 21;
   const LEGACY_KEYS = ['thoughts_assistant_v1','thoughts','ideas','mindItems','thoughtsAppItems'];
   const state = {
     items: [],
@@ -135,6 +137,7 @@
       done:!!item.done,
       schedule:item.schedule || null,
       random:item.random || null,
+      dueOccurrence:item.dueOccurrence || null,
       lastNotifiedAt:item.lastNotifiedAt || null
     };
   }
@@ -295,10 +298,39 @@
   }
 
   function isDue(item){
+    if(item?.dueOccurrence) return true;
     const iso = scheduledIso(item.schedule);
     if(iso && new Date(iso).getTime() <= Date.now()) return true;
     if(item.random?.enabled && item.random.nextAt && new Date(item.random.nextAt).getTime() <= Date.now()) return true;
     return false;
+  }
+
+  function materializeDueOccurrences(nowMs=Date.now()){
+    let changed = false;
+    for(const item of state.items){
+      if(item.archived || item.done || item.dueOccurrence) continue;
+
+      const scheduled = scheduledIso(item.schedule);
+      if(scheduled && new Date(scheduled).getTime() <= nowMs){
+        item.dueOccurrence = {
+          kind:'schedule',
+          triggeredAt:new Date(nowMs).toISOString(),
+          sourceAt:scheduled
+        };
+        changed = true;
+        continue;
+      }
+
+      if(item.random?.enabled && item.random.nextAt && new Date(item.random.nextAt).getTime() <= nowMs){
+        item.dueOccurrence = {
+          kind:'random',
+          triggeredAt:new Date(nowMs).toISOString(),
+          sourceAt:item.random.nextAt
+        };
+        changed = true;
+      }
+    }
+    return changed;
   }
 
   function addMonthsClamped(date, months){
@@ -324,10 +356,48 @@
     return ({daily:86400000,'3days':259200000,weekly:604800000,biweekly:1209600000})[freq] || 86400000;
   }
 
-  function makeRandomNext(freq){
+  function daytimeIntervals(startMs, endMs){
+    const intervals = [];
+    const cursor = new Date(startMs);
+    cursor.setHours(0,0,0,0);
+    const last = new Date(endMs);
+    last.setHours(0,0,0,0);
+
+    for(let day = new Date(cursor); day.getTime() <= last.getTime(); day.setDate(day.getDate()+1)){
+      const start = new Date(day);
+      start.setHours(RANDOM_DAY_START_HOUR,0,0,0);
+      const end = new Date(day);
+      end.setHours(RANDOM_DAY_END_HOUR,0,0,0);
+
+      const from = Math.max(start.getTime(), startMs);
+      const to = Math.min(end.getTime(), endMs);
+      if(to > from) intervals.push([from,to]);
+    }
+    return intervals;
+  }
+
+  function makeRandomNext(freq, baseMs=Date.now()){
     const span = randomWindowMs(freq);
-    const min = Math.min(2*60*60*1000, span*0.15);
-    return new Date(Date.now() + min + Math.random()*(span-min)).toISOString();
+    const minDelay = Math.min(2*60*60*1000, span*0.15);
+    const startMs = baseMs + minDelay;
+    const endMs = baseMs + span;
+    const intervals = daytimeIntervals(startMs, endMs);
+
+    if(!intervals.length){
+      const next = new Date(endMs);
+      next.setHours(RANDOM_DAY_START_HOUR,0,0,0);
+      if(next.getTime() <= endMs) next.setDate(next.getDate()+1);
+      return next.toISOString();
+    }
+
+    const total = intervals.reduce((sum,[from,to]) => sum + (to-from), 0);
+    let pick = Math.random() * total;
+    for(const [from,to] of intervals){
+      const length = to-from;
+      if(pick <= length) return new Date(from + pick).toISOString();
+      pick -= length;
+    }
+    return new Date(intervals[intervals.length-1][0]).toISOString();
   }
 
   function normalizeRandom(random){
@@ -340,6 +410,7 @@
   }
 
   function render(){
+    if(materializeDueOccurrences()) save();
     const filtered = state.items.filter(item => {
       if(state.filter === 'active') return !item.archived;
       if(state.filter === 'archived') return item.archived;
@@ -424,7 +495,7 @@
     return {schedule, random};
   }
 
-  function advanceAfterDone(item){
+  function advanceScheduledOccurrence(item){
     const repeat = item.schedule?.repeat;
     const iso = scheduledIso(item.schedule);
     if(iso && repeat && repeat !== 'none'){
@@ -436,35 +507,57 @@
       item.schedule.date = `${next.getFullYear()}-${pad(next.getMonth()+1)}-${pad(next.getDate())}`;
       item.schedule.time = `${pad(next.getHours())}:${pad(next.getMinutes())}`;
       item.done = false;
-      item.lastNotifiedAt = null;
-      if(item.random?.enabled) item.random.nextAt = makeRandomNext(item.random.frequency);
       toast(t('nextScheduled'));
-      return;
+      return true;
     }
     item.done = true;
+    return false;
+  }
+
+  function acknowledgeItem(item){
+    const occurrence = item.dueOccurrence;
+
+    if(occurrence?.kind === 'random'){
+      if(item.random?.enabled){
+        item.random.nextAt = makeRandomNext(item.random.frequency);
+      }
+      item.dueOccurrence = null;
+      item.lastNotifiedAt = null;
+      item.done = false;
+      return;
+    }
+
+    if(occurrence?.kind === 'schedule'){
+      item.dueOccurrence = null;
+      item.lastNotifiedAt = null;
+      advanceScheduledOccurrence(item);
+      return;
+    }
+
+    item.lastNotifiedAt = null;
+    advanceScheduledOccurrence(item);
   }
 
   function maybeNotify(){
+    const materialized = materializeDueOccurrences();
     const dueItems = state.items.filter(x => !x.archived && isDue(x));
+    let changed = materialized;
+
     for(const item of dueItems){
       const now = Date.now();
       const last = item.lastNotifiedAt ? new Date(item.lastNotifiedAt).getTime() : 0;
       if(now-last < 15*60*1000) continue;
 
       item.lastNotifiedAt = new Date().toISOString();
-
-      if(item.random?.enabled && item.random.nextAt && new Date(item.random.nextAt).getTime() <= now){
-        item.random.nextAt = makeRandomNext(item.random.frequency);
-      }
+      changed = true;
 
       if('Notification' in window && Notification.permission === 'granted'){
         try{ new Notification(state.lang === 'he' ? 'תזכורת מהמחשבות' : 'Thought reminder', {body:item.text}); }catch(e){}
       }
     }
-    if(dueItems.length){
-      save();
-      render();
-    }
+
+    if(changed) save();
+    if(materialized) render();
   }
 
   $('addBtn').addEventListener('click', () => {
@@ -473,7 +566,7 @@
     const pending = state.pendingSchedule || {schedule:null,random:null};
     state.items.push({
       id:uid(), schemaVersion:SCHEMA_VERSION, text, type:$('newType').value === 'friend' ? 'friend' : 'thought', createdAt:new Date().toISOString(), archived:false, done:false,
-      schedule:pending.schedule || null, random:normalizeRandom(pending.random), lastNotifiedAt:null
+      schedule:pending.schedule || null, random:normalizeRandom(pending.random), dueOccurrence:null, lastNotifiedAt:null
     });
     $('thoughtInput').value = '';
     state.pendingSchedule = null;
@@ -496,6 +589,7 @@
         item.schedule = value.schedule;
         item.random = normalizeRandom(value.random);
         item.done = false;
+        item.dueOccurrence = null;
         item.lastNotifiedAt = null;
         save(); render(); toast(t('updated'));
       }
@@ -510,7 +604,7 @@
   $('clearScheduleBtn').addEventListener('click', () => {
     if(state.scheduleTargetId){
       const item = state.items.find(x=>x.id===state.scheduleTargetId);
-      if(item){ item.schedule=null; item.random=null; item.lastNotifiedAt=null; save(); render(); }
+      if(item){ item.schedule=null; item.random=null; item.dueOccurrence=null; item.lastNotifiedAt=null; save(); render(); }
     }else{
       state.pendingSchedule = null;
     }
@@ -533,7 +627,7 @@
       return;
     }
     if(e.target.closest('.complete')){
-      advanceAfterDone(item);
+      acknowledgeItem(item);
       save(); render(); toast(t('completed'));
       return;
     }
