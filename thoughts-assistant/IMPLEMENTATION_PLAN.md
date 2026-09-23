@@ -267,20 +267,21 @@ At the end of each phase, record in this file:
 
 ## Current checkpoint
 - Date: 2026-09-23
-- Phase: Phase 5 complete — iPhone/mobile ergonomics and voice fallback improved
-- Pre-change HEAD: e4b83f3adb7efe4b4563efcfbf95b25e4a19cbf0
-- Functional commit: 5e7d8ee6dd6f2298d2c064f0f0c1c369e52a788e
-- Files changed: thoughts-assistant/index.html, thoughts-assistant/app.js, thoughts-assistant/app.css
+- Phase: Phase 6 client-side complete — permission flow and PWA push foundation added; background push backend still pending
+- Pre-change HEAD: 67ba60e37e766f44fa3c1be7203ca18f2bcef100
+- Functional commit: 756c4f5b692386a905a6d3a4c43ac1dc94e37869
+- Files changed: thoughts-assistant/index.html, thoughts-assistant/app.js, thoughts-assistant/app.css, thoughts-assistant/manifest.webmanifest, thoughts-assistant/sw.js
 - Data migration performed: no
-- Mobile viewport: added viewport-fit plus interactive-widget resize hint and dynamic viewport sizing
-- Keyboard/modal behavior: dialogs have dynamic viewport max-height; modal content scrolls; modal action row stays reachable at the bottom
-- Touch ergonomics: tabs, item actions and data-tool buttons use at least 44px minimum height
-- iPhone text input: form controls use 16px font size at mobile breakpoint to reduce automatic zoom risk
-- Horizontal layout: body prevents accidental horizontal overflow
-- Voice supported path: SpeechRecognition/webkitSpeechRecognition remains the direct dictation path
-- Voice fallback: when recognition is unavailable or errors, focus returns to the thought field and the user is instructed to use the iPhone keyboard microphone
-- Voice state: listening state/ARIA state is added and cleaned up on end
-- Repo verification performed: yes — JS syntax parsed; viewport, dialog scroll, touch-target, mobile-font and voice fallback paths present
-- Runtime/live verification performed: no; real iPhone behavior has not been physically tested
-- Known remaining issues: background/system notification architecture remains for Phase 6; live iPhone verification still pending
-- Next intended phase: Phase 6 — notifications
+- Notification UI: added explicit status panel and user-triggered Enable button
+- Permission flow: Notification.requestPermission is called only from direct user interaction
+- Status handling: granted/denied/default/unsupported states are presented separately
+- iPhone guidance: when not running as a Home Screen app, the UI explains that closed-app notifications require adding the app to the Home Screen
+- PWA foundation: standalone web-app manifest added and service worker registered
+- Service worker: includes push-event notification display and notificationclick focus/open handling
+- Foreground/in-app reminder state remains separate from system notification delivery
+- Background push limitation: no PushManager subscription, VAPID keys, subscription storage or server sender exists yet; therefore notifications while the app is closed are NOT verified or complete
+- External technical verification: Apple/WebKit documentation confirms iOS/iPadOS Home Screen web apps support Web Push via Push API, Notifications API and Service Workers, and that server-side push infrastructure is required
+- Repo verification performed: yes — manifest link, permission UI, permission states, service-worker registration, push handler and click handler verified
+- Runtime/live verification performed: no
+- Known remaining issues: implement a secure push-subscription backend before claiming background notifications; live Home Screen/iPhone test still required
+- Next intended phase: Phase 7 — ChatGPT-site migration path, unless backend Web Push is prioritized first
