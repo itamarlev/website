@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f7f7f4">
 <title>המחשבות שלי</title>
-<link rel="stylesheet" href="app.css?v=20260906b">
+<link rel="stylesheet" href="app.css?v=20260923c">
 </head>
 <body>
 <div class="app-shell">
@@ -36,8 +36,7 @@
       <select id="newType" aria-label="סוג פריט">
         <option value="thought" data-t="typeThought">מחשבה / משימה</option>
         <option value="event" data-t="typeEvent">אירוע</option>
-        <option value="friend" data-t="typeFriend">חבר / אדם</option>
-      </select>
+              </select>
       <button id="scheduleNew" class="soft-btn" data-t="schedule">תזמון</button>
     </div>
 
@@ -88,7 +87,7 @@
 
 <dialog id="editDlg"><form id="editForm" class="modal">
   <div class="modal-head"><h2 data-t="editTitle">עריכת פריט</h2><button type="button" class="close" data-close="editDlg">×</button></div>
-  <label><span data-t="itemType">סוג פריט</span><select id="editType"><option value="thought" data-t="typeThought">מחשבה / משימה</option><option value="event" data-t="typeEvent">אירוע</option><option value="friend" data-t="typeFriend">חבר / אדם</option></select></label>
+  <label><span data-t="itemType">סוג פריט</span><select id="editType"><option value="thought" data-t="typeThought">מחשבה / משימה</option><option value="event" data-t="typeEvent">אירוע</option></select></label>
   <label><span data-t="content">תוכן</span><textarea id="editText"></textarea></label>
   <div class="modal-actions"><button type="button" id="editSchedule" class="ghost-btn" data-t="changeSchedule">שינוי תזמון</button><button class="modal-primary" data-t="saveChanges">שמירה</button></div>
 </form></dialog>
@@ -100,6 +99,6 @@
 <dialog id="importDlg"><form id="importForm" class="modal"><div class="modal-head"><h2 data-t="importTitle">ייבוא מחשבות</h2><button type="button" class="close" data-close="importDlg">×</button></div><p class="modal-copy" data-t="importHelp">הדבק כאן JSON שיוצא מהאפליקציה הישנה. פריטים קיימים לא יימחקו.</p><textarea id="importText" class="import-text" placeholder='[{"text":"..."}]'></textarea><div class="modal-actions"><button type="button" class="ghost-btn" data-close="importDlg" data-t="cancel">ביטול</button><button class="modal-primary" data-t="importNow">ייבוא עכשיו</button></div></form></dialog>
 
 <div id="toast" class="toast"></div>
-<script src="app.js?v=20260906b"></script>
+<script src="app.js?v=20260923c"></script>
 </body>
 </html>
