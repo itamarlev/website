@@ -37,7 +37,7 @@
       added:'המחשבה נוספה.', updated:'המחשבה עודכנה.', deleted:'המחשבה נמחקה.',
       archivedToast:'המחשבה הועברה לארכיון.', restoredToast:'המחשבה הוחזרה.',
       completed:'סומן כבוצע.', nextScheduled:'המועד הבא נקבע אוטומטית.',
-      speechUnsupported:'הכתבה קולית אינה נתמכת בדפדפן הזה.',
+      speechUnsupported:'הכתבה ישירה אינה זמינה כאן. אפשר להשתמש במיקרופון של מקלדת האייפון.', speechListening:'מקשיב…', speechError:'לא הצלחתי להפעיל הכתבה קולית. אפשר להשתמש במיקרופון של המקלדת.',
       allowNotif:'אפשר להפעיל התראות בדפדפן כדי לקבל תזכורות בזמן שהאפליקציה פעילה.', showReminders:'הצג תזכורות', dueListTitle:'התזכורות שמחכות לך', close:'סגור', transferToSite:'העבר לאתר', transferred:'המחשבות מוכנות להעברה לאתר.',
       exportBackup:'ייצוא גיבוי', importBackup:'ייבוא גיבוי', importTitle:'בדיקת הגיבוי לפני ייבוא', confirmImport:'מזג נתונים',
       backupReady:'קובץ הגיבוי נוצר.', importInvalid:'לא הצלחתי לקרוא את קובץ הגיבוי.', importComplete:'הייבוא הושלם בלי למחוק נתונים קיימים.'
@@ -62,7 +62,7 @@
       added:'Thought added.', updated:'Thought updated.', deleted:'Thought deleted.',
       archivedToast:'Moved to archive.', restoredToast:'Restored.',
       completed:'Marked done.', nextScheduled:'Next occurrence scheduled automatically.',
-      speechUnsupported:'Voice dictation is not supported in this browser.',
+      speechUnsupported:'Direct dictation is unavailable here. You can use the iPhone keyboard microphone.', speechListening:'Listening…', speechError:'Could not start voice dictation. You can use the keyboard microphone instead.',
       allowNotif:'You can enable browser notifications to receive reminders while the app is active.', showReminders:'Show reminders', dueListTitle:'Reminders waiting for you', close:'Close', transferToSite:'Transfer to website', transferred:'Your thoughts are ready to transfer.',
       exportBackup:'Export backup', importBackup:'Import backup', importTitle:'Review backup before import', confirmImport:'Merge data',
       backupReady:'Backup file created.', importInvalid:'Could not read the backup file.', importComplete:'Import finished without deleting existing data.'
@@ -754,18 +754,50 @@
 
   $('langBtn').addEventListener('click', () => setLanguage(state.lang === 'he' ? 'en':'he'));
 
+  function focusForNativeDictation(messageKey='speechUnsupported'){
+    const input = $('thoughtInput');
+    input.focus({preventScroll:true});
+    input.scrollIntoView({behavior:'smooth',block:'center'});
+    toast(t(messageKey));
+  }
+
   $('voiceBtn').addEventListener('click', () => {
+    const button = $('voiceBtn');
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-    if(!SR){ toast(t('speechUnsupported')); return; }
+    if(!SR){
+      focusForNativeDictation();
+      return;
+    }
+
     const rec = new SR();
     rec.lang = state.lang === 'he' ? 'he-IL':'en-US';
     rec.interimResults = false;
     rec.maxAlternatives = 1;
+
+    rec.onstart = () => {
+      button.classList.add('listening');
+      button.setAttribute('aria-pressed','true');
+      button.setAttribute('aria-label', t('speechListening'));
+    };
+    rec.onend = () => {
+      button.classList.remove('listening');
+      button.setAttribute('aria-pressed','false');
+      button.setAttribute('aria-label', state.lang === 'he' ? 'הכתבה קולית' : 'Voice dictation');
+    };
+    rec.onerror = () => {
+      focusForNativeDictation('speechError');
+    };
     rec.onresult = ev => {
       const text = ev.results?.[0]?.[0]?.transcript || '';
-      if(text) $('thoughtInput').value = ($('thoughtInput').value + ' ' + text).trim();
+      if(text){
+        const input = $('thoughtInput');
+        input.value = (input.value + ' ' + text).trim();
+        input.focus({preventScroll:true});
+      }
     };
-    rec.start();
+
+    try{ rec.start(); }
+    catch(e){ focusForNativeDictation('speechError'); }
   });
 
   window.addEventListener('focus', maybeNotify);
