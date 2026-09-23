@@ -56,18 +56,12 @@
     11:{title:"הביתה ✈️",summary:"קמים מוקדם, מחזירים את הרכב בשדה התעופה ונכנסים לטיסה הביתה. זהו — הטיול נגמר!",points:{"Zurich Airport / SIXT return":["🚗","מחזירים את הרכב ב־08:00 ואז עוברים לשדה לטיסה."]},fact:"הטיסה מתוכננת לצאת ב־10:55 ולנחות בתל אביב ב־15:50."}
   };
 
-  const expected = {
-    1:["Zurich Airport","Hilton Garden Inn Zurich Limmattal"],
-    2:["Freiburg Minster","Freiburg Old Town","Schlossbergbahn Freiburg","Gengenbach Old Town"],
-    3:["Triberg Waterfalls","Triberg im Schwarzwald"],
-    4:["Europa-Park","Caracalla Therme","Lichtentaler Allee"],
-    5:["Batorama","Strasbourg Cathedral","Petite France","Ponts Couverts"],
-    6:["פארק החבלים","מגלשת ההרים","בנג׳י טרמפולינה","Downhill Carts"],
-    7:["Guémar","Riquewihr","Ribeauvillé"],
-    8:["Château du Haut-Koenigsbourg","La Montagne des Singes"],
-    9:["Little Venice","Marché Couvert","Eguisheim"],
-    10:["Zurich Old Town","Bürkliplatz / Lake Zurich","Hilton Garden Inn"],
-    11:["Zurich Airport / SIXT return"]
+  // Fingerprints of the adult itinerary at the time these child-friendly summaries were written.
+  // If title, description, points, constraints or an important note changes, the curated copy is hidden
+  // and the page falls back to the live adult itinerary instead of presenting stale information.
+  const expectedSignature = {
+    1:"iglo69",2:"11w94j9",3:"ac73at",4:"ea1qu8",5:"1645fe4",6:"106e6u8",
+    7:"1pht3ib",8:"14b6zkw",9:"1l7n7js",10:"ood8i2",11:"1vn7wwe"
   };
   const dayDates=["2026-09-22","2026-09-23","2026-09-24","2026-09-25","2026-09-26","2026-09-27","2026-09-28","2026-09-29","2026-09-30","2026-10-01","2026-10-02"];
   const hebDays=["יום ראשון","יום שני","יום שלישי","יום רביעי","יום חמישי","יום שישי","שבת"];
@@ -87,8 +81,10 @@
     const parts=desc.split(/(?<=[.!?])\s+/).filter(Boolean);
     return parts.slice(0,2).join(" ").slice(0,260);
   }
-  function samePoints(actual, planned){
-    return actual.length===planned.length && actual.every((x,i)=>x===planned[i]);
+  function sourceHash(value){
+    let h=2166136261;
+    for(let i=0;i<value.length;i++){h^=value.charCodeAt(i);h=Math.imul(h,16777619);}
+    return (h>>>0).toString(36);
   }
   function renderPoint(name, item){
     const icon=item?.[0]||"📍";
@@ -117,7 +113,10 @@
         const dayName=hebDays[d.getUTCDay()];
         const dd=date.slice(8,10)+"/"+date.slice(5,7);
         const data=curated[n];
-        const changed=!samePoints(srcPoints,expected[n]||[]);
+        const srcDetails=textOf(src.querySelector(".day-points"));
+        const srcNote=textOf(src.querySelector(".important-note"));
+        const liveSignature=sourceHash([srcTitle,srcDesc,srcDetails,srcNote].join("||"));
+        const changed=liveSignature!==expectedSignature[n];
         const isToday=n===currentDay;
 
         const chip=document.createElement("a");
