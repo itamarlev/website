@@ -267,9 +267,14 @@ At the end of each phase, record in this file:
 
 ## Current checkpoint
 - Date: 2026-09-23
-- Phase: Audit complete; implementation not started
-- Baseline HEAD for thoughts-assistant: a67bc9158f37e708ed0744dda2934c5a95b05147
-- App files changed by this checkpoint: none
+- Phase: Phase 1 complete — single source of truth established
+- Pre-change HEAD: e339a63b6a1ea484c95e87ae7d86378794e0837d
+- Functional commit: f7255bbbc182e822ac4efdf5ea83a4a8746085ef
+- Files changed: thoughts-assistant/index.html, thoughts-assistant/app.css, thoughts-assistant/app.js
+- Change: moved the exact active inline CSS/JavaScript from index.html into app.css/app.js and wired index.html to those external files
 - Data migration performed: no
-- Live verification: unavailable
-- Next intended phase: Phase 1 — establish one source of truth
+- Storage keys changed: no
+- Repo verification performed: yes — external asset links verified; inline implementation removed; required feature code and storage keys still present
+- Runtime/live verification performed: no
+- Known remaining issues: all Phase 2+ data/reminder/notification/voice issues remain intentionally unchanged
+- Next intended phase: Phase 2 — data safety and migration foundation
