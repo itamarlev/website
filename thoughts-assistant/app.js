@@ -1,61 +1,511 @@
-(()=>{
-const KEY='thoughts_assistant_v1';
-const LEGACY=['thoughts_app_v2','thoughts','ideas','mindItems','thoughtsAppItems','thoughts_assistant','thoughtsAssistant','thoughts_app'];
-const $=id=>document.getElementById(id);
-const S={items:[],filter:'active',lang:localStorage.getItem('thoughts_lang')||'he',pending:null,target:null,edit:null,del:null,draftBlob:null,recorder:null,stream:null,legacy:[]};
-const L={
-he:{appName:'המחשבות שלי',eyebrow:'המקום שלך לזכור',headline:'מה עובר לך בראש?',subhead:'לכתוב, לדבר, לתזמן — ולחזור לזה בדיוק בזמן.',placeholder:'כתוב משהו שלא תרצה לשכוח...',typeThought:'מחשבה / משימה',typeEvent:'אירוע',typeFriend:'חבר / אדם',schedule:'תזמון',add:'הוסף',activeStat:'פעילים',scheduledStat:'מתוזמנים',dueStat:'עכשיו',yourThoughts:'המחשבות שלך',yourThoughtsSub:'מה שחשוב נשאר קרוב.',active:'פעילים',archived:'ארכיון',all:'הכול',emptyTitle:'הכול מסודר',empty:'הפריט הבא שלך מתחיל למעלה.',local:'המחשבות נשמרות במכשיר הזה.',scheduleTitle:'מתי להזכיר לך?',date:'תאריך',time:'שעה',repeat:'חזרה',none:'ללא חזרה',daily:'כל יום',threeDays:'כל 3 ימים',weekly:'כל שבוע',biweekly:'כל שבועיים',monthly:'כל חודש',bimonthly:'כל חודשיים',random:'להפתיע אותי',randomHelp:'להחזיר את הפריט בזמן אקראי לפי התדירות.',frequency:'תדירות',clear:'ללא תזמון',save:'שמירה',itemType:'סוג פריט',content:'תוכן',editTitle:'עריכת פריט',changeSchedule:'שינוי תזמון',saveChanges:'שמירה',deleteTitle:'למחוק?',deleteHelp:'המחיקה סופית. אפשר להעביר לארכיון במקום.',cancel:'ביטול',delete:'מחיקה',edit:'עריכה',archive:'ארכיון',restore:'החזרה',done:'בוצע',nextOccurrence:'הבא',scheduled:'מתוזמן',repeats:'חוזר',due:'הגיע הזמן',randomChip:'אקראי',voiceNote:'הקלטה קולית',added:'נוסף',updated:'עודכן',deleted:'נמחק',archivedToast:'הועבר לארכיון',restoredToast:'הוחזר',next:'נקבע המועד הבא',writeFirst:'כתוב או הקלט משהו קודם',listening:'מקשיב… דבר עכשיו',recording:'מקליט… לחץ שוב לעצירה',voiceReady:'ההקלטה מוכנה',voiceDenied:'אין הרשאה למיקרופון',voiceNoSpeech:'לא זוהה דיבור. אפשר לנסות שוב.',voiceError:'ההקלטה לא הצליחה',migrationTitle:'מצאתי מחשבות מהאפליקציה הישנה',migrationText:'אפשר למזג אותן לכאן בלי למחוק שום דבר שקיים באתר.',migrate:'ייבוא',import:'ייבוא מהאפליקציה הישנה',export:'גיבוי המחשבות',importTitle:'ייבוא מחשבות',importHelp:'הדבק כאן JSON שיוצא מהאפליקציה הישנה. פריטים קיימים לא יימחקו.',importNow:'ייבוא עכשיו',imported:'המחשבות יובאו בהצלחה',nothingToImport:'לא נמצאו מחשבות חדשות לייבוא',backupReady:'קובץ הגיבוי מוכן',dueListTitle:'התזכורות שמחכות לך',dueListHelp:'לחץ על תזכורת כדי להגיע אליה ברשימה.',noDue:'אין כרגע תזכורות שמחכות.'},
-en:{appName:'My Thoughts',eyebrow:'Your place to remember',headline:"What's on your mind?",subhead:'Write it, say it, schedule it — and return to it at the right time.',placeholder:"Write something you don't want to forget...",typeThought:'Thought / task',typeEvent:'Event',typeFriend:'Friend / person',schedule:'Schedule',add:'Add',activeStat:'Active',scheduledStat:'Scheduled',dueStat:'Now',yourThoughts:'Your thoughts',yourThoughtsSub:'What matters stays close.',active:'Active',archived:'Archive',all:'All',emptyTitle:'All clear',empty:'Your next item starts above.',local:'Thoughts are stored on this device.',scheduleTitle:'When should I remind you?',date:'Date',time:'Time',repeat:'Repeat',none:'No repeat',daily:'Daily',threeDays:'Every 3 days',weekly:'Weekly',biweekly:'Every 2 weeks',monthly:'Monthly',bimonthly:'Every 2 months',random:'Surprise me',randomHelp:'Bring this item back randomly at the selected frequency.',frequency:'Frequency',clear:'No schedule',save:'Save',itemType:'Item type',content:'Content',editTitle:'Edit item',changeSchedule:'Change schedule',saveChanges:'Save',deleteTitle:'Delete?',deleteHelp:'Deletion is permanent. You can archive it instead.',cancel:'Cancel',delete:'Delete',edit:'Edit',archive:'Archive',restore:'Restore',done:'Done',nextOccurrence:'Next',scheduled:'Scheduled',repeats:'Repeats',due:'Due now',randomChip:'Random',voiceNote:'Voice note',added:'Added',updated:'Updated',deleted:'Deleted',archivedToast:'Archived',restoredToast:'Restored',next:'Next occurrence scheduled',writeFirst:'Write or record something first',listening:'Listening… speak now',recording:'Recording… tap again to stop',voiceReady:'Recording ready',voiceDenied:'Microphone permission denied',voiceNoSpeech:'No speech detected. Try again.',voiceError:'Voice capture failed',migrationTitle:'I found thoughts from the old app',migrationText:'You can merge them here without deleting anything already on the website.',migrate:'Import',import:'Import from old app',export:'Back up thoughts',importTitle:'Import thoughts',importHelp:'Paste JSON exported from the old app. Existing items will not be deleted.',importNow:'Import now',imported:'Thoughts imported',nothingToImport:'No new thoughts found',backupReady:'Backup ready',dueListTitle:'Reminders waiting for you',dueListHelp:'Tap a reminder to jump to it in the list.',noDue:'No reminders are waiting right now'}};
-const t=k=>L[S.lang][k]||k;
-const save=()=>localStorage.setItem(KEY,JSON.stringify(S.items));
-const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const toast=x=>{const e=$('toast');e.textContent=x;e.classList.add('show');clearTimeout(toast.h);toast.h=setTimeout(()=>e.classList.remove('show'),1800)};
-function normalize(x,n=0){const schedule=x.schedule||((x.date&&x.time)?{date:x.date,time:x.time,repeat:x.repeat||'none'}:null);return{id:String(x.id||x.uuid||`${Date.now()}_${n}_${Math.random().toString(36).slice(2,7)}`),text:String(x.text||x.title||x.content||x.note||''),type:['thought','event'].includes(x.type)?x.type:'thought',createdAt:x.createdAt||x.created||x.timestamp||new Date().toISOString(),archived:!!x.archived,done:!!x.done,schedule,random:x.random||null,audioId:x.audioId||null,lastNotifiedAt:x.lastNotifiedAt||null}}
-function fingerprint(i){return`${(i.text||'').trim().toLowerCase()}|${i.createdAt||''}|${i.type||'thought'}`}
-function extractArray(raw){try{const v=typeof raw==='string'?JSON.parse(raw):raw;if(Array.isArray(v))return v;if(v&&Array.isArray(v.items))return v.items;if(v&&Array.isArray(v.thoughts))return v.thoughts;if(v&&Array.isArray(v.data))return v.data}catch{}return[]}
-function discoverLegacy(){const found=[];const seen=new Set();for(let n=0;n<localStorage.length;n++){const k=localStorage.key(n);if(!k||k===KEY||k==='thoughts_lang')continue;let arr=[];try{arr=extractArray(localStorage.getItem(k))}catch{}if(!arr.length)continue;for(const x of arr){const i=normalize(x,found.length);if(!i.text&&!i.audioId)continue;const f=fingerprint(i);if(!seen.has(f)){seen.add(f);found.push(i)}}}return found}
-function load(){try{S.items=extractArray(localStorage.getItem(KEY)).map(normalize).filter(i=>i.text||i.audioId)}catch{S.items=[]}S.legacy=discoverLegacy().filter(i=>!new Set(S.items.map(fingerprint)).has(fingerprint(i)));$('migrationBox').classList.toggle('hidden',!S.legacy.length)}
-function mergeItems(items){const have=new Set(S.items.map(fingerprint));let count=0;for(const x of items.map(normalize)){if(!x.text&&!x.audioId)continue;const f=fingerprint(x);if(have.has(f))continue;have.add(f);S.items.push(x);count++}if(count){save();render();S.legacy=discoverLegacy().filter(i=>!new Set(S.items.map(fingerprint)).has(fingerprint(i)));$('migrationBox').classList.toggle('hidden',!S.legacy.length);toast(t('imported'))}else toast(t('nothingToImport'));return count}
-function iso(s){if(!s?.date||!s?.time)return null;const d=new Date(`${s.date}T${s.time}:00`);return isNaN(d)?null:d.toISOString()}
-function fmt(x){if(!x)return'';try{return new Intl.DateTimeFormat(S.lang==='he'?'he-IL':'en-GB',{dateStyle:'medium',timeStyle:'short'}).format(new Date(x))}catch{return''}}
-function due(i){const a=iso(i.schedule),b=i.random?.enabled?i.random.nextAt:null;return!!((a&&new Date(a)<=new Date())||(b&&new Date(b)<=new Date()))}
-function addMonths(d,n){const day=d.getDate();d=new Date(d);d.setDate(1);d.setMonth(d.getMonth()+n);d.setDate(Math.min(day,new Date(d.getFullYear(),d.getMonth()+1,0).getDate()));return d}
-function nextDate(d,r){d=new Date(d);if(r==='daily')d.setDate(d.getDate()+1);else if(r==='3days')d.setDate(d.getDate()+3);else if(r==='weekly')d.setDate(d.getDate()+7);else if(r==='biweekly')d.setDate(d.getDate()+14);else if(r==='monthly')d=addMonths(d,1);else if(r==='bimonthly')d=addMonths(d,2);return d}
-function rndMs(v){return({daily:86400000,'3days':259200000,weekly:604800000,biweekly:1209600000})[v]||86400000}
-function nextRandom(v){const span=rndMs(v);return new Date(Date.now()+7200000+Math.random()*Math.max(1,span-7200000)).toISOString()}
-function repeatText(v){return v==='3days'?t('threeDays'):t(v||'none')}
-function typeText(v){return t(v==='event'?'typeEvent':'typeThought')}
-function openDueList(){
-  const items=S.items.filter(i=>!i.archived&&due(i)).sort((a,b)=>{
-    const at=iso(a.schedule)||a.random?.nextAt||a.createdAt;
-    const bt=iso(b.schedule)||b.random?.nextAt||b.createdAt;
-    return new Date(at)-new Date(bt)
-  });
-  const box=$('dueList');
-  box.innerHTML='';
-  if(!items.length){box.innerHTML='<div class="empty"><strong>'+esc(t('noDue'))+'</strong></div>'; $('dueDlg').showModal(); return}
-  for(const i of items){
-    const b=document.createElement('button');
-    b.type='button'; b.className='card due'; b.dataset.id=i.id;
-    b.style.width='100%'; b.style.textAlign='inherit';
-    b.innerHTML='<div class="card-top"><span class="status-mark"></span><div style="flex:1"><div class="thought">'+esc(i.text||t('voiceNote'))+'</div><div class="chips"><span class="chip due">'+esc(t('due'))+'</span></div></div></div>';
-    box.appendChild(b)
+(() => {
+  const STORAGE_KEY = 'thoughts_app_v2';
+  const LEGACY_KEYS = ['thoughts_assistant_v1','thoughts','ideas','mindItems','thoughtsAppItems'];
+  const state = {
+    items: [],
+    filter: 'active',
+    lang: localStorage.getItem('thoughts_lang') || 'he',
+    pendingSchedule: null,
+    scheduleTargetId: null,
+    editTargetId: null,
+    deleteTargetId: null
+  };
+
+  const i18n = {
+    he: {
+      title:'המחשבות שלי', subtitle:'לזכור, לתזמן, ולחזור למה שחשוב',
+      placeholder:'מה עובר לך בראש?', schedule:'תזמון', add:'הוספה', itemType:'סוג פריט', typeThought:'מחשבה / משימה', typeFriend:'חבר / אדם',
+      active:'פעילות', archived:'ארכיון', all:'הכול', empty:'אין כאן מחשבות כרגע.',
+      savedLocal:'המידע נשמר מקומית במכשיר הזה.', scheduleTitle:'תזמון',
+      date:'תאריך', time:'שעה', repeat:'חזרה', repeatNone:'ללא חזרה',
+      repeatWeekly:'פעם בשבוע', repeatBiweekly:'פעם בשבועיים',
+      repeatMonthly:'פעם בחודש', repeatBimonthly:'פעם בחודשיים',
+      randomize:'תזכורת אקראית', randomizeHelp:'תופיע שוב במועד אקראי לפי התדירות',
+      frequency:'תדירות אקראית', randomDaily:'פעם ביום', random3Days:'פעם בשלושה ימים',
+      randomWeekly:'פעם בשבוע', randomBiweekly:'פעם בשבועיים',
+      clear:'נקה תזמון', save:'שמור', editTitle:'עריכת מחשבה', thought:'מחשבה',
+      editSchedule:'שינוי תזמון', saveChanges:'שמירת שינויים',
+      deleteTitle:'למחוק את המחשבה?', deleteHelp:'המחיקה היא סופית. אפשר לבחור בארכיון אם אולי תרצה לחזור אליה.',
+      cancel:'ביטול', delete:'מחיקה', edit:'עריכה', archive:'ארכיון',
+      restore:'החזרה', done:'בוצע', menu:'פעולות', due:'הגיע הזמן',
+      scheduled:'מתוזמן', repeats:'חוזר', random:'אקראי', noText:'צריך לכתוב משהו קודם.',
+      added:'המחשבה נוספה.', updated:'המחשבה עודכנה.', deleted:'המחשבה נמחקה.',
+      archivedToast:'המחשבה הועברה לארכיון.', restoredToast:'המחשבה הוחזרה.',
+      completed:'סומן כבוצע.', nextScheduled:'המועד הבא נקבע אוטומטית.',
+      speechUnsupported:'הכתבה קולית אינה נתמכת בדפדפן הזה.',
+      allowNotif:'אפשר להפעיל התראות בדפדפן כדי לקבל תזכורות בזמן שהאפליקציה פעילה.', showReminders:'הצג תזכורות', dueListTitle:'התזכורות שמחכות לך', close:'סגור', transferToSite:'העבר לאתר', transferred:'המחשבות מוכנות להעברה לאתר.'
+    },
+    en: {
+      title:'My Thoughts', subtitle:'Remember, schedule, and return to what matters',
+      placeholder:'What is on your mind?', schedule:'Schedule', add:'Add', itemType:'Item type', typeThought:'Thought / task', typeFriend:'Friend / person',
+      active:'Active', archived:'Archive', all:'All', empty:'No thoughts here right now.',
+      savedLocal:'Your data is stored locally on this device.', scheduleTitle:'Schedule',
+      date:'Date', time:'Time', repeat:'Repeat', repeatNone:'No repeat',
+      repeatWeekly:'Once a week', repeatBiweekly:'Every two weeks',
+      repeatMonthly:'Once a month', repeatBimonthly:'Every two months',
+      randomize:'Random reminder', randomizeHelp:'It will pop up again randomly based on frequency',
+      frequency:'Random frequency', randomDaily:'Once a day', random3Days:'Every three days',
+      randomWeekly:'Once a week', randomBiweekly:'Every two weeks',
+      clear:'Clear schedule', save:'Save', editTitle:'Edit thought', thought:'Thought',
+      editSchedule:'Change schedule', saveChanges:'Save changes',
+      deleteTitle:'Delete this thought?', deleteHelp:'Deletion is permanent. Use Archive if you may want it later.',
+      cancel:'Cancel', delete:'Delete', edit:'Edit', archive:'Archive',
+      restore:'Restore', done:'Done', menu:'Actions', due:'Due now',
+      scheduled:'Scheduled', repeats:'Repeats', random:'Random', noText:'Write something first.',
+      added:'Thought added.', updated:'Thought updated.', deleted:'Thought deleted.',
+      archivedToast:'Moved to archive.', restoredToast:'Restored.',
+      completed:'Marked done.', nextScheduled:'Next occurrence scheduled automatically.',
+      speechUnsupported:'Voice dictation is not supported in this browser.',
+      allowNotif:'You can enable browser notifications to receive reminders while the app is active.', showReminders:'Show reminders', dueListTitle:'Reminders waiting for you', close:'Close', transferToSite:'Transfer to website', transferred:'Your thoughts are ready to transfer.'
+    }
+  };
+
+  const $ = id => document.getElementById(id);
+  const listEl = $('list');
+  const emptyEl = $('empty');
+
+  function t(k){ return i18n[state.lang][k] || k; }
+
+  function setLanguage(lang){
+    state.lang = lang;
+    localStorage.setItem('thoughts_lang', lang);
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n));
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => el.placeholder = t(el.dataset.i18nPlaceholder));
+    $('langBtn').textContent = lang === 'he' ? 'EN' : 'עברית';
+    render();
   }
-  $('dueDlg').showModal()
-}
-function render(){const active=S.items.filter(i=>!i.archived);$('activeCount').textContent=active.length;$('scheduledCount').textContent=active.filter(i=>i.schedule||i.random?.enabled).length;$('dueCount').textContent=active.filter(due).length;const arr=S.items.filter(i=>S.filter==='all'||(S.filter==='active'?!i.archived:i.archived)).sort((a,b)=>(due(a)?0:1)-(due(b)?0:1)||new Date(b.createdAt)-new Date(a.createdAt));$('list').innerHTML='';$('empty').classList.toggle('hidden',!!arr.length);for(const i of arr){const card=document.createElement('article');const si=iso(i.schedule);const chips=[`<span class="chip ${i.type==='event'?'event':i.type==='friend'?'friend':'type'}">${esc(typeText(i.type))}</span>`];if(due(i))chips.push(`<span class="chip due">${esc(t('due'))}</span>`);if(si)chips.push(`<span class="chip">${esc(fmt(si))}</span>`);if(i.schedule?.repeat&&i.schedule.repeat!=='none')chips.push(`<span class="chip repeat">${esc(t('repeats'))}: ${esc(repeatText(i.schedule.repeat))}</span>`);if(i.random?.enabled)chips.push(`<span class="chip repeat">${esc(t('randomChip'))}: ${esc(repeatText(i.random.frequency))}</span>`);if(i.done)chips.push(`<span class="chip done">${esc(t('done'))}</span>`);const recurring=!!(i.schedule?.repeat&&i.schedule.repeat!=='none');card.className=`card${due(i)?' due':si?' scheduled':''}`;card.dataset.id=i.id;card.innerHTML=`<div class="card-top"><span class="status-mark"></span><div style="flex:1"><div class="thought-row"><div class="thought">${esc(i.text||t('voiceNote'))}</div><div class="thought-actions"><button class="quick-action edit" type="button">${esc(t('edit'))}</button><button class="quick-action delete" type="button">${esc(t('delete'))}</button></div></div><div class="chips">${chips.join('')}</div><div class="audio-card ${i.audioId?'':'hidden'}" data-audio="${esc(i.audioId||'')}"></div><div class="meta">${esc(fmt(i.createdAt))}</div></div></div><div class="card-actions"><button class="small schedule">${esc(t('schedule'))}</button><button class="small complete">${esc(recurring?t('nextOccurrence'):t('done'))}</button><button class="small archive">${esc(i.archived?t('restore'):t('archive'))}</button></div>`;$('list').appendChild(card)}hydrateAudio()}
-function applyLang(){document.documentElement.lang=S.lang;document.documentElement.dir=S.lang==='he'?'rtl':'ltr';document.querySelectorAll('[data-t]').forEach(e=>e.textContent=t(e.dataset.t));document.querySelectorAll('[data-ph]').forEach(e=>e.placeholder=t(e.dataset.ph));$('lang').textContent=S.lang==='he'?'EN':'עברית';render();updatePending()}
-function updatePending(){const e=$('pending');if(!S.pending?.schedule&&!S.pending?.random){e.classList.remove('show');return}const p=[];if(S.pending.schedule)p.push(fmt(iso(S.pending.schedule)));if(S.pending.schedule?.repeat&&S.pending.schedule.repeat!=='none')p.push(`${t('repeats')} · ${repeatText(S.pending.schedule.repeat)}`);if(S.pending.random?.enabled)p.push(`${t('randomChip')} · ${repeatText(S.pending.random.frequency)}`);$('pendingText').textContent=p.join(' · ');e.classList.add('show')}
-function openSchedule(id=null){S.target=id;const item=id?S.items.find(x=>x.id===id):S.pending||{};const s=item.schedule||{},r=item.random||{},now=new Date(),p=n=>String(n).padStart(2,'0');$('date').value=s.date||`${now.getFullYear()}-${p(now.getMonth()+1)}-${p(now.getDate())}`;$('time').value=s.time||`${p(Math.min(23,now.getHours()+1))}:00`;$('repeat').value=s.repeat||'none';$('randomOn').checked=!!r.enabled;$('frequency').value=r.frequency||'daily';$('randomWrap').classList.toggle('hidden',!r.enabled);$('scheduleDlg').showModal()}
-function scheduleValue(){return{schedule:$('date').value&&$('time').value?{date:$('date').value,time:$('time').value,repeat:$('repeat').value}:null,random:$('randomOn').checked?{enabled:true,frequency:$('frequency').value,nextAt:nextRandom($('frequency').value)}:null}}
-function advance(i){const r=i.schedule?.repeat,si=iso(i.schedule);if(si&&r&&r!=='none'){let n=nextDate(new Date(si),r);while(n<=new Date())n=nextDate(n,r);const p=x=>String(x).padStart(2,'0');i.schedule.date=`${n.getFullYear()}-${p(n.getMonth()+1)}-${p(n.getDate())}`;i.schedule.time=`${p(n.getHours())}:${p(n.getMinutes())}`;i.done=false;if(i.random?.enabled)i.random.nextAt=nextRandom(i.random.frequency);toast(t('next'))}else i.done=true;save();render()}
-const DB='thoughts_voice_db';function db(){return new Promise((res,rej)=>{const q=indexedDB.open(DB,1);q.onupgradeneeded=()=>{if(!q.result.objectStoreNames.contains('audio'))q.result.createObjectStore('audio')};q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)})}async function dbPut(id,blob){const d=await db();await new Promise((res,rej)=>{const tx=d.transaction('audio','readwrite');tx.objectStore('audio').put(blob,id);tx.oncomplete=res;tx.onerror=()=>rej(tx.error)});d.close()}async function dbGet(id){const d=await db();const v=await new Promise((res,rej)=>{const q=d.transaction('audio').objectStore('audio').get(id);q.onsuccess=()=>res(q.result);q.onerror=()=>rej(q.error)});d.close();return v}async function hydrateAudio(){for(const e of document.querySelectorAll('[data-audio]:not(.hidden)')){if(e.dataset.ready)continue;e.dataset.ready='1';try{const b=await dbGet(e.dataset.audio);if(b){const a=document.createElement('audio');a.controls=true;a.src=URL.createObjectURL(b);e.appendChild(a)}}catch{}}}
-async function startVoice(){if(S.recorder){stopVoice();return}const SR=window.SpeechRecognition||window.webkitSpeechRecognition;if(SR){try{await navigator.mediaDevices.getUserMedia({audio:true}).then(s=>s.getTracks().forEach(t=>t.stop()));const r=new SR();r.lang=S.lang==='he'?'he-IL':'en-US';r.interimResults=false;r.maxAlternatives=1;$('voice').classList.add('listening');$('voiceState').classList.add('show');$('voiceLabel').textContent=t('listening');r.onresult=e=>{$('newText').value=($('newText').value+' '+e.results[0][0].transcript).trim()};r.onerror=e=>{if(e.error==='not-allowed')toast(t('voiceDenied'));else if(e.error!=='aborted')toast(t('voiceNoSpeech'))};r.onend=()=>{$('voice').classList.remove('listening');$('voiceState').classList.remove('show')};r.start();return}catch{}}try{S.stream=await navigator.mediaDevices.getUserMedia({audio:true});const chunks=[];S.recorder=new MediaRecorder(S.stream);S.recorder.ondataavailable=e=>chunks.push(e.data);S.recorder.onstop=()=>{S.draftBlob=new Blob(chunks,{type:S.recorder?.mimeType||'audio/webm'});$('draftAudio').src=URL.createObjectURL(S.draftBlob);$('audioDraft').classList.add('show');$('voiceState').classList.remove('show');$('voice').classList.remove('listening');S.stream?.getTracks().forEach(t=>t.stop());S.recorder=null};S.recorder.start();$('voice').classList.add('listening');$('voiceState').classList.add('show');$('voiceLabel').textContent=t('recording')}catch{toast(t('voiceDenied'))}}
-function stopVoice(){try{S.recorder?.stop()}catch{}}
-async function addItem(){const text=$('newText').value.trim();if(!text&&!S.draftBlob){toast(t('writeFirst'));return}let audioId=null;if(S.draftBlob){audioId=`audio_${Date.now()}`;try{await dbPut(audioId,S.draftBlob)}catch{audioId=null}}S.items.push(normalize({text,type:$('newType').value,createdAt:new Date().toISOString(),schedule:S.pending?.schedule||null,random:S.pending?.random||null,audioId}));save();$('newText').value='';S.pending=null;S.draftBlob=null;$('audioDraft').classList.remove('show');$('draftAudio').removeAttribute('src');updatePending();render();toast(t('added'))}
-function exportData(){const blob=new Blob([JSON.stringify({version:1,exportedAt:new Date().toISOString(),items:S.items},null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`thoughts-backup-${new Date().toISOString().slice(0,10)}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);toast(t('backupReady'))}
-$('lang').onclick=()=>{S.lang=S.lang==='he'?'en':'he';localStorage.setItem('thoughts_lang',S.lang);applyLang()};$('add').onclick=addItem;$('voice').onclick=startVoice;$('removeAudio').onclick=()=>{S.draftBlob=null;$('audioDraft').classList.remove('show');$('draftAudio').removeAttribute('src')};$('scheduleNew').onclick=()=>openSchedule();$('clearPending').onclick=()=>{S.pending=null;updatePending()};$('randomOn').onchange=e=>$('randomWrap').classList.toggle('hidden',!e.target.checked);document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>$(b.dataset.close).close());$('clearSchedule').onclick=()=>{$('scheduleDlg').close();if(S.target){const i=S.items.find(x=>x.id===S.target);if(i){i.schedule=null;i.random=null;save();render()}}else{S.pending=null;updatePending()}};$('scheduleForm').onsubmit=e=>{e.preventDefault();const v=scheduleValue();$('scheduleDlg').close();if(S.target){const i=S.items.find(x=>x.id===S.target);if(i){i.schedule=v.schedule;i.random=v.random;i.done=false;save();render()}}else{S.pending=v;updatePending()}};document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));b.classList.add('active');S.filter=b.dataset.filter;render()});$('list').onclick=e=>{const b=e.target.closest('button');if(!b)return;const card=e.target.closest('.card'),i=S.items.find(x=>x.id===card?.dataset.id);if(!i)return;if(b.classList.contains('edit')){S.edit=i.id;$('editText').value=i.text;$('editType').value=i.type==='event'?'event':'thought';$('editDlg').showModal()}else if(b.classList.contains('schedule'))openSchedule(i.id);else if(b.classList.contains('complete'))advance(i);else if(b.classList.contains('archive')){i.archived=!i.archived;save();render();toast(i.archived?t('archivedToast'):t('restoredToast'))}else if(b.classList.contains('delete')){S.del=i.id;$('deleteDlg').showModal()}};$('editForm').onsubmit=e=>{e.preventDefault();const i=S.items.find(x=>x.id===S.edit);if(i){i.text=$('editText').value.trim();i.type=$('editType').value;save();render();toast(t('updated'))}$('editDlg').close()};$('editSchedule').onclick=()=>{$('editDlg').close();openSchedule(S.edit)};$('cancelDelete').onclick=()=> $('deleteDlg').close();$('confirmDelete').onclick=()=>{S.items=S.items.filter(i=>i.id!==S.del);save();render();$('deleteDlg').close();toast(t('deleted'))};$('migrateBtn').onclick=()=>mergeItems(S.legacy);$('importBtn').onclick=()=>{$('importText').value='';$('importDlg').showModal()};$('importForm').onsubmit=e=>{e.preventDefault();mergeItems(extractArray($('importText').value));$('importDlg').close()};$('exportBtn').onclick=exportData;
-$('dueStatBtn').onclick=openDueList;
-$('dueList').onclick=e=>{const card=e.target.closest('[data-id]');if(!card)return;$('dueDlg').close();S.filter='active';document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.filter==='active'));render();setTimeout(()=>{const target=document.querySelector('.card[data-id="'+CSS.escape(card.dataset.id)+'"]');target?.scrollIntoView({behavior:'smooth',block:'center'});target?.animate([{transform:'scale(1)'},{transform:'scale(1.02)'},{transform:'scale(1)'}],{duration:500})},60)};
-load();applyLang();setInterval(render,60000);
+
+  function migrateLegacy(){
+    if (localStorage.getItem(STORAGE_KEY)) return;
+    for(const key of LEGACY_KEYS){
+      try{
+        const raw = localStorage.getItem(key);
+        if(!raw) continue;
+        const arr = JSON.parse(raw);
+        if(!Array.isArray(arr)) continue;
+        state.items = arr.map((x, idx) => ({
+          id: String(x.id || crypto.randomUUID?.() || Date.now() + '_' + idx),
+          text: x.text || x.title || x.content || '',
+          type: x.type === 'friend' ? 'friend' : 'thought',
+          createdAt: x.createdAt || new Date().toISOString(),
+          archived: !!x.archived,
+          done: !!x.done,
+          schedule: x.schedule || null,
+          random: x.random || null,
+          lastNotifiedAt: x.lastNotifiedAt || null
+        })).filter(x => x.text);
+        save();
+        return;
+      }catch(e){}
+    }
+  }
+
+  function load(){
+    migrateLegacy();
+    try{
+      state.items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      if(!Array.isArray(state.items)) state.items = [];
+      state.items = state.items.map(x => ({...x, type:x.type === 'friend' ? 'friend' : 'thought'}));
+    }catch(e){ state.items = []; }
+  }
+
+  function save(){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.items));
+  }
+
+  function importFromHash(){
+    const m = location.hash.match(/^#thoughts-transfer=(.+)$/);
+    if(!m) return;
+    try{
+      const incoming = JSON.parse(decodeURIComponent(escape(atob(m[1]))));
+      if(Array.isArray(incoming)){
+        const seen = new Set(state.items.map(x => (x.text||'')+'|'+(x.createdAt||'')));
+        for(const item of incoming){
+          const key=(item.text||'')+'|'+(item.createdAt||'');
+          if(!seen.has(key)){ state.items.push(item); seen.add(key); }
+        }
+        save();
+      }
+      history.replaceState(null,'',location.pathname+location.search);
+    }catch(e){}
+  }
+
+  function toast(msg){
+    const el = $('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toast.timer);
+    toast.timer = setTimeout(() => el.classList.remove('show'), 1800);
+  }
+
+  function uid(){
+    return (crypto.randomUUID && crypto.randomUUID()) || Date.now().toString(36)+Math.random().toString(36).slice(2);
+  }
+
+  function formatDateTime(iso){
+    if(!iso) return '';
+    const d = new Date(iso);
+    if(Number.isNaN(d.getTime())) return '';
+    return new Intl.DateTimeFormat(state.lang === 'he' ? 'he-IL':'en-GB',{
+      dateStyle:'medium', timeStyle:'short'
+    }).format(d);
+  }
+
+  function repeatLabel(value){
+    return ({
+      none:t('repeatNone'), weekly:t('repeatWeekly'), biweekly:t('repeatBiweekly'),
+      monthly:t('repeatMonthly'), bimonthly:t('repeatBimonthly')
+    })[value || 'none'];
+  }
+
+  function randomLabel(value){
+    return ({
+      daily:t('randomDaily'), '3days':t('random3Days'), weekly:t('randomWeekly'), biweekly:t('randomBiweekly')
+    })[value || 'daily'];
+  }
+
+  function scheduledIso(schedule){
+    if(!schedule?.date || !schedule?.time) return null;
+    const d = new Date(`${schedule.date}T${schedule.time}:00`);
+    return Number.isNaN(d.getTime()) ? null : d.toISOString();
+  }
+
+  function isDue(item){
+    const iso = scheduledIso(item.schedule);
+    if(iso && new Date(iso).getTime() <= Date.now()) return true;
+    if(item.random?.enabled && item.random.nextAt && new Date(item.random.nextAt).getTime() <= Date.now()) return true;
+    return false;
+  }
+
+  function addMonthsClamped(date, months){
+    const d = new Date(date);
+    const originalDay = d.getDate();
+    d.setDate(1);
+    d.setMonth(d.getMonth()+months);
+    const lastDay = new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
+    d.setDate(Math.min(originalDay, lastDay));
+    return d;
+  }
+
+  function nextRecurringDate(current, repeat){
+    const d = new Date(current);
+    if(repeat === 'weekly') d.setDate(d.getDate()+7);
+    if(repeat === 'biweekly') d.setDate(d.getDate()+14);
+    if(repeat === 'monthly') return addMonthsClamped(d,1);
+    if(repeat === 'bimonthly') return addMonthsClamped(d,2);
+    return d;
+  }
+
+  function randomWindowMs(freq){
+    return ({daily:86400000,'3days':259200000,weekly:604800000,biweekly:1209600000})[freq] || 86400000;
+  }
+
+  function makeRandomNext(freq){
+    const span = randomWindowMs(freq);
+    const min = Math.min(2*60*60*1000, span*0.15);
+    return new Date(Date.now() + min + Math.random()*(span-min)).toISOString();
+  }
+
+  function normalizeRandom(random){
+    if(!random?.enabled) return null;
+    return {
+      enabled:true,
+      frequency:random.frequency || 'daily',
+      nextAt: random.nextAt || makeRandomNext(random.frequency || 'daily')
+    };
+  }
+
+  function render(){
+    const filtered = state.items.filter(item => {
+      if(state.filter === 'active') return !item.archived;
+      if(state.filter === 'archived') return item.archived;
+      return true;
+    }).sort((a,b) => {
+      const ad = isDue(a) ? 0 : 1;
+      const bd = isDue(b) ? 0 : 1;
+      if(ad !== bd) return ad-bd;
+      return new Date(b.createdAt)-new Date(a.createdAt);
+    });
+
+    listEl.innerHTML = '';
+    emptyEl.classList.toggle('hidden', filtered.length !== 0);
+    const dueItems = state.items.filter(x => !x.archived && isDue(x));
+    $('dueBar').classList.toggle('show', dueItems.length > 0);
+    $('dueSummary').textContent = state.lang === 'he' ? `יש לך ${dueItems.length} תזכורות` : `You have ${dueItems.length} reminders`;
+
+    for(const item of filtered){
+      const card = document.createElement('article');
+      card.className = 'card' + (item.type === 'friend' ? ' friend-card' : '') + (isDue(item) ? ' due-card' : '');
+      card.dataset.id = item.id;
+
+      const chips = [`<span class="chip ${item.type==='friend'?'friend':''}">${escapeHtml(item.type==='friend'?t('typeFriend'):t('typeThought'))}</span>`];
+      const iso = scheduledIso(item.schedule);
+      if(isDue(item)) chips.push(`<span class="chip due">${escapeHtml(t('due'))}</span>`);
+      if(iso) chips.push(`<span class="chip">${escapeHtml(t('scheduled'))}: ${escapeHtml(formatDateTime(iso))}</span>`);
+      if(item.schedule?.repeat && item.schedule.repeat !== 'none') chips.push(`<span class="chip repeat">${escapeHtml(t('repeats'))}: ${escapeHtml(repeatLabel(item.schedule.repeat))}</span>`);
+      if(item.random?.enabled) chips.push(`<span class="chip random">${escapeHtml(t('random'))}: ${escapeHtml(randomLabel(item.random.frequency))}</span>`);
+      if(item.done) chips.push(`<span class="chip done">${escapeHtml(t('done'))}</span>`);
+
+      card.innerHTML = `
+        <div class="card-top">
+          <div style="flex:1">
+            <div class="thought">${escapeHtml(item.text)}</div>
+            <div class="chips">${chips.join('')}</div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="small-action edit">${escapeHtml(t('edit'))}</button>
+          <button class="small-action delete">${escapeHtml(t('delete'))}</button>
+          <button class="small-action complete">${escapeHtml(t('done'))}</button>
+          <button class="small-action archive">${escapeHtml(item.archived ? t('restore'):t('archive'))}</button>
+        </div>
+        <div class="meta">${escapeHtml(formatDateTime(item.createdAt))}</div>
+      `;
+      listEl.appendChild(card);
+    }
+  }
+
+  function escapeHtml(s){
+    return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+  }
+
+  function openSchedule({targetId=null, initial=null}={}){
+    state.scheduleTargetId = targetId;
+    const schedule = initial?.schedule || (targetId ? state.items.find(x=>x.id===targetId)?.schedule : state.pendingSchedule?.schedule) || null;
+    const random = initial?.random || (targetId ? state.items.find(x=>x.id===targetId)?.random : state.pendingSchedule?.random) || null;
+
+    const now = new Date();
+    const pad = n => String(n).padStart(2,'0');
+    $('scheduleDate').value = schedule?.date || `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+    $('scheduleTime').value = schedule?.time || `${pad(now.getHours()+1 > 23 ? 23 : now.getHours()+1)}:00`;
+    $('repeatSelect').value = schedule?.repeat || 'none';
+    $('randomEnabled').checked = !!random?.enabled;
+    $('randomFrequency').value = random?.frequency || 'daily';
+    $('randomFrequencyWrap').classList.toggle('hidden', !$('randomEnabled').checked);
+    $('scheduleDialog').showModal();
+  }
+
+  function readScheduleForm(){
+    const hasDateTime = $('scheduleDate').value && $('scheduleTime').value;
+    const schedule = hasDateTime ? {
+      date:$('scheduleDate').value,
+      time:$('scheduleTime').value,
+      repeat:$('repeatSelect').value
+    } : null;
+    const random = $('randomEnabled').checked ? normalizeRandom({
+      enabled:true,
+      frequency:$('randomFrequency').value,
+      nextAt:null
+    }) : null;
+    return {schedule, random};
+  }
+
+  function advanceAfterDone(item){
+    const repeat = item.schedule?.repeat;
+    const iso = scheduledIso(item.schedule);
+    if(iso && repeat && repeat !== 'none'){
+      let next = nextRecurringDate(new Date(iso), repeat);
+      while(next.getTime() <= Date.now()){
+        next = nextRecurringDate(next, repeat);
+      }
+      const pad = n => String(n).padStart(2,'0');
+      item.schedule.date = `${next.getFullYear()}-${pad(next.getMonth()+1)}-${pad(next.getDate())}`;
+      item.schedule.time = `${pad(next.getHours())}:${pad(next.getMinutes())}`;
+      item.done = false;
+      item.lastNotifiedAt = null;
+      if(item.random?.enabled) item.random.nextAt = makeRandomNext(item.random.frequency);
+      toast(t('nextScheduled'));
+      return;
+    }
+    item.done = true;
+  }
+
+  function maybeNotify(){
+    const dueItems = state.items.filter(x => !x.archived && isDue(x));
+    for(const item of dueItems){
+      const now = Date.now();
+      const last = item.lastNotifiedAt ? new Date(item.lastNotifiedAt).getTime() : 0;
+      if(now-last < 15*60*1000) continue;
+
+      item.lastNotifiedAt = new Date().toISOString();
+
+      if(item.random?.enabled && item.random.nextAt && new Date(item.random.nextAt).getTime() <= now){
+        item.random.nextAt = makeRandomNext(item.random.frequency);
+      }
+
+      if('Notification' in window && Notification.permission === 'granted'){
+        try{ new Notification(state.lang === 'he' ? 'תזכורת מהמחשבות' : 'Thought reminder', {body:item.text}); }catch(e){}
+      }
+    }
+    if(dueItems.length){
+      save();
+      render();
+    }
+  }
+
+  $('addBtn').addEventListener('click', () => {
+    const text = $('thoughtInput').value.trim();
+    if(!text){ toast(t('noText')); return; }
+    const pending = state.pendingSchedule || {schedule:null,random:null};
+    state.items.push({
+      id:uid(), text, type:$('newType').value === 'friend' ? 'friend' : 'thought', createdAt:new Date().toISOString(), archived:false, done:false,
+      schedule:pending.schedule || null, random:normalizeRandom(pending.random), lastNotifiedAt:null
+    });
+    $('thoughtInput').value = '';
+    state.pendingSchedule = null;
+    save(); render(); toast(t('added'));
+  });
+
+  $('scheduleNewBtn').addEventListener('click', () => openSchedule());
+
+  $('randomEnabled').addEventListener('change', () => {
+    $('randomFrequencyWrap').classList.toggle('hidden', !$('randomEnabled').checked);
+  });
+
+  $('scheduleForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const value = readScheduleForm();
+
+    if(state.scheduleTargetId){
+      const item = state.items.find(x=>x.id===state.scheduleTargetId);
+      if(item){
+        item.schedule = value.schedule;
+        item.random = normalizeRandom(value.random);
+        item.done = false;
+        item.lastNotifiedAt = null;
+        save(); render(); toast(t('updated'));
+      }
+    }else{
+      state.pendingSchedule = value;
+      toast(t('updated'));
+    }
+    state.scheduleTargetId = null;
+    $('scheduleDialog').close();
+  });
+
+  $('clearScheduleBtn').addEventListener('click', () => {
+    if(state.scheduleTargetId){
+      const item = state.items.find(x=>x.id===state.scheduleTargetId);
+      if(item){ item.schedule=null; item.random=null; item.lastNotifiedAt=null; save(); render(); }
+    }else{
+      state.pendingSchedule = null;
+    }
+    state.scheduleTargetId = null;
+    $('scheduleDialog').close();
+  });
+
+  listEl.addEventListener('click', e => {
+    const card = e.target.closest('.card');
+    if(!card) return;
+    const id = card.dataset.id;
+    const item = state.items.find(x=>x.id===id);
+    if(!item) return;
+
+    if(e.target.closest('.edit')){
+      state.editTargetId = id;
+      $('editType').value = item.type === 'friend' ? 'friend' : 'thought';
+      $('editText').value = item.text;
+      $('editDialog').showModal();
+      return;
+    }
+    if(e.target.closest('.complete')){
+      advanceAfterDone(item);
+      save(); render(); toast(t('completed'));
+      return;
+    }
+    if(e.target.closest('.archive')){
+      item.archived = !item.archived;
+      save(); render(); toast(item.archived ? t('archivedToast'):t('restoredToast'));
+      return;
+    }
+    if(e.target.closest('.delete')){
+      state.deleteTargetId = id;
+      $('deleteDialog').showModal();
+      return;
+    }
+  });
+
+  $('editForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const item = state.items.find(x=>x.id===state.editTargetId);
+    const text = $('editText').value.trim();
+    if(item && text){
+      item.text = text;
+      item.type = $('editType').value === 'friend' ? 'friend' : 'thought';
+      save(); render(); toast(t('updated'));
+    }
+    state.editTargetId = null;
+    $('editDialog').close();
+  });
+
+  $('editScheduleBtn').addEventListener('click', () => {
+    const id = state.editTargetId;
+    $('editDialog').close();
+    openSchedule({targetId:id});
+  });
+
+  $('cancelDeleteBtn').addEventListener('click', () => {
+    state.deleteTargetId = null;
+    $('deleteDialog').close();
+  });
+
+  $('confirmDeleteBtn').addEventListener('click', () => {
+    state.items = state.items.filter(x=>x.id!==state.deleteTargetId);
+    state.deleteTargetId = null;
+    save(); render(); $('deleteDialog').close(); toast(t('deleted'));
+  });
+
+  document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    tab.classList.add('active');
+    state.filter = tab.dataset.filter;
+    render();
+  }));
+
+  $('showDueBtn').addEventListener('click', () => {
+    const dueItems = state.items.filter(x => !x.archived && isDue(x));
+    $('dueList').innerHTML = dueItems.map(item => `<button class="small-action" data-id="${escapeHtml(item.id)}" style="text-align:inherit;padding:12px">${escapeHtml(item.text)}</button>`).join('');
+    $('dueDialog').showModal();
+  });
+  $('closeDueBtn').addEventListener('click', () => $('dueDialog').close());
+  $('dueList').addEventListener('click', e => {
+    const b=e.target.closest('[data-id]'); if(!b) return;
+    $('dueDialog').close();
+    state.filter='active';
+    document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.filter==='active'));
+    render();
+    setTimeout(()=>document.querySelector('.card[data-id="'+CSS.escape(b.dataset.id)+'"]')?.scrollIntoView({behavior:'smooth',block:'center'}),50);
+  });
+
+  $('transferBtn').addEventListener('click', () => {
+    const payload = btoa(unescape(encodeURIComponent(JSON.stringify(state.items))));
+    location.href = 'https://itamarlev.com/thoughts-assistant/#thoughts-transfer=' + payload;
+  });
+
+  $('langBtn').addEventListener('click', () => setLanguage(state.lang === 'he' ? 'en':'he'));
+
+  $('voiceBtn').addEventListener('click', () => {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SR){ toast(t('speechUnsupported')); return; }
+    const rec = new SR();
+    rec.lang = state.lang === 'he' ? 'he-IL':'en-US';
+    rec.interimResults = false;
+    rec.maxAlternatives = 1;
+    rec.onresult = ev => {
+      const text = ev.results?.[0]?.[0]?.transcript || '';
+      if(text) $('thoughtInput').value = ($('thoughtInput').value + ' ' + text).trim();
+    };
+    rec.start();
+  });
+
+  window.addEventListener('focus', maybeNotify);
+  setInterval(maybeNotify, 60000);
+
+  load();
+  importFromHash();
+  if(location.hostname === 'itamarlev.com' || location.hostname.endsWith('.itamarlev.com')) $('transferBtn').style.display='none';
+  setLanguage(state.lang);
+  maybeNotify();
 })();
