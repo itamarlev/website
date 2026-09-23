@@ -267,18 +267,16 @@ At the end of each phase, record in this file:
 
 ## Current checkpoint
 - Date: 2026-09-23
-- Phase: Phase 8 complete — daily-use UX hierarchy refined
-- Pre-change HEAD: 926f73270b30ce4a97768727340b34ca02522003
-- Functional commit: fb3903975f2c45af5241e6c224e3af584fbfdee5
-- Files changed: thoughts-assistant/index.html, thoughts-assistant/app.js, thoughts-assistant/app.css
-- Data migration performed: no
-- Primary hierarchy: quick capture remains first; due reminders now appear before navigation/list controls when present
-- List context: current filter name and visible item count are shown above the list
-- Friends accessibility: dedicated Friends tab remains unchanged and prominent
-- Secondary tools: notifications, backup/import, legacy migration and transfer controls remain available but are grouped under a collapsed Settings & data section
-- Fast capture: after adding an item, focus returns to the capture field
-- Visual refinement: spacing, card typography and secondary-panel styling tightened without removing features
-- Repo verification performed: yes — all required DOM IDs remain present; all four filters remain; notification/import/migration/transfer controls remain wired; JS syntax parsed; mobile rules preserved
-- Runtime/live verification performed: no
-- Known remaining issues: production deployment/live smoke test still pending; background Web Push backend remains pending
-- Next intended phase: Phase 9 — deployment verification and smoke test
+- Phase: Phase 9 verification attempted — repository smoke test passed; production/live verification unavailable from current tools
+- Current main HEAD: 743869828902713d1185663458991a7e79210314
+- Latest functional commit: fb3903975f2c45af5241e6c224e3af584fbfdee5
+- Files verified in repository: thoughts-assistant/index.html, thoughts-assistant/app.js, thoughts-assistant/app.css, thoughts-assistant/manifest.webmanifest, thoughts-assistant/sw.js
+- GitHub deployment evidence: none — no GitHub Actions workflow runs and no combined commit statuses are present for current HEAD
+- Live fetch attempt: failed from both web access and direct HTTP/container DNS; therefore the production domain and asset versions could not be inspected
+- Repo smoke test performed: yes — JS syntax parses; HTML loads app.css/app.js; primary add/edit/delete/schedule flows remain wired; Friends remains present; due/random reminder logic remains present; import/export/migration remain present; notification/PWA files remain present; mobile rules remain present; no localStorage.removeItem exists
+- VERIFIED IN REPO: yes
+- VERIFIED DEPLOYMENT: no
+- VERIFIED LIVE: no
+- Production wording requirement: say committed to GitHub; production deployment not verified
+- Known remaining issues: live production smoke test still needed from an environment that can reach itamarlev.com; real iPhone Home Screen test still needed; background Web Push backend remains pending
+- Next recommended action: verify the live URL manually or provide Cloudflare deployment evidence, then run the live smoke checklist
