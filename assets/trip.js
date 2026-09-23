@@ -123,6 +123,17 @@ document.documentElement.classList.add("js");
         background: rgba(255,255,255,.12);
         color: #fff;
       }
+      .day-nav .day-nav__sections a.kids-version-link {
+        border-color: #ffd84d;
+        background: #ffd84d;
+        color: #20254d;
+        box-shadow: 0 5px 16px rgba(255,216,77,.2);
+      }
+      .day-nav .day-nav__sections a.kids-version-link:hover {
+        border-color: #ffe57c;
+        background: #ffe57c;
+        color: #20254d;
+      }
       .day-nav .day-nav__sections a::after { display: none; }
       .day-nav a.is-today {
         box-shadow: inset 0 0 0 1px var(--trip-sun);
@@ -159,6 +170,7 @@ document.documentElement.classList.add("js");
       sectionBar.setAttribute("aria-label", "ניווט למקטעי העמוד");
       const sections = [
         ["#route", "סקירת המסלול"],
+        ["kids/", "🎒 גרסת ילדים", "kids-version-link"],
         ["#bookings", "טיסות ולינות"],
         ["#preparation", "הכנות וצ'קליסט"],
         ["#strategy", "איך מטיילים יחד"],
@@ -166,7 +178,7 @@ document.documentElement.classList.add("js");
         ["#itinerary", "תוכנית יומית"]
       ];
       sectionBar.innerHTML = sections
-        .map(([href, label]) => `<a href="${href}">${label}</a>`)
+        .map(([href, label, className]) => `<a href="${href}"${className ? ` class="${className}"` : ""}>${label}</a>`)
         .join("");
       navProgress?.insertAdjacentElement("afterend", sectionBar);
     }
