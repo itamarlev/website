@@ -73,7 +73,7 @@ input,select{
 .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
 .btn.danger{background:var(--danger-soft);color:var(--danger)}
 .tabs{
-  position:sticky;top:84px;z-index:35;display:grid;grid-template-columns:repeat(3,1fr);gap:4px;
+  position:sticky;top:84px;z-index:35;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;
   margin:0 0 16px;padding:4px;border-radius:17px;background:rgba(228,231,238,.82);
   backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)
 }
@@ -118,6 +118,8 @@ input,select{
   color:#58606b;font-size:11px;font-weight:780
 }
 .small-action.edit{color:#4446ad;background:#f1f1ff}
+.small-action.reminder{color:var(--friend);background:var(--friend-soft)}
+.friend-actions{grid-template-columns:repeat(5,1fr)}
 .small-action.delete{color:var(--danger);background:#fff3f4}
 .small-action.complete{color:var(--success);background:#eff8f2}
 .small-action.archive{color:#5f6670;background:#f2f3f5}
@@ -168,7 +170,7 @@ dialog::backdrop{background:rgba(12,15,22,.44);backdrop-filter:blur(7px);-webkit
   textarea{min-height:96px;font-size:16px}
   .icon-btn{width:52px;min-width:52px;border-radius:17px}
   .tabs{top:78px}
-  .actions{grid-template-columns:1fr 1fr}
+  .actions,.friend-actions{grid-template-columns:1fr 1fr}
   .grid2{grid-template-columns:1fr}
   .due-bar{align-items:flex-start}
 }

@@ -20,7 +20,7 @@
     he: {
       title:'המחשבות שלי', subtitle:'לזכור, לתזמן, ולחזור למה שחשוב',
       placeholder:'מה עובר לך בראש?', schedule:'תזמון', add:'הוספה', itemType:'סוג פריט', typeThought:'מחשבה / משימה', typeFriend:'חבר / אדם',
-      active:'פעילות', archived:'ארכיון', all:'הכול', empty:'אין כאן מחשבות כרגע.',
+      active:'פעילות', friends:'חברים', archived:'ארכיון', all:'הכול', empty:'אין כאן מחשבות כרגע.',
       savedLocal:'המידע נשמר מקומית במכשיר הזה.', scheduleTitle:'תזמון',
       date:'תאריך', time:'שעה', repeat:'חזרה', repeatNone:'ללא חזרה',
       repeatWeekly:'פעם בשבוע', repeatBiweekly:'פעם בשבועיים',
@@ -31,7 +31,7 @@
       clear:'נקה תזמון', save:'שמור', editTitle:'עריכת מחשבה', thought:'מחשבה',
       editSchedule:'שינוי תזמון', saveChanges:'שמירת שינויים',
       deleteTitle:'למחוק את המחשבה?', deleteHelp:'המחיקה היא סופית. אפשר לבחור בארכיון אם אולי תרצה לחזור אליה.',
-      cancel:'ביטול', delete:'מחיקה', edit:'עריכה', archive:'ארכיון',
+      cancel:'ביטול', delete:'מחיקה', edit:'עריכה', reminder:'תזכורת', archive:'ארכיון',
       restore:'החזרה', done:'בוצע', menu:'פעולות', due:'הגיע הזמן',
       scheduled:'מתוזמן', repeats:'חוזר', random:'אקראי', noText:'צריך לכתוב משהו קודם.',
       added:'המחשבה נוספה.', updated:'המחשבה עודכנה.', deleted:'המחשבה נמחקה.',
@@ -45,7 +45,7 @@
     en: {
       title:'My Thoughts', subtitle:'Remember, schedule, and return to what matters',
       placeholder:'What is on your mind?', schedule:'Schedule', add:'Add', itemType:'Item type', typeThought:'Thought / task', typeFriend:'Friend / person',
-      active:'Active', archived:'Archive', all:'All', empty:'No thoughts here right now.',
+      active:'Active', friends:'Friends', archived:'Archive', all:'All', empty:'No thoughts here right now.',
       savedLocal:'Your data is stored locally on this device.', scheduleTitle:'Schedule',
       date:'Date', time:'Time', repeat:'Repeat', repeatNone:'No repeat',
       repeatWeekly:'Once a week', repeatBiweekly:'Every two weeks',
@@ -56,7 +56,7 @@
       clear:'Clear schedule', save:'Save', editTitle:'Edit thought', thought:'Thought',
       editSchedule:'Change schedule', saveChanges:'Save changes',
       deleteTitle:'Delete this thought?', deleteHelp:'Deletion is permanent. Use Archive if you may want it later.',
-      cancel:'Cancel', delete:'Delete', edit:'Edit', archive:'Archive',
+      cancel:'Cancel', delete:'Delete', edit:'Edit', reminder:'Reminder', archive:'Archive',
       restore:'Restore', done:'Done', menu:'Actions', due:'Due now',
       scheduled:'Scheduled', repeats:'Repeats', random:'Random', noText:'Write something first.',
       added:'Thought added.', updated:'Thought updated.', deleted:'Thought deleted.',
@@ -413,6 +413,7 @@
     if(materializeDueOccurrences()) save();
     const filtered = state.items.filter(item => {
       if(state.filter === 'active') return !item.archived;
+      if(state.filter === 'friends') return !item.archived && item.type === 'friend';
       if(state.filter === 'archived') return item.archived;
       return true;
     }).sort((a,b) => {
@@ -424,6 +425,11 @@
 
     listEl.innerHTML = '';
     emptyEl.classList.toggle('hidden', filtered.length !== 0);
+    if(!filtered.length){
+      emptyEl.textContent = state.filter === 'friends'
+        ? (state.lang === 'he' ? 'עדיין אין חברים ברשימה.' : 'No friends in your list yet.')
+        : t('empty');
+    }
     const dueItems = state.items.filter(x => !x.archived && isDue(x));
     $('dueBar').classList.toggle('show', dueItems.length > 0);
     $('dueSummary').textContent = state.lang === 'he' ? `יש לך ${dueItems.length} תזכורות` : `You have ${dueItems.length} reminders`;
@@ -448,8 +454,9 @@
             <div class="chips">${chips.join('')}</div>
           </div>
         </div>
-        <div class="actions">
+        <div class="actions ${item.type === 'friend' ? 'friend-actions' : ''}">
           <button class="small-action edit">${escapeHtml(t('edit'))}</button>
+          ${item.type === 'friend' ? `<button class="small-action reminder">${escapeHtml(t('reminder'))}</button>` : ''}
           <button class="small-action delete">${escapeHtml(t('delete'))}</button>
           <button class="small-action complete">${escapeHtml(t('done'))}</button>
           <button class="small-action archive">${escapeHtml(item.archived ? t('restore'):t('archive'))}</button>
@@ -624,6 +631,10 @@
       $('editType').value = item.type === 'friend' ? 'friend' : 'thought';
       $('editText').value = item.text;
       $('editDialog').showModal();
+      return;
+    }
+    if(e.target.closest('.reminder')){
+      openSchedule({targetId:id});
       return;
     }
     if(e.target.closest('.complete')){
