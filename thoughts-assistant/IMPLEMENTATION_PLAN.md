@@ -267,21 +267,21 @@ At the end of each phase, record in this file:
 
 ## Current checkpoint
 - Date: 2026-09-23
-- Phase: Phase 6 client-side complete — permission flow and PWA push foundation added; background push backend still pending
-- Pre-change HEAD: 67ba60e37e766f44fa3c1be7203ca18f2bcef100
-- Functional commit: 756c4f5b692386a905a6d3a4c43ac1dc94e37869
-- Files changed: thoughts-assistant/index.html, thoughts-assistant/app.js, thoughts-assistant/app.css, thoughts-assistant/manifest.webmanifest, thoughts-assistant/sw.js
-- Data migration performed: no
-- Notification UI: added explicit status panel and user-triggered Enable button
-- Permission flow: Notification.requestPermission is called only from direct user interaction
-- Status handling: granted/denied/default/unsupported states are presented separately
-- iPhone guidance: when not running as a Home Screen app, the UI explains that closed-app notifications require adding the app to the Home Screen
-- PWA foundation: standalone web-app manifest added and service worker registered
-- Service worker: includes push-event notification display and notificationclick focus/open handling
-- Foreground/in-app reminder state remains separate from system notification delivery
-- Background push limitation: no PushManager subscription, VAPID keys, subscription storage or server sender exists yet; therefore notifications while the app is closed are NOT verified or complete
-- External technical verification: Apple/WebKit documentation confirms iOS/iPadOS Home Screen web apps support Web Push via Push API, Notifications API and Service Workers, and that server-side push infrastructure is required
-- Repo verification performed: yes — manifest link, permission UI, permission states, service-worker registration, push handler and click handler verified
+- Phase: Phase 7 complete on destination side — explicit legacy-site migration path added
+- Pre-change HEAD: c0cf66bef372b7c331a5c4291d7b59fc9381fe74
+- Functional commit: af8ca9e70758ccc60cd882ffbb57f87a302e2d67
+- Files changed: thoughts-assistant/index.html, thoughts-assistant/app.js, thoughts-assistant/app.css
+- Data migration performed: no automatic destructive migration
+- Live source-site access: unavailable; the ChatGPT site could not be fetched, so its current UI/source remains unverified
+- Migration assistant: added a dedicated Move from old site dialog explaining origin-scoped browser storage
+- Source extraction fallback: added a copyable bookmarklet/export helper that, when explicitly run on the old-site origin, exports all known storage keys into JSON
+- Destination import: existing JSON import is reused and remains merge-only
+- Hash transfer safety: incoming thoughts-transfer hashes no longer auto-save; they open the same preview/confirmation flow
+- Backup-first rule: confirm merge is disabled until the current destination data has been exported to a backup file during that import session
+- Preview: incoming count, new-item count and existing destination count are shown before merge
+- Completion: before/after item counts are shown after merge
+- Storage safety: no localStorage.removeItem is present; existing legacy keys are not deleted
+- Repo verification performed: yes — JS syntax parsed; migration dialog/helper, explicit preview, backup gate, merge-only path and count reporting verified
 - Runtime/live verification performed: no
-- Known remaining issues: implement a secure push-subscription backend before claiming background notifications; live Home Screen/iPhone test still required
-- Next intended phase: Phase 7 — ChatGPT-site migration path, unless backend Web Push is prioritized first
+- Known remaining issues: source-site helper cannot be verified until the old ChatGPT site is directly accessible or the user runs it; background Web Push backend remains pending
+- Next intended phase: Phase 8 — UX refinement
