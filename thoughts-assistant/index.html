@@ -61,6 +61,7 @@
   <div class="transfer-row data-tools">
     <button id="exportBtn" class="transfer-btn" type="button" data-i18n="exportBackup">ייצוא גיבוי</button>
     <button id="importBtn" class="transfer-btn" type="button" data-i18n="importBackup">ייבוא גיבוי</button>
+    <button id="migrationHelpBtn" class="transfer-btn" type="button" data-i18n="migrationHelp">מעבר מהאתר הישן</button>
     <button id="transferBtn" class="transfer-btn" type="button" data-i18n="transferToSite">העבר לאתר</button>
   </div>
   <input id="importFile" type="file" accept="application/json,.json" hidden>
@@ -150,9 +151,32 @@
   <div class="modal">
     <h2 data-i18n="importTitle">בדיקת הגיבוי לפני ייבוא</h2>
     <div id="importSummary" class="sub"></div>
+    <div class="import-safety">
+      <div data-i18n="backupBeforeMerge">לפני המיזוג, הורד גיבוי של הנתונים הקיימים באתר הזה.</div>
+      <button id="backupBeforeImportBtn" class="btn secondary" type="button" data-i18n="backupNow">הורד גיבוי עכשיו</button>
+    </div>
     <div class="modal-actions">
       <button id="cancelImportBtn" class="btn ghost" data-i18n="cancel">ביטול</button>
-      <button id="confirmImportBtn" class="btn primary" data-i18n="confirmImport">מזג נתונים</button>
+      <button id="confirmImportBtn" class="btn primary" type="button" data-i18n="confirmImport" disabled>מזג נתונים</button>
+    </div>
+  </div>
+</dialog>
+
+<dialog id="migrationDialog">
+  <div class="modal">
+    <h2 data-i18n="migrationTitle">מעבר מהאתר הישן</h2>
+    <div class="migration-steps">
+      <p data-i18n="migrationIntro">המידע באתר הישן נשמר בדפדפן של אותו אתר, ולכן האתר החדש לא יכול לקרוא אותו ישירות.</p>
+      <ol>
+        <li data-i18n="migrationStep1">פתח את האתר הישן באותו מכשיר/דפדפן שבו השתמשת בו.</li>
+        <li data-i18n="migrationStep2">הרץ שם את כלי הייצוא כדי ליצור קובץ JSON.</li>
+        <li data-i18n="migrationStep3">חזור לכאן ובחר ייבוא גיבוי. לפני המיזוג תתבקש להוריד גיבוי של הנתונים שכבר כאן.</li>
+      </ol>
+      <button id="copyMigrationHelperBtn" class="btn secondary" type="button" data-i18n="copyMigrationHelper">העתק כלי ייצוא לאתר הישן</button>
+      <div class="sub" data-i18n="migrationIphone">באייפון אפשר לשמור סימנייה, לערוך את הכתובת שלה ולהדביק את הכלי שהועתק, ואז להפעיל את הסימנייה מתוך האתר הישן.</div>
+    </div>
+    <div class="modal-actions">
+      <button id="closeMigrationBtn" class="btn ghost" type="button" data-i18n="close">סגור</button>
     </div>
   </div>
 </dialog>

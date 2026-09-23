@@ -13,7 +13,9 @@
     scheduleTargetId: null,
     editTargetId: null,
     deleteTargetId: null,
-    pendingImport: null
+    pendingImport: null,
+    pendingImportSource: null,
+    backupMadeForPendingImport: false
   };
 
   const i18n = {
@@ -205,6 +207,11 @@
     };
   }
 
+  function legacyExportHelper(){
+    const code = `(()=>{const keys=['thoughts_app_v2','thoughts_assistant_v1','thoughts','ideas','mindItems','thoughtsAppItems','thoughts_app_meta_v1'];const snapshots={};for(const k of keys){const v=localStorage.getItem(k);if(v!==null)snapshots[k]=v;}const payload={schemaVersion:2,exportedAt:new Date().toISOString(),app:'thoughts-assistant-legacy-export',storageSnapshots:snapshots};const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='thoughts-old-site-export-'+new Date().toISOString().slice(0,10)+'.json';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(a.href),1000);})();`;
+    return 'javascript:' + encodeURIComponent(code);
+  }
+
   function downloadBackup(){
     const blob = new Blob([JSON.stringify(createBackupPayload(), null, 2)], {type:'application/json'});
     const link = document.createElement('a');
@@ -231,6 +238,22 @@
     return groups;
   }
 
+  function openImportPreview(payload, source='file'){
+    const preview = previewImport(payload);
+    if(!preview.incoming.length) throw new Error('No items');
+    state.pendingImport = preview;
+    state.pendingImportSource = source;
+    state.backupMadeForPendingImport = false;
+    $('confirmImportBtn').disabled = true;
+    const sourceLabel = source === 'hash-transfer'
+      ? (state.lang === 'he' ? 'העברה מהאתר הישן' : 'old-site transfer')
+      : (state.lang === 'he' ? 'קובץ הגיבוי' : 'backup file');
+    $('importSummary').textContent = state.lang === 'he'
+      ? `${sourceLabel}: נמצאו ${preview.incoming.length} פריטים. ${preview.addedCount} מהם חדשים ויתווספו ל־${state.items.length} הפריטים הקיימים. שום מידע קיים לא יימחק.`
+      : `${sourceLabel}: found ${preview.incoming.length} items. ${preview.addedCount} are new and will be merged into your ${state.items.length} existing items. Existing data will not be deleted.`;
+    $('importDialog').showModal();
+  }
+
   function previewImport(payload){
     const incoming = mergeItems(extractImportGroups(payload));
     const combined = mergeItems([
@@ -249,15 +272,12 @@
     if(!m) return;
     try{
       const incoming = JSON.parse(decodeURIComponent(escape(atob(m[1]))));
-      if(Array.isArray(incoming)){
-        state.items = mergeItems([
-          {sourceKey:'current', items:state.items},
-          {sourceKey:'hash-transfer', items:incoming}
-        ]);
-        save();
-      }
       history.replaceState(null,'',location.pathname+location.search);
-    }catch(e){}
+      openImportPreview({items:Array.isArray(incoming) ? incoming : []}, 'hash-transfer');
+    }catch(e){
+      history.replaceState(null,'',location.pathname+location.search);
+      toast(t('importInvalid'));
+    }
   }
 
   function toast(msg){
@@ -778,13 +798,7 @@
     if(!file) return;
     try{
       const payload = JSON.parse(await file.text());
-      const preview = previewImport(payload);
-      if(!preview.incoming.length) throw new Error('No items');
-      state.pendingImport = preview;
-      $('importSummary').textContent = state.lang === 'he'
-        ? `בגיבוי נמצאו ${preview.incoming.length} פריטים. ${preview.addedCount} מהם חדשים ויתווספו ל־${state.items.length} הפריטים הקיימים. שום מידע קיים לא יימחק.`
-        : `The backup contains ${preview.incoming.length} items. ${preview.addedCount} are new and will be merged into your ${state.items.length} existing items. Existing data will not be deleted.`;
-      $('importDialog').showModal();
+      openImportPreview(payload, 'file');
     }catch(err){
       state.pendingImport = null;
       toast(t('importInvalid'));
@@ -793,18 +807,43 @@
 
   $('cancelImportBtn').addEventListener('click', () => {
     state.pendingImport = null;
+    state.pendingImportSource = null;
+    state.backupMadeForPendingImport = false;
     $('importDialog').close();
   });
 
+  $('backupBeforeImportBtn').addEventListener('click', () => {
+    downloadBackup();
+    state.backupMadeForPendingImport = true;
+    $('confirmImportBtn').disabled = false;
+  });
+
   $('confirmImportBtn').addEventListener('click', () => {
-    if(state.pendingImport){
-      state.items = state.pendingImport.combined;
-      save();
-      render();
-      toast(t('importComplete'));
-    }
+    if(!state.pendingImport || !state.backupMadeForPendingImport) return;
+    const beforeCount = state.items.length;
+    state.items = state.pendingImport.combined;
+    const afterCount = state.items.length;
+    save();
+    render();
+    toast(state.lang === 'he'
+      ? `המיזוג הושלם: ${beforeCount} → ${afterCount} פריטים.`
+      : `Merge complete: ${beforeCount} → ${afterCount} items.`);
     state.pendingImport = null;
+    state.pendingImportSource = null;
+    state.backupMadeForPendingImport = false;
     $('importDialog').close();
+  });
+
+  $('migrationHelpBtn').addEventListener('click', () => $('migrationDialog').showModal());
+  $('closeMigrationBtn').addEventListener('click', () => $('migrationDialog').close());
+  $('copyMigrationHelperBtn').addEventListener('click', async () => {
+    const helper = legacyExportHelper();
+    try{
+      await navigator.clipboard.writeText(helper);
+      toast(t('migrationCopied'));
+    }catch(e){
+      window.prompt(state.lang === 'he' ? 'העתק את כלי הייצוא:' : 'Copy the export helper:', helper);
+    }
   });
 
   $('transferBtn').addEventListener('click', () => {
