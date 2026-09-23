@@ -267,21 +267,18 @@ At the end of each phase, record in this file:
 
 ## Current checkpoint
 - Date: 2026-09-23
-- Phase: Phase 7 complete on destination side — explicit legacy-site migration path added
-- Pre-change HEAD: c0cf66bef372b7c331a5c4291d7b59fc9381fe74
-- Functional commit: af8ca9e70758ccc60cd882ffbb57f87a302e2d67
+- Phase: Phase 8 complete — daily-use UX hierarchy refined
+- Pre-change HEAD: 926f73270b30ce4a97768727340b34ca02522003
+- Functional commit: fb3903975f2c45af5241e6c224e3af584fbfdee5
 - Files changed: thoughts-assistant/index.html, thoughts-assistant/app.js, thoughts-assistant/app.css
-- Data migration performed: no automatic destructive migration
-- Live source-site access: unavailable; the ChatGPT site could not be fetched, so its current UI/source remains unverified
-- Migration assistant: added a dedicated Move from old site dialog explaining origin-scoped browser storage
-- Source extraction fallback: added a copyable bookmarklet/export helper that, when explicitly run on the old-site origin, exports all known storage keys into JSON
-- Destination import: existing JSON import is reused and remains merge-only
-- Hash transfer safety: incoming thoughts-transfer hashes no longer auto-save; they open the same preview/confirmation flow
-- Backup-first rule: confirm merge is disabled until the current destination data has been exported to a backup file during that import session
-- Preview: incoming count, new-item count and existing destination count are shown before merge
-- Completion: before/after item counts are shown after merge
-- Storage safety: no localStorage.removeItem is present; existing legacy keys are not deleted
-- Repo verification performed: yes — JS syntax parsed; migration dialog/helper, explicit preview, backup gate, merge-only path and count reporting verified
+- Data migration performed: no
+- Primary hierarchy: quick capture remains first; due reminders now appear before navigation/list controls when present
+- List context: current filter name and visible item count are shown above the list
+- Friends accessibility: dedicated Friends tab remains unchanged and prominent
+- Secondary tools: notifications, backup/import, legacy migration and transfer controls remain available but are grouped under a collapsed Settings & data section
+- Fast capture: after adding an item, focus returns to the capture field
+- Visual refinement: spacing, card typography and secondary-panel styling tightened without removing features
+- Repo verification performed: yes — all required DOM IDs remain present; all four filters remain; notification/import/migration/transfer controls remain wired; JS syntax parsed; mobile rules preserved
 - Runtime/live verification performed: no
-- Known remaining issues: source-site helper cannot be verified until the old ChatGPT site is directly accessible or the user runs it; background Web Push backend remains pending
-- Next intended phase: Phase 8 — UX refinement
+- Known remaining issues: production deployment/live smoke test still pending; background Web Push backend remains pending
+- Next intended phase: Phase 9 — deployment verification and smoke test
