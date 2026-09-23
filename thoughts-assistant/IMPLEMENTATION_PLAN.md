@@ -267,14 +267,18 @@ At the end of each phase, record in this file:
 
 ## Current checkpoint
 - Date: 2026-09-23
-- Phase: Phase 1 complete — single source of truth established
-- Pre-change HEAD: e339a63b6a1ea484c95e87ae7d86378794e0837d
-- Functional commit: f7255bbbc182e822ac4efdf5ea83a4a8746085ef
+- Phase: Phase 2 complete — data safety and migration foundation
+- Pre-change HEAD: 3dd7dec2aab47fa2f33432a1f3c1c2954d32c953
+- Functional commit: 291ec996164d9b90212860a7d18a0886819d2677
 - Files changed: thoughts-assistant/index.html, thoughts-assistant/app.css, thoughts-assistant/app.js
-- Change: moved the exact active inline CSS/JavaScript from index.html into app.css/app.js and wired index.html to those external files
-- Data migration performed: no
-- Storage keys changed: no
-- Repo verification performed: yes — external asset links verified; inline implementation removed; required feature code and storage keys still present
+- Data migration strategy: load and merge known local sources in memory; do not delete or rewrite legacy keys during startup
+- Storage keys preserved: thoughts_app_v2, thoughts_assistant_v1 and all other legacy keys remain untouched unless the normal primary save path writes thoughts_app_v2
+- Backup: user-visible JSON export includes merged items plus raw storage snapshots for all known keys
+- Import: JSON import previews item counts and performs merge-only confirmation; no existing items are intentionally deleted
+- Schema: SCHEMA_VERSION=2 metadata is written to thoughts_app_meta_v1; newly created items include schemaVersion
+- Repo verification performed: yes — JS syntax parsed; both storage keys are read; no localStorage.removeItem exists; export/import UI and logic present
+- Logic tests performed: duplicate item across primary+legacy keys; missing-id deterministic normalization; repeated import/merge idempotence; unknown-field preservation
+- Logic test result: 3 expected merged items, 3 after repeated merge; deterministic generated ID; unknown fields preserved
 - Runtime/live verification performed: no
-- Known remaining issues: all Phase 2+ data/reminder/notification/voice issues remain intentionally unchanged
-- Next intended phase: Phase 2 — data safety and migration foundation
+- Known remaining issues: reminder occurrence behavior, random reminder timing, background notifications and voice fallback remain for later phases
+- Next intended phase: Phase 3 — core behavior correctness
