@@ -48,7 +48,7 @@
   <section class="quick-stats">
     <div><strong id="activeCount">0</strong><span data-t="activeStat">פעילים</span></div>
     <div><strong id="scheduledCount">0</strong><span data-t="scheduledStat">מתוזמנים</span></div>
-    <div><strong id="dueCount">0</strong><span data-t="dueStat">עכשיו</span></div>
+    <button id="dueStatBtn" class="stat-button" type="button" aria-label="הצג תזכורות שהגיע זמנן"><strong id="dueCount">0</strong><span data-t="dueStat">עכשיו</span></button>
   </section>
 
   <section id="migrationBox" class="migration-box hidden">
@@ -94,6 +94,8 @@
 </form></dialog>
 
 <dialog id="deleteDlg"><div class="modal"><div class="modal-head"><h2 data-t="deleteTitle">למחוק?</h2><button type="button" class="close" data-close="deleteDlg">×</button></div><p class="modal-copy" data-t="deleteHelp">המחיקה סופית. אפשר להעביר לארכיון במקום.</p><div class="modal-actions"><button id="cancelDelete" class="ghost-btn" data-t="cancel">ביטול</button><button id="confirmDelete" class="danger-btn" data-t="delete">מחיקה</button></div></div></dialog>
+
+<dialog id="dueDlg"><div class="modal"><div class="modal-head"><h2 data-t="dueListTitle">התזכורות שמחכות לך</h2><button type="button" class="close" data-close="dueDlg">×</button></div><p class="modal-copy" data-t="dueListHelp">לחץ על תזכורת כדי להגיע אליה ברשימה.</p><div id="dueList" class="list"></div></div></dialog>
 
 <dialog id="importDlg"><form id="importForm" class="modal"><div class="modal-head"><h2 data-t="importTitle">ייבוא מחשבות</h2><button type="button" class="close" data-close="importDlg">×</button></div><p class="modal-copy" data-t="importHelp">הדבק כאן JSON שיוצא מהאפליקציה הישנה. פריטים קיימים לא יימחקו.</p><textarea id="importText" class="import-text" placeholder='[{"text":"..."}]'></textarea><div class="modal-actions"><button type="button" class="ghost-btn" data-close="importDlg" data-t="cancel">ביטול</button><button class="modal-primary" data-t="importNow">ייבוא עכשיו</button></div></form></dialog>
 
