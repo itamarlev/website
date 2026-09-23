@@ -89,6 +89,7 @@
     .chip.repeat{background:var(--primary-soft);color:#4149a8}
     .chip.random{background:#f2edff;color:#6a42a6}
     .chip.done{background:var(--success-soft);color:var(--success)}
+    .chip.friend{background:#e9f4ff;color:#34698d}
     .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:12px}
     .menu{display:none}
     .small-action{
@@ -149,6 +150,13 @@
     <div class="composer-row">
       <textarea id="thoughtInput" placeholder="מה עובר לך בראש?" data-i18n-placeholder="placeholder"></textarea>
       <button id="voiceBtn" class="icon-btn" title="הכתבה קולית" aria-label="הכתבה קולית">🎙</button>
+    </div>
+    <div class="field" style="margin-top:12px">
+      <label for="newType" data-i18n="itemType">סוג פריט</label>
+      <select id="newType">
+        <option value="thought" data-i18n="typeThought">מחשבה / משימה</option>
+        <option value="friend" data-i18n="typeFriend">חבר / אדם</option>
+      </select>
     </div>
     <div class="composer-actions">
       <button id="scheduleNewBtn" class="btn secondary" data-i18n="schedule">תזמון</button>
@@ -224,7 +232,14 @@
   <form method="dialog" class="modal" id="editForm">
     <h2 data-i18n="editTitle">עריכת מחשבה</h2>
     <div class="field">
-      <label for="editText" data-i18n="thought">מחשבה</label>
+      <label for="editType" data-i18n="itemType">סוג פריט</label>
+      <select id="editType">
+        <option value="thought" data-i18n="typeThought">מחשבה / משימה</option>
+        <option value="friend" data-i18n="typeFriend">חבר / אדם</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="editText" data-i18n="thought">תוכן</label>
       <textarea id="editText" style="min-height:120px"></textarea>
     </div>
     <div class="modal-actions">
@@ -272,7 +287,7 @@
   const i18n = {
     he: {
       title:'המחשבות שלי', subtitle:'לזכור, לתזמן, ולחזור למה שחשוב',
-      placeholder:'מה עובר לך בראש?', schedule:'תזמון', add:'הוספה',
+      placeholder:'מה עובר לך בראש?', schedule:'תזמון', add:'הוספה', itemType:'סוג פריט', typeThought:'מחשבה / משימה', typeFriend:'חבר / אדם',
       active:'פעילות', archived:'ארכיון', all:'הכול', empty:'אין כאן מחשבות כרגע.',
       savedLocal:'המידע נשמר מקומית במכשיר הזה.', scheduleTitle:'תזמון',
       date:'תאריך', time:'שעה', repeat:'חזרה', repeatNone:'ללא חזרה',
@@ -295,7 +310,7 @@
     },
     en: {
       title:'My Thoughts', subtitle:'Remember, schedule, and return to what matters',
-      placeholder:'What is on your mind?', schedule:'Schedule', add:'Add',
+      placeholder:'What is on your mind?', schedule:'Schedule', add:'Add', itemType:'Item type', typeThought:'Thought / task', typeFriend:'Friend / person',
       active:'Active', archived:'Archive', all:'All', empty:'No thoughts here right now.',
       savedLocal:'Your data is stored locally on this device.', scheduleTitle:'Schedule',
       date:'Date', time:'Time', repeat:'Repeat', repeatNone:'No repeat',
@@ -346,6 +361,7 @@
         state.items = arr.map((x, idx) => ({
           id: String(x.id || crypto.randomUUID?.() || Date.now() + '_' + idx),
           text: x.text || x.title || x.content || '',
+          type: x.type === 'friend' ? 'friend' : 'thought',
           createdAt: x.createdAt || new Date().toISOString(),
           archived: !!x.archived,
           done: !!x.done,
@@ -364,6 +380,7 @@
     try{
       state.items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
       if(!Array.isArray(state.items)) state.items = [];
+      state.items = state.items.map(x => ({...x, type:x.type === 'friend' ? 'friend' : 'thought'}));
     }catch(e){ state.items = []; }
   }
 
@@ -496,7 +513,7 @@
       card.className = 'card';
       card.dataset.id = item.id;
 
-      const chips = [];
+      const chips = [`<span class="chip ${item.type==='friend'?'friend':''}">${escapeHtml(item.type==='friend'?t('typeFriend'):t('typeThought'))}</span>`];
       const iso = scheduledIso(item.schedule);
       if(isDue(item)) chips.push(`<span class="chip due">${escapeHtml(t('due'))}</span>`);
       if(iso) chips.push(`<span class="chip">${escapeHtml(t('scheduled'))}: ${escapeHtml(formatDateTime(iso))}</span>`);
@@ -606,7 +623,7 @@
     if(!text){ toast(t('noText')); return; }
     const pending = state.pendingSchedule || {schedule:null,random:null};
     state.items.push({
-      id:uid(), text, createdAt:new Date().toISOString(), archived:false, done:false,
+      id:uid(), text, type:$('newType').value === 'friend' ? 'friend' : 'thought', createdAt:new Date().toISOString(), archived:false, done:false,
       schedule:pending.schedule || null, random:normalizeRandom(pending.random), lastNotifiedAt:null
     });
     $('thoughtInput').value = '';
@@ -661,6 +678,7 @@
 
     if(e.target.closest('.edit')){
       state.editTargetId = id;
+      $('editType').value = item.type === 'friend' ? 'friend' : 'thought';
       $('editText').value = item.text;
       $('editDialog').showModal();
       return;
@@ -688,6 +706,7 @@
     const text = $('editText').value.trim();
     if(item && text){
       item.text = text;
+      item.type = $('editType').value === 'friend' ? 'friend' : 'thought';
       save(); render(); toast(t('updated'));
     }
     state.editTargetId = null;
