@@ -267,18 +267,17 @@ At the end of each phase, record in this file:
 
 ## Current checkpoint
 - Date: 2026-09-23
-- Phase: Phase 2 complete — data safety and migration foundation
-- Pre-change HEAD: 3dd7dec2aab47fa2f33432a1f3c1c2954d32c953
-- Functional commit: 291ec996164d9b90212860a7d18a0886819d2677
-- Files changed: thoughts-assistant/index.html, thoughts-assistant/app.css, thoughts-assistant/app.js
-- Data migration strategy: load and merge known local sources in memory; do not delete or rewrite legacy keys during startup
-- Storage keys preserved: thoughts_app_v2, thoughts_assistant_v1 and all other legacy keys remain untouched unless the normal primary save path writes thoughts_app_v2
-- Backup: user-visible JSON export includes merged items plus raw storage snapshots for all known keys
-- Import: JSON import previews item counts and performs merge-only confirmation; no existing items are intentionally deleted
-- Schema: SCHEMA_VERSION=2 metadata is written to thoughts_app_meta_v1; newly created items include schemaVersion
-- Repo verification performed: yes — JS syntax parsed; both storage keys are read; no localStorage.removeItem exists; export/import UI and logic present
-- Logic tests performed: duplicate item across primary+legacy keys; missing-id deterministic normalization; repeated import/merge idempotence; unknown-field preservation
-- Logic test result: 3 expected merged items, 3 after repeated merge; deterministic generated ID; unknown fields preserved
+- Phase: Phase 3 complete — core reminder behavior corrected
+- Pre-change HEAD: d47e217a3e38839c193edefc6ca923c022582912
+- Functional commit: e2a8209b197b92c509acf2ec26386782fce4efa9
+- Files changed: thoughts-assistant/app.js
+- Data migration performed: no destructive migration; new dueOccurrence field is optional and backward-compatible
+- Due model: overdue fixed/random triggers are materialized into dueOccurrence and remain due until explicit user action
+- Random reminder behavior: maybeNotify no longer advances nextAt; nextAt advances only when the random occurrence is acknowledged
+- Scheduled recurring behavior: acknowledging a scheduled occurrence advances weekly/biweekly/monthly/bimonthly schedules to the next future occurrence
+- Random time window: generated random reminder times are constrained to local 09:00–21:00
+- Repo verification performed: yes — JS syntax parsed; occurrence materialization, acknowledgment paths and daytime constants present
+- Logic tests performed: random occurrence persistence across notification; random reschedule after acknowledgment; 1,000 generated-style samples across multiple base times/frequencies stayed within 09:00–21:00
 - Runtime/live verification performed: no
-- Known remaining issues: reminder occurrence behavior, random reminder timing, background notifications and voice fallback remain for later phases
-- Next intended phase: Phase 3 — core behavior correctness
+- Known remaining issues: friends-specific UX, iPhone/voice fallback and background notification architecture remain for later phases
+- Next intended phase: Phase 4 — friends as a first-class workflow
