@@ -267,17 +267,17 @@ At the end of each phase, record in this file:
 
 ## Current checkpoint
 - Date: 2026-09-23
-- Phase: Phase 3 complete — core reminder behavior corrected
-- Pre-change HEAD: d47e217a3e38839c193edefc6ca923c022582912
-- Functional commit: e2a8209b197b92c509acf2ec26386782fce4efa9
-- Files changed: thoughts-assistant/app.js
-- Data migration performed: no destructive migration; new dueOccurrence field is optional and backward-compatible
-- Due model: overdue fixed/random triggers are materialized into dueOccurrence and remain due until explicit user action
-- Random reminder behavior: maybeNotify no longer advances nextAt; nextAt advances only when the random occurrence is acknowledged
-- Scheduled recurring behavior: acknowledging a scheduled occurrence advances weekly/biweekly/monthly/bimonthly schedules to the next future occurrence
-- Random time window: generated random reminder times are constrained to local 09:00–21:00
-- Repo verification performed: yes — JS syntax parsed; occurrence materialization, acknowledgment paths and daytime constants present
-- Logic tests performed: random occurrence persistence across notification; random reschedule after acknowledgment; 1,000 generated-style samples across multiple base times/frequencies stayed within 09:00–21:00
+- Phase: Phase 4 complete — Friends promoted to first-class workflow
+- Pre-change HEAD: ecea0189f390a4109b6d33517bf8ea47a6aea361
+- Functional commit: f27b25e23a99f67e7d09366baa0d8461fc136963
+- Files changed: thoughts-assistant/index.html, thoughts-assistant/app.js, thoughts-assistant/app.css
+- Data migration performed: no; friend records retain the existing type:'friend' model
+- Friends navigation: added a dedicated Friends filter showing active friend/person records only
+- Friend reminder editing: added a direct Reminder action on friend cards that opens that friend's scheduling/frequency controls without requiring text editing
+- Existing friend actions preserved: edit, delete, done, archive/restore remain available
+- Existing creation preserved: the composer still supports creating friend/person records
+- Mobile behavior: friend action grid collapses to two columns at the existing mobile breakpoint
+- Repo verification performed: yes — four filters present; friend filter condition present; add/edit/delete/archive/reminder paths present; JS syntax parsed
 - Runtime/live verification performed: no
-- Known remaining issues: friends-specific UX, iPhone/voice fallback and background notification architecture remain for later phases
-- Next intended phase: Phase 4 — friends as a first-class workflow
+- Known remaining issues: iPhone interaction/voice fallback and background notification architecture remain for later phases
+- Next intended phase: Phase 5 — iPhone and voice
