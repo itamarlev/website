@@ -1,104 +1,768 @@
 <!doctype html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#f7f7f4">
-<title>המחשבות שלי</title>
-<link rel="stylesheet" href="app.css?v=20260923c">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#f6f7fb" />
+  <title>המחשבות שלי</title>
+  <style>
+    :root{
+      --bg:#f6f7fb;
+      --card:#ffffff;
+      --ink:#1f2430;
+      --muted:#6c7280;
+      --line:#e6e8ef;
+      --primary:#4f5bd5;
+      --primary-soft:#eef0ff;
+      --danger:#b42318;
+      --danger-soft:#fff1f0;
+      --success:#18794e;
+      --success-soft:#edf9f2;
+      --shadow:0 10px 30px rgba(31,36,48,.07);
+      --radius:20px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      background:var(--bg);
+      color:var(--ink);
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,"Noto Sans Hebrew",sans-serif;
+    }
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer}
+    .app{max-width:760px;margin:0 auto;padding:18px 16px 110px}
+    header{
+      display:flex;align-items:center;justify-content:space-between;gap:12px;
+      padding:8px 2px 18px;
+    }
+    h1{font-size:30px;line-height:1.1;margin:0}
+    .sub{color:var(--muted);font-size:14px;margin-top:5px}
+    .lang{
+      border:1px solid var(--line);background:var(--card);border-radius:999px;
+      padding:9px 12px;color:var(--ink)
+    }
+    .composer{
+      background:var(--card);border:1px solid var(--line);border-radius:var(--radius);
+      padding:16px;box-shadow:var(--shadow);margin-bottom:18px
+    }
+    .composer-row{display:flex;gap:10px;align-items:stretch}
+    textarea{
+      flex:1;min-height:72px;resize:vertical;border:1px solid var(--line);
+      border-radius:16px;padding:13px 14px;background:#fbfbfd;color:var(--ink);
+      outline:none
+    }
+    textarea:focus,input:focus,select:focus{border-color:#aab0ef;box-shadow:0 0 0 3px #eef0ff}
+    .icon-btn{
+      min-width:48px;border:1px solid var(--line);border-radius:16px;background:#fff;
+      color:var(--ink)
+    }
+    .composer-actions{display:flex;gap:10px;margin-top:12px}
+    .btn{
+      border:0;border-radius:14px;padding:12px 16px;font-weight:700;
+      min-height:46px
+    }
+    .btn.primary{background:var(--primary);color:#fff;flex:1}
+    .btn.secondary{background:var(--primary-soft);color:#3f48ac}
+    .btn.ghost{background:#fff;border:1px solid var(--line);color:var(--ink)}
+    .btn.danger{background:var(--danger-soft);color:var(--danger)}
+    .tabs{display:flex;gap:8px;margin:6px 0 14px}
+    .tab{
+      background:#fff;border:1px solid var(--line);border-radius:999px;padding:9px 13px;color:var(--muted)
+    }
+    .tab.active{background:var(--primary-soft);color:#3f48ac;border-color:#d8dcff;font-weight:700}
+    .empty{
+      background:#fff;border:1px dashed #d7dae3;border-radius:18px;padding:28px;text-align:center;color:var(--muted)
+    }
+    .list{display:grid;gap:12px}
+    .card{
+      background:var(--card);border:1px solid var(--line);border-radius:18px;padding:15px;
+      box-shadow:0 6px 20px rgba(31,36,48,.04)
+    }
+    .card-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .thought{font-size:17px;line-height:1.5;white-space:pre-wrap;overflow-wrap:anywhere}
+    .menu{
+      border:0;background:#f4f5f8;border-radius:11px;min-width:40px;height:40px;font-size:20px
+    }
+    .chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+    .chip{font-size:12px;border-radius:999px;padding:6px 9px;background:#f2f3f7;color:#5f6572}
+    .chip.due{background:#fff2e7;color:#9a4f00}
+    .chip.repeat{background:var(--primary-soft);color:#4149a8}
+    .chip.random{background:#f2edff;color:#6a42a6}
+    .chip.done{background:var(--success-soft);color:var(--success)}
+    .actions{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:12px}
+    .menu{display:none}
+    .small-action{
+      border:1px solid var(--line);background:#fff;border-radius:12px;padding:9px 8px;font-size:13px
+    }
+    .small-action.delete{color:var(--danger);background:#fffafa}
+    .meta{font-size:12px;color:var(--muted);margin-top:9px}
+    .due-bar{display:none;align-items:center;justify-content:space-between;gap:10px;margin:0 0 14px;padding:12px 14px;border:1px solid #ffd8c9;background:#fff5ef;border-radius:16px}
+    .due-bar.show{display:flex}.due-bar button{border:0;background:#fff;border-radius:12px;padding:9px 12px;font-weight:700;color:#8d432f}
+    .transfer-row{display:flex;justify-content:center;margin-top:18px}
+    .transfer-btn{border:1px solid var(--line);background:#fff;border-radius:12px;padding:10px 14px;color:var(--ink);font-weight:700}
+    .footer-hint{color:var(--muted);font-size:12px;text-align:center;margin-top:22px}
+
+    dialog{
+      width:min(94vw,560px);border:0;border-radius:24px;padding:0;box-shadow:0 24px 80px rgba(0,0,0,.25)
+    }
+    dialog::backdrop{background:rgba(21,25,35,.38);backdrop-filter:blur(2px)}
+    .modal{padding:20px}
+    .modal h2{margin:0 0 16px;font-size:23px}
+    .field{display:grid;gap:7px;margin-bottom:14px}
+    label{font-size:14px;font-weight:700}
+    input,select{
+      width:100%;border:1px solid var(--line);border-radius:14px;padding:12px 13px;background:#fff;color:var(--ink);outline:none
+    }
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .switch-row{
+      display:flex;justify-content:space-between;align-items:center;gap:12px;
+      border:1px solid var(--line);border-radius:16px;padding:12px 13px;margin-bottom:14px
+    }
+    .switch-row input{width:22px;height:22px}
+    .modal-actions{display:flex;gap:10px;margin-top:18px}
+    .modal-actions .btn{flex:1}
+    .hidden{display:none !important}
+    .toast{
+      position:fixed;left:50%;bottom:26px;transform:translateX(-50%);
+      background:#222733;color:#fff;padding:11px 15px;border-radius:999px;
+      z-index:1000;opacity:0;pointer-events:none;transition:.2s;white-space:nowrap
+    }
+    .toast.show{opacity:1}
+    @media(max-width:520px){
+      h1{font-size:26px}
+      .actions{grid-template-columns:1fr 1fr}
+      .grid2{grid-template-columns:1fr}
+    }
+  </style>
 </head>
 <body>
-<div class="app-shell">
-<header class="topbar">
-  <a class="back" href="/">←</a>
-  <div class="brand"><span class="brand-dot"></span><span data-t="appName">המחשבות שלי</span></div>
-  <button id="lang" class="icon-btn">EN</button>
-</header>
+<div class="app">
+  <header>
+    <div>
+      <h1 data-i18n="title">המחשבות שלי</h1>
+      <div class="sub" data-i18n="subtitle">לזכור, לתזמן, ולחזור למה שחשוב</div>
+    </div>
+    <button id="langBtn" class="lang" aria-label="Switch language">EN</button>
+  </header>
 
-<main class="main">
-  <section class="welcome">
-    <p class="eyebrow" data-t="eyebrow">המקום שלך לזכור</p>
-    <h1 data-t="headline">מה עובר לך בראש?</h1>
-    <p data-t="subhead">לכתוב, לדבר, לתזמן — ולחזור לזה בדיוק בזמן.</p>
-  </section>
-
-  <section class="composer-card">
+  <section class="composer">
     <div class="composer-row">
-      <textarea id="newText" data-ph="placeholder" placeholder="כתוב משהו שלא תרצה לשכוח..."></textarea>
-      <button id="voice" class="voice-btn" aria-label="הקלטה קולית" title="הקלטה קולית">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 10a7 7 0 0 0 14 0M12 17v4M8 21h8"/></svg>
-      </button>
+      <textarea id="thoughtInput" placeholder="מה עובר לך בראש?" data-i18n-placeholder="placeholder"></textarea>
+      <button id="voiceBtn" class="icon-btn" title="הכתבה קולית" aria-label="הכתבה קולית">🎙</button>
     </div>
-    <div id="voiceState" class="voice-state"><span class="pulse-dot"></span><span id="voiceLabel"></span></div>
-    <div id="audioDraft" class="audio-draft"><audio id="draftAudio" controls></audio><button id="removeAudio" type="button">×</button></div>
-
-    <div class="composer-options">
-      <select id="newType" aria-label="סוג פריט">
-        <option value="thought" data-t="typeThought">מחשבה / משימה</option>
-        <option value="event" data-t="typeEvent">אירוע</option>
-              </select>
-      <button id="scheduleNew" class="soft-btn" data-t="schedule">תזמון</button>
+    <div class="composer-actions">
+      <button id="scheduleNewBtn" class="btn secondary" data-i18n="schedule">תזמון</button>
+      <button id="addBtn" class="btn primary" data-i18n="add">הוספה</button>
     </div>
-
-    <div id="pending" class="pending"><span>◷</span><span id="pendingText"></span><button id="clearPending" type="button">×</button></div>
-    <button id="add" class="add-btn"><span>＋</span><span data-t="add">הוסף</span></button>
   </section>
 
-  <section class="quick-stats">
-    <div><strong id="activeCount">0</strong><span data-t="activeStat">פעילים</span></div>
-    <div><strong id="scheduledCount">0</strong><span data-t="scheduledStat">מתוזמנים</span></div>
-    <button id="dueStatBtn" class="stat-button" type="button" aria-label="הצג תזכורות שהגיע זמנן"><strong id="dueCount">0</strong><span data-t="dueStat">עכשיו</span></button>
-  </section>
+  <div class="tabs">
+    <button class="tab active" data-filter="active" data-i18n="active">פעילות</button>
+    <button class="tab" data-filter="archived" data-i18n="archived">ארכיון</button>
+    <button class="tab" data-filter="all" data-i18n="all">הכול</button>
+  </div>
 
-  <section id="migrationBox" class="migration-box hidden">
-    <div><strong data-t="migrationTitle">מצאתי מחשבות מהאפליקציה הישנה</strong><p data-t="migrationText">אפשר למזג אותן לכאן בלי למחוק שום דבר שקיים באתר.</p></div>
-    <button id="migrateBtn" class="mini-primary" data-t="migrate">ייבוא</button>
-  </section>
+  <div id="dueBar" class="due-bar"><strong id="dueSummary"></strong><button id="showDueBtn" type="button" data-i18n="showReminders">הצג תזכורות</button></div>
+  <div id="list" class="list"></div>
+  <div id="empty" class="empty hidden" data-i18n="empty">אין כאן מחשבות כרגע.</div>
 
-  <section class="items-section">
-    <div class="section-head">
-      <div><h2 data-t="yourThoughts">המחשבות שלך</h2><p data-t="yourThoughtsSub">מה שחשוב נשאר קרוב.</p></div>
-      <div class="tabs">
-        <button class="tab active" data-filter="active" data-t="active">פעילים</button>
-        <button class="tab" data-filter="archived" data-t="archived">ארכיון</button>
-        <button class="tab" data-filter="all" data-t="all">הכול</button>
-      </div>
-    </div>
-    <div id="list" class="list"></div>
-    <div id="empty" class="empty hidden"><span>✓</span><strong data-t="emptyTitle">הכול מסודר</strong><p data-t="empty">הפריט הבא שלך מתחיל למעלה.</p></div>
-  </section>
-
-  <section class="data-tools">
-    <button id="importBtn" class="text-btn" data-t="import">ייבוא מהאפליקציה הישנה</button>
-    <button id="exportBtn" class="text-btn" data-t="export">גיבוי המחשבות</button>
-  </section>
-  <p class="storage-note" data-t="local">המחשבות נשמרות במכשיר הזה.</p>
-</main>
+  <div class="transfer-row"><button id="transferBtn" class="transfer-btn" type="button" data-i18n="transferToSite">העבר לאתר</button></div>
+  <div class="footer-hint" data-i18n="savedLocal">המידע נשמר מקומית במכשיר הזה.</div>
 </div>
 
-<dialog id="scheduleDlg"><form id="scheduleForm" class="modal">
-  <div class="modal-head"><h2 data-t="scheduleTitle">מתי להזכיר לך?</h2><button type="button" class="close" data-close="scheduleDlg">×</button></div>
-  <div class="grid2"><label><span data-t="date">תאריך</span><input id="date" type="date"></label><label><span data-t="time">שעה</span><input id="time" type="time"></label></div>
-  <label><span data-t="repeat">חזרה</span><select id="repeat"><option value="none" data-t="none">ללא חזרה</option><option value="daily" data-t="daily">כל יום</option><option value="3days" data-t="threeDays">כל 3 ימים</option><option value="weekly" data-t="weekly">כל שבוע</option><option value="biweekly" data-t="biweekly">כל שבועיים</option><option value="monthly" data-t="monthly">כל חודש</option><option value="bimonthly" data-t="bimonthly">כל חודשיים</option></select></label>
-  <label class="switch-row"><span><strong data-t="random">להפתיע אותי</strong><small data-t="randomHelp">להחזיר את הפריט בזמן אקראי לפי התדירות.</small></span><input id="randomOn" type="checkbox"></label>
-  <label id="randomWrap" class="hidden"><span data-t="frequency">תדירות</span><select id="frequency"><option value="daily" data-t="daily">כל יום</option><option value="3days" data-t="threeDays">כל 3 ימים</option><option value="weekly" data-t="weekly">כל שבוע</option><option value="biweekly" data-t="biweekly">כל שבועיים</option></select></label>
-  <div class="modal-actions"><button type="button" id="clearSchedule" class="ghost-btn" data-t="clear">ללא תזמון</button><button class="modal-primary" data-t="save">שמירה</button></div>
-</form></dialog>
+<dialog id="scheduleDialog">
+  <form method="dialog" class="modal" id="scheduleForm">
+    <h2 data-i18n="scheduleTitle">תזמון</h2>
+    <div class="grid2">
+      <div class="field">
+        <label for="scheduleDate" data-i18n="date">תאריך</label>
+        <input id="scheduleDate" type="date">
+      </div>
+      <div class="field">
+        <label for="scheduleTime" data-i18n="time">שעה</label>
+        <input id="scheduleTime" type="time">
+      </div>
+    </div>
 
-<dialog id="editDlg"><form id="editForm" class="modal">
-  <div class="modal-head"><h2 data-t="editTitle">עריכת פריט</h2><button type="button" class="close" data-close="editDlg">×</button></div>
-  <label><span data-t="itemType">סוג פריט</span><select id="editType"><option value="thought" data-t="typeThought">מחשבה / משימה</option><option value="event" data-t="typeEvent">אירוע</option></select></label>
-  <label><span data-t="content">תוכן</span><textarea id="editText"></textarea></label>
-  <div class="modal-actions"><button type="button" id="editSchedule" class="ghost-btn" data-t="changeSchedule">שינוי תזמון</button><button class="modal-primary" data-t="saveChanges">שמירה</button></div>
-</form></dialog>
+    <div class="field">
+      <label for="repeatSelect" data-i18n="repeat">חזרה</label>
+      <select id="repeatSelect">
+        <option value="none" data-i18n="repeatNone">ללא חזרה</option>
+        <option value="weekly" data-i18n="repeatWeekly">פעם בשבוע</option>
+        <option value="biweekly" data-i18n="repeatBiweekly">פעם בשבועיים</option>
+        <option value="monthly" data-i18n="repeatMonthly">פעם בחודש</option>
+        <option value="bimonthly" data-i18n="repeatBimonthly">פעם בחודשיים</option>
+      </select>
+    </div>
 
-<dialog id="deleteDlg"><div class="modal"><div class="modal-head"><h2 data-t="deleteTitle">למחוק?</h2><button type="button" class="close" data-close="deleteDlg">×</button></div><p class="modal-copy" data-t="deleteHelp">המחיקה סופית. אפשר להעביר לארכיון במקום.</p><div class="modal-actions"><button id="cancelDelete" class="ghost-btn" data-t="cancel">ביטול</button><button id="confirmDelete" class="danger-btn" data-t="delete">מחיקה</button></div></div></dialog>
+    <div class="switch-row">
+      <div>
+        <div style="font-weight:700" data-i18n="randomize">תזכורת אקראית</div>
+        <div class="sub" data-i18n="randomizeHelp">תופיע שוב במועד אקראי לפי התדירות</div>
+      </div>
+      <input id="randomEnabled" type="checkbox" aria-label="Random reminder">
+    </div>
 
-<dialog id="dueDlg"><div class="modal"><div class="modal-head"><h2 data-t="dueListTitle">התזכורות שמחכות לך</h2><button type="button" class="close" data-close="dueDlg">×</button></div><p class="modal-copy" data-t="dueListHelp">לחץ על תזכורת כדי להגיע אליה ברשימה.</p><div id="dueList" class="list"></div></div></dialog>
+    <div id="randomFrequencyWrap" class="field hidden">
+      <label for="randomFrequency" data-i18n="frequency">תדירות אקראית</label>
+      <select id="randomFrequency">
+        <option value="daily" data-i18n="randomDaily">פעם ביום</option>
+        <option value="3days" data-i18n="random3Days">פעם בשלושה ימים</option>
+        <option value="weekly" data-i18n="randomWeekly">פעם בשבוע</option>
+        <option value="biweekly" data-i18n="randomBiweekly">פעם בשבועיים</option>
+      </select>
+    </div>
 
-<dialog id="importDlg"><form id="importForm" class="modal"><div class="modal-head"><h2 data-t="importTitle">ייבוא מחשבות</h2><button type="button" class="close" data-close="importDlg">×</button></div><p class="modal-copy" data-t="importHelp">הדבק כאן JSON שיוצא מהאפליקציה הישנה. פריטים קיימים לא יימחקו.</p><textarea id="importText" class="import-text" placeholder='[{"text":"..."}]'></textarea><div class="modal-actions"><button type="button" class="ghost-btn" data-close="importDlg" data-t="cancel">ביטול</button><button class="modal-primary" data-t="importNow">ייבוא עכשיו</button></div></form></dialog>
+    <div class="modal-actions">
+      <button type="button" id="clearScheduleBtn" class="btn ghost" data-i18n="clear">נקה תזמון</button>
+      <button type="submit" id="saveScheduleBtn" class="btn primary" data-i18n="save">שמור</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="editDialog">
+  <form method="dialog" class="modal" id="editForm">
+    <h2 data-i18n="editTitle">עריכת מחשבה</h2>
+    <div class="field">
+      <label for="editText" data-i18n="thought">מחשבה</label>
+      <textarea id="editText" style="min-height:120px"></textarea>
+    </div>
+    <div class="modal-actions">
+      <button type="button" id="editScheduleBtn" class="btn secondary" data-i18n="editSchedule">שינוי תזמון</button>
+      <button type="submit" class="btn primary" data-i18n="saveChanges">שמירת שינויים</button>
+    </div>
+  </form>
+</dialog>
+
+<dialog id="dueDialog">
+  <div class="modal">
+    <h2 data-i18n="dueListTitle">התזכורות שמחכות לך</h2>
+    <div id="dueList" class="list"></div>
+    <div class="modal-actions"><button id="closeDueBtn" class="btn ghost" data-i18n="close">סגור</button></div>
+  </div>
+</dialog>
+
+<dialog id="deleteDialog">
+  <div class="modal">
+    <h2 data-i18n="deleteTitle">למחוק את המחשבה?</h2>
+    <div class="sub" data-i18n="deleteHelp">המחיקה היא סופית. אפשר לבחור בארכיון אם אולי תרצה לחזור אליה.</div>
+    <div class="modal-actions">
+      <button id="cancelDeleteBtn" class="btn ghost" data-i18n="cancel">ביטול</button>
+      <button id="confirmDeleteBtn" class="btn danger" data-i18n="delete">מחיקה</button>
+    </div>
+  </div>
+</dialog>
 
 <div id="toast" class="toast"></div>
-<script src="app.js?v=20260923c"></script>
+
+<script>
+(() => {
+  const STORAGE_KEY = 'thoughts_app_v2';
+  const LEGACY_KEYS = ['thoughts_assistant_v1','thoughts','ideas','mindItems','thoughtsAppItems'];
+  const state = {
+    items: [],
+    filter: 'active',
+    lang: localStorage.getItem('thoughts_lang') || 'he',
+    pendingSchedule: null,
+    scheduleTargetId: null,
+    editTargetId: null,
+    deleteTargetId: null
+  };
+
+  const i18n = {
+    he: {
+      title:'המחשבות שלי', subtitle:'לזכור, לתזמן, ולחזור למה שחשוב',
+      placeholder:'מה עובר לך בראש?', schedule:'תזמון', add:'הוספה',
+      active:'פעילות', archived:'ארכיון', all:'הכול', empty:'אין כאן מחשבות כרגע.',
+      savedLocal:'המידע נשמר מקומית במכשיר הזה.', scheduleTitle:'תזמון',
+      date:'תאריך', time:'שעה', repeat:'חזרה', repeatNone:'ללא חזרה',
+      repeatWeekly:'פעם בשבוע', repeatBiweekly:'פעם בשבועיים',
+      repeatMonthly:'פעם בחודש', repeatBimonthly:'פעם בחודשיים',
+      randomize:'תזכורת אקראית', randomizeHelp:'תופיע שוב במועד אקראי לפי התדירות',
+      frequency:'תדירות אקראית', randomDaily:'פעם ביום', random3Days:'פעם בשלושה ימים',
+      randomWeekly:'פעם בשבוע', randomBiweekly:'פעם בשבועיים',
+      clear:'נקה תזמון', save:'שמור', editTitle:'עריכת מחשבה', thought:'מחשבה',
+      editSchedule:'שינוי תזמון', saveChanges:'שמירת שינויים',
+      deleteTitle:'למחוק את המחשבה?', deleteHelp:'המחיקה היא סופית. אפשר לבחור בארכיון אם אולי תרצה לחזור אליה.',
+      cancel:'ביטול', delete:'מחיקה', edit:'עריכה', archive:'ארכיון',
+      restore:'החזרה', done:'בוצע', menu:'פעולות', due:'הגיע הזמן',
+      scheduled:'מתוזמן', repeats:'חוזר', random:'אקראי', noText:'צריך לכתוב משהו קודם.',
+      added:'המחשבה נוספה.', updated:'המחשבה עודכנה.', deleted:'המחשבה נמחקה.',
+      archivedToast:'המחשבה הועברה לארכיון.', restoredToast:'המחשבה הוחזרה.',
+      completed:'סומן כבוצע.', nextScheduled:'המועד הבא נקבע אוטומטית.',
+      speechUnsupported:'הכתבה קולית אינה נתמכת בדפדפן הזה.',
+      allowNotif:'אפשר להפעיל התראות בדפדפן כדי לקבל תזכורות בזמן שהאפליקציה פעילה.', showReminders:'הצג תזכורות', dueListTitle:'התזכורות שמחכות לך', close:'סגור', transferToSite:'העבר לאתר', transferred:'המחשבות מוכנות להעברה לאתר.'
+    },
+    en: {
+      title:'My Thoughts', subtitle:'Remember, schedule, and return to what matters',
+      placeholder:'What is on your mind?', schedule:'Schedule', add:'Add',
+      active:'Active', archived:'Archive', all:'All', empty:'No thoughts here right now.',
+      savedLocal:'Your data is stored locally on this device.', scheduleTitle:'Schedule',
+      date:'Date', time:'Time', repeat:'Repeat', repeatNone:'No repeat',
+      repeatWeekly:'Once a week', repeatBiweekly:'Every two weeks',
+      repeatMonthly:'Once a month', repeatBimonthly:'Every two months',
+      randomize:'Random reminder', randomizeHelp:'It will pop up again randomly based on frequency',
+      frequency:'Random frequency', randomDaily:'Once a day', random3Days:'Every three days',
+      randomWeekly:'Once a week', randomBiweekly:'Every two weeks',
+      clear:'Clear schedule', save:'Save', editTitle:'Edit thought', thought:'Thought',
+      editSchedule:'Change schedule', saveChanges:'Save changes',
+      deleteTitle:'Delete this thought?', deleteHelp:'Deletion is permanent. Use Archive if you may want it later.',
+      cancel:'Cancel', delete:'Delete', edit:'Edit', archive:'Archive',
+      restore:'Restore', done:'Done', menu:'Actions', due:'Due now',
+      scheduled:'Scheduled', repeats:'Repeats', random:'Random', noText:'Write something first.',
+      added:'Thought added.', updated:'Thought updated.', deleted:'Thought deleted.',
+      archivedToast:'Moved to archive.', restoredToast:'Restored.',
+      completed:'Marked done.', nextScheduled:'Next occurrence scheduled automatically.',
+      speechUnsupported:'Voice dictation is not supported in this browser.',
+      allowNotif:'You can enable browser notifications to receive reminders while the app is active.', showReminders:'Show reminders', dueListTitle:'Reminders waiting for you', close:'Close', transferToSite:'Transfer to website', transferred:'Your thoughts are ready to transfer.'
+    }
+  };
+
+  const $ = id => document.getElementById(id);
+  const listEl = $('list');
+  const emptyEl = $('empty');
+
+  function t(k){ return i18n[state.lang][k] || k; }
+
+  function setLanguage(lang){
+    state.lang = lang;
+    localStorage.setItem('thoughts_lang', lang);
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'he' ? 'rtl' : 'ltr';
+    document.querySelectorAll('[data-i18n]').forEach(el => el.textContent = t(el.dataset.i18n));
+    document.querySelectorAll('[data-i18n-placeholder]').forEach(el => el.placeholder = t(el.dataset.i18nPlaceholder));
+    $('langBtn').textContent = lang === 'he' ? 'EN' : 'עברית';
+    render();
+  }
+
+  function migrateLegacy(){
+    if (localStorage.getItem(STORAGE_KEY)) return;
+    for(const key of LEGACY_KEYS){
+      try{
+        const raw = localStorage.getItem(key);
+        if(!raw) continue;
+        const arr = JSON.parse(raw);
+        if(!Array.isArray(arr)) continue;
+        state.items = arr.map((x, idx) => ({
+          id: String(x.id || crypto.randomUUID?.() || Date.now() + '_' + idx),
+          text: x.text || x.title || x.content || '',
+          createdAt: x.createdAt || new Date().toISOString(),
+          archived: !!x.archived,
+          done: !!x.done,
+          schedule: x.schedule || null,
+          random: x.random || null,
+          lastNotifiedAt: x.lastNotifiedAt || null
+        })).filter(x => x.text);
+        save();
+        return;
+      }catch(e){}
+    }
+  }
+
+  function load(){
+    migrateLegacy();
+    try{
+      state.items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      if(!Array.isArray(state.items)) state.items = [];
+    }catch(e){ state.items = []; }
+  }
+
+  function save(){
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(state.items));
+  }
+
+  function importFromHash(){
+    const m = location.hash.match(/^#thoughts-transfer=(.+)$/);
+    if(!m) return;
+    try{
+      const incoming = JSON.parse(decodeURIComponent(escape(atob(m[1]))));
+      if(Array.isArray(incoming)){
+        const seen = new Set(state.items.map(x => (x.text||'')+'|'+(x.createdAt||'')));
+        for(const item of incoming){
+          const key=(item.text||'')+'|'+(item.createdAt||'');
+          if(!seen.has(key)){ state.items.push(item); seen.add(key); }
+        }
+        save();
+      }
+      history.replaceState(null,'',location.pathname+location.search);
+    }catch(e){}
+  }
+
+  function toast(msg){
+    const el = $('toast');
+    el.textContent = msg;
+    el.classList.add('show');
+    clearTimeout(toast.timer);
+    toast.timer = setTimeout(() => el.classList.remove('show'), 1800);
+  }
+
+  function uid(){
+    return (crypto.randomUUID && crypto.randomUUID()) || Date.now().toString(36)+Math.random().toString(36).slice(2);
+  }
+
+  function formatDateTime(iso){
+    if(!iso) return '';
+    const d = new Date(iso);
+    if(Number.isNaN(d.getTime())) return '';
+    return new Intl.DateTimeFormat(state.lang === 'he' ? 'he-IL':'en-GB',{
+      dateStyle:'medium', timeStyle:'short'
+    }).format(d);
+  }
+
+  function repeatLabel(value){
+    return ({
+      none:t('repeatNone'), weekly:t('repeatWeekly'), biweekly:t('repeatBiweekly'),
+      monthly:t('repeatMonthly'), bimonthly:t('repeatBimonthly')
+    })[value || 'none'];
+  }
+
+  function randomLabel(value){
+    return ({
+      daily:t('randomDaily'), '3days':t('random3Days'), weekly:t('randomWeekly'), biweekly:t('randomBiweekly')
+    })[value || 'daily'];
+  }
+
+  function scheduledIso(schedule){
+    if(!schedule?.date || !schedule?.time) return null;
+    const d = new Date(`${schedule.date}T${schedule.time}:00`);
+    return Number.isNaN(d.getTime()) ? null : d.toISOString();
+  }
+
+  function isDue(item){
+    const iso = scheduledIso(item.schedule);
+    if(iso && new Date(iso).getTime() <= Date.now()) return true;
+    if(item.random?.enabled && item.random.nextAt && new Date(item.random.nextAt).getTime() <= Date.now()) return true;
+    return false;
+  }
+
+  function addMonthsClamped(date, months){
+    const d = new Date(date);
+    const originalDay = d.getDate();
+    d.setDate(1);
+    d.setMonth(d.getMonth()+months);
+    const lastDay = new Date(d.getFullYear(), d.getMonth()+1, 0).getDate();
+    d.setDate(Math.min(originalDay, lastDay));
+    return d;
+  }
+
+  function nextRecurringDate(current, repeat){
+    const d = new Date(current);
+    if(repeat === 'weekly') d.setDate(d.getDate()+7);
+    if(repeat === 'biweekly') d.setDate(d.getDate()+14);
+    if(repeat === 'monthly') return addMonthsClamped(d,1);
+    if(repeat === 'bimonthly') return addMonthsClamped(d,2);
+    return d;
+  }
+
+  function randomWindowMs(freq){
+    return ({daily:86400000,'3days':259200000,weekly:604800000,biweekly:1209600000})[freq] || 86400000;
+  }
+
+  function makeRandomNext(freq){
+    const span = randomWindowMs(freq);
+    const min = Math.min(2*60*60*1000, span*0.15);
+    return new Date(Date.now() + min + Math.random()*(span-min)).toISOString();
+  }
+
+  function normalizeRandom(random){
+    if(!random?.enabled) return null;
+    return {
+      enabled:true,
+      frequency:random.frequency || 'daily',
+      nextAt: random.nextAt || makeRandomNext(random.frequency || 'daily')
+    };
+  }
+
+  function render(){
+    const filtered = state.items.filter(item => {
+      if(state.filter === 'active') return !item.archived;
+      if(state.filter === 'archived') return item.archived;
+      return true;
+    }).sort((a,b) => {
+      const ad = isDue(a) ? 0 : 1;
+      const bd = isDue(b) ? 0 : 1;
+      if(ad !== bd) return ad-bd;
+      return new Date(b.createdAt)-new Date(a.createdAt);
+    });
+
+    listEl.innerHTML = '';
+    emptyEl.classList.toggle('hidden', filtered.length !== 0);
+    const dueItems = state.items.filter(x => !x.archived && isDue(x));
+    $('dueBar').classList.toggle('show', dueItems.length > 0);
+    $('dueSummary').textContent = state.lang === 'he' ? `יש לך ${dueItems.length} תזכורות` : `You have ${dueItems.length} reminders`;
+
+    for(const item of filtered){
+      const card = document.createElement('article');
+      card.className = 'card';
+      card.dataset.id = item.id;
+
+      const chips = [];
+      const iso = scheduledIso(item.schedule);
+      if(isDue(item)) chips.push(`<span class="chip due">${escapeHtml(t('due'))}</span>`);
+      if(iso) chips.push(`<span class="chip">${escapeHtml(t('scheduled'))}: ${escapeHtml(formatDateTime(iso))}</span>`);
+      if(item.schedule?.repeat && item.schedule.repeat !== 'none') chips.push(`<span class="chip repeat">${escapeHtml(t('repeats'))}: ${escapeHtml(repeatLabel(item.schedule.repeat))}</span>`);
+      if(item.random?.enabled) chips.push(`<span class="chip random">${escapeHtml(t('random'))}: ${escapeHtml(randomLabel(item.random.frequency))}</span>`);
+      if(item.done) chips.push(`<span class="chip done">${escapeHtml(t('done'))}</span>`);
+
+      card.innerHTML = `
+        <div class="card-top">
+          <div style="flex:1">
+            <div class="thought">${escapeHtml(item.text)}</div>
+            <div class="chips">${chips.join('')}</div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="small-action edit">${escapeHtml(t('edit'))}</button>
+          <button class="small-action delete">${escapeHtml(t('delete'))}</button>
+          <button class="small-action complete">${escapeHtml(t('done'))}</button>
+          <button class="small-action archive">${escapeHtml(item.archived ? t('restore'):t('archive'))}</button>
+        </div>
+        <div class="meta">${escapeHtml(formatDateTime(item.createdAt))}</div>
+      `;
+      listEl.appendChild(card);
+    }
+  }
+
+  function escapeHtml(s){
+    return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
+  }
+
+  function openSchedule({targetId=null, initial=null}={}){
+    state.scheduleTargetId = targetId;
+    const schedule = initial?.schedule || (targetId ? state.items.find(x=>x.id===targetId)?.schedule : state.pendingSchedule?.schedule) || null;
+    const random = initial?.random || (targetId ? state.items.find(x=>x.id===targetId)?.random : state.pendingSchedule?.random) || null;
+
+    const now = new Date();
+    const pad = n => String(n).padStart(2,'0');
+    $('scheduleDate').value = schedule?.date || `${now.getFullYear()}-${pad(now.getMonth()+1)}-${pad(now.getDate())}`;
+    $('scheduleTime').value = schedule?.time || `${pad(now.getHours()+1 > 23 ? 23 : now.getHours()+1)}:00`;
+    $('repeatSelect').value = schedule?.repeat || 'none';
+    $('randomEnabled').checked = !!random?.enabled;
+    $('randomFrequency').value = random?.frequency || 'daily';
+    $('randomFrequencyWrap').classList.toggle('hidden', !$('randomEnabled').checked);
+    $('scheduleDialog').showModal();
+  }
+
+  function readScheduleForm(){
+    const hasDateTime = $('scheduleDate').value && $('scheduleTime').value;
+    const schedule = hasDateTime ? {
+      date:$('scheduleDate').value,
+      time:$('scheduleTime').value,
+      repeat:$('repeatSelect').value
+    } : null;
+    const random = $('randomEnabled').checked ? normalizeRandom({
+      enabled:true,
+      frequency:$('randomFrequency').value,
+      nextAt:null
+    }) : null;
+    return {schedule, random};
+  }
+
+  function advanceAfterDone(item){
+    const repeat = item.schedule?.repeat;
+    const iso = scheduledIso(item.schedule);
+    if(iso && repeat && repeat !== 'none'){
+      let next = nextRecurringDate(new Date(iso), repeat);
+      while(next.getTime() <= Date.now()){
+        next = nextRecurringDate(next, repeat);
+      }
+      const pad = n => String(n).padStart(2,'0');
+      item.schedule.date = `${next.getFullYear()}-${pad(next.getMonth()+1)}-${pad(next.getDate())}`;
+      item.schedule.time = `${pad(next.getHours())}:${pad(next.getMinutes())}`;
+      item.done = false;
+      item.lastNotifiedAt = null;
+      if(item.random?.enabled) item.random.nextAt = makeRandomNext(item.random.frequency);
+      toast(t('nextScheduled'));
+      return;
+    }
+    item.done = true;
+  }
+
+  function maybeNotify(){
+    const dueItems = state.items.filter(x => !x.archived && isDue(x));
+    for(const item of dueItems){
+      const now = Date.now();
+      const last = item.lastNotifiedAt ? new Date(item.lastNotifiedAt).getTime() : 0;
+      if(now-last < 15*60*1000) continue;
+
+      item.lastNotifiedAt = new Date().toISOString();
+
+      if(item.random?.enabled && item.random.nextAt && new Date(item.random.nextAt).getTime() <= now){
+        item.random.nextAt = makeRandomNext(item.random.frequency);
+      }
+
+      if('Notification' in window && Notification.permission === 'granted'){
+        try{ new Notification(state.lang === 'he' ? 'תזכורת מהמחשבות' : 'Thought reminder', {body:item.text}); }catch(e){}
+      }
+    }
+    if(dueItems.length){
+      save();
+      render();
+    }
+  }
+
+  $('addBtn').addEventListener('click', () => {
+    const text = $('thoughtInput').value.trim();
+    if(!text){ toast(t('noText')); return; }
+    const pending = state.pendingSchedule || {schedule:null,random:null};
+    state.items.push({
+      id:uid(), text, createdAt:new Date().toISOString(), archived:false, done:false,
+      schedule:pending.schedule || null, random:normalizeRandom(pending.random), lastNotifiedAt:null
+    });
+    $('thoughtInput').value = '';
+    state.pendingSchedule = null;
+    save(); render(); toast(t('added'));
+  });
+
+  $('scheduleNewBtn').addEventListener('click', () => openSchedule());
+
+  $('randomEnabled').addEventListener('change', () => {
+    $('randomFrequencyWrap').classList.toggle('hidden', !$('randomEnabled').checked);
+  });
+
+  $('scheduleForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const value = readScheduleForm();
+
+    if(state.scheduleTargetId){
+      const item = state.items.find(x=>x.id===state.scheduleTargetId);
+      if(item){
+        item.schedule = value.schedule;
+        item.random = normalizeRandom(value.random);
+        item.done = false;
+        item.lastNotifiedAt = null;
+        save(); render(); toast(t('updated'));
+      }
+    }else{
+      state.pendingSchedule = value;
+      toast(t('updated'));
+    }
+    state.scheduleTargetId = null;
+    $('scheduleDialog').close();
+  });
+
+  $('clearScheduleBtn').addEventListener('click', () => {
+    if(state.scheduleTargetId){
+      const item = state.items.find(x=>x.id===state.scheduleTargetId);
+      if(item){ item.schedule=null; item.random=null; item.lastNotifiedAt=null; save(); render(); }
+    }else{
+      state.pendingSchedule = null;
+    }
+    state.scheduleTargetId = null;
+    $('scheduleDialog').close();
+  });
+
+  listEl.addEventListener('click', e => {
+    const card = e.target.closest('.card');
+    if(!card) return;
+    const id = card.dataset.id;
+    const item = state.items.find(x=>x.id===id);
+    if(!item) return;
+
+    if(e.target.closest('.edit')){
+      state.editTargetId = id;
+      $('editText').value = item.text;
+      $('editDialog').showModal();
+      return;
+    }
+    if(e.target.closest('.complete')){
+      advanceAfterDone(item);
+      save(); render(); toast(t('completed'));
+      return;
+    }
+    if(e.target.closest('.archive')){
+      item.archived = !item.archived;
+      save(); render(); toast(item.archived ? t('archivedToast'):t('restoredToast'));
+      return;
+    }
+    if(e.target.closest('.delete')){
+      state.deleteTargetId = id;
+      $('deleteDialog').showModal();
+      return;
+    }
+  });
+
+  $('editForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const item = state.items.find(x=>x.id===state.editTargetId);
+    const text = $('editText').value.trim();
+    if(item && text){
+      item.text = text;
+      save(); render(); toast(t('updated'));
+    }
+    state.editTargetId = null;
+    $('editDialog').close();
+  });
+
+  $('editScheduleBtn').addEventListener('click', () => {
+    const id = state.editTargetId;
+    $('editDialog').close();
+    openSchedule({targetId:id});
+  });
+
+  $('cancelDeleteBtn').addEventListener('click', () => {
+    state.deleteTargetId = null;
+    $('deleteDialog').close();
+  });
+
+  $('confirmDeleteBtn').addEventListener('click', () => {
+    state.items = state.items.filter(x=>x.id!==state.deleteTargetId);
+    state.deleteTargetId = null;
+    save(); render(); $('deleteDialog').close(); toast(t('deleted'));
+  });
+
+  document.querySelectorAll('.tab').forEach(tab => tab.addEventListener('click', () => {
+    document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+    tab.classList.add('active');
+    state.filter = tab.dataset.filter;
+    render();
+  }));
+
+  $('showDueBtn').addEventListener('click', () => {
+    const dueItems = state.items.filter(x => !x.archived && isDue(x));
+    $('dueList').innerHTML = dueItems.map(item => `<button class="small-action" data-id="${escapeHtml(item.id)}" style="text-align:inherit;padding:12px">${escapeHtml(item.text)}</button>`).join('');
+    $('dueDialog').showModal();
+  });
+  $('closeDueBtn').addEventListener('click', () => $('dueDialog').close());
+  $('dueList').addEventListener('click', e => {
+    const b=e.target.closest('[data-id]'); if(!b) return;
+    $('dueDialog').close();
+    state.filter='active';
+    document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.filter==='active'));
+    render();
+    setTimeout(()=>document.querySelector('.card[data-id="'+CSS.escape(b.dataset.id)+'"]')?.scrollIntoView({behavior:'smooth',block:'center'}),50);
+  });
+
+  $('transferBtn').addEventListener('click', () => {
+    const payload = btoa(unescape(encodeURIComponent(JSON.stringify(state.items))));
+    location.href = 'https://itamarlev.com/thoughts-assistant/#thoughts-transfer=' + payload;
+  });
+
+  $('langBtn').addEventListener('click', () => setLanguage(state.lang === 'he' ? 'en':'he'));
+
+  $('voiceBtn').addEventListener('click', () => {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if(!SR){ toast(t('speechUnsupported')); return; }
+    const rec = new SR();
+    rec.lang = state.lang === 'he' ? 'he-IL':'en-US';
+    rec.interimResults = false;
+    rec.maxAlternatives = 1;
+    rec.onresult = ev => {
+      const text = ev.results?.[0]?.[0]?.transcript || '';
+      if(text) $('thoughtInput').value = ($('thoughtInput').value + ' ' + text).trim();
+    };
+    rec.start();
+  });
+
+  window.addEventListener('focus', maybeNotify);
+  setInterval(maybeNotify, 60000);
+
+  load();
+  importFromHash();
+  if(location.hostname === 'itamarlev.com' || location.hostname.endsWith('.itamarlev.com')) $('transferBtn').style.display='none';
+  setLanguage(state.lang);
+  maybeNotify();
+})();
+</script>
 </body>
 </html>
