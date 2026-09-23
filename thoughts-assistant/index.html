@@ -45,7 +45,12 @@
   <div id="list" class="list"></div>
   <div id="empty" class="empty hidden" data-i18n="empty">אין כאן מחשבות כרגע.</div>
 
-  <div class="transfer-row"><button id="transferBtn" class="transfer-btn" type="button" data-i18n="transferToSite">העבר לאתר</button></div>
+  <div class="transfer-row data-tools">
+    <button id="exportBtn" class="transfer-btn" type="button" data-i18n="exportBackup">ייצוא גיבוי</button>
+    <button id="importBtn" class="transfer-btn" type="button" data-i18n="importBackup">ייבוא גיבוי</button>
+    <button id="transferBtn" class="transfer-btn" type="button" data-i18n="transferToSite">העבר לאתר</button>
+  </div>
+  <input id="importFile" type="file" accept="application/json,.json" hidden>
   <div class="footer-hint" data-i18n="savedLocal">המידע נשמר מקומית במכשיר הזה.</div>
 </div>
 
@@ -125,6 +130,17 @@
     <h2 data-i18n="dueListTitle">התזכורות שמחכות לך</h2>
     <div id="dueList" class="list"></div>
     <div class="modal-actions"><button id="closeDueBtn" class="btn ghost" data-i18n="close">סגור</button></div>
+  </div>
+</dialog>
+
+<dialog id="importDialog">
+  <div class="modal">
+    <h2 data-i18n="importTitle">בדיקת הגיבוי לפני ייבוא</h2>
+    <div id="importSummary" class="sub"></div>
+    <div class="modal-actions">
+      <button id="cancelImportBtn" class="btn ghost" data-i18n="cancel">ביטול</button>
+      <button id="confirmImportBtn" class="btn primary" data-i18n="confirmImport">מזג נתונים</button>
+    </div>
   </div>
 </dialog>
 

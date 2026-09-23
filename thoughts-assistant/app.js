@@ -1,5 +1,7 @@
 (() => {
   const STORAGE_KEY = 'thoughts_app_v2';
+  const META_KEY = 'thoughts_app_meta_v1';
+  const SCHEMA_VERSION = 2;
   const LEGACY_KEYS = ['thoughts_assistant_v1','thoughts','ideas','mindItems','thoughtsAppItems'];
   const state = {
     items: [],
@@ -8,7 +10,8 @@
     pendingSchedule: null,
     scheduleTargetId: null,
     editTargetId: null,
-    deleteTargetId: null
+    deleteTargetId: null,
+    pendingImport: null
   };
 
   const i18n = {
@@ -33,7 +36,9 @@
       archivedToast:'המחשבה הועברה לארכיון.', restoredToast:'המחשבה הוחזרה.',
       completed:'סומן כבוצע.', nextScheduled:'המועד הבא נקבע אוטומטית.',
       speechUnsupported:'הכתבה קולית אינה נתמכת בדפדפן הזה.',
-      allowNotif:'אפשר להפעיל התראות בדפדפן כדי לקבל תזכורות בזמן שהאפליקציה פעילה.', showReminders:'הצג תזכורות', dueListTitle:'התזכורות שמחכות לך', close:'סגור', transferToSite:'העבר לאתר', transferred:'המחשבות מוכנות להעברה לאתר.'
+      allowNotif:'אפשר להפעיל התראות בדפדפן כדי לקבל תזכורות בזמן שהאפליקציה פעילה.', showReminders:'הצג תזכורות', dueListTitle:'התזכורות שמחכות לך', close:'סגור', transferToSite:'העבר לאתר', transferred:'המחשבות מוכנות להעברה לאתר.',
+      exportBackup:'ייצוא גיבוי', importBackup:'ייבוא גיבוי', importTitle:'בדיקת הגיבוי לפני ייבוא', confirmImport:'מזג נתונים',
+      backupReady:'קובץ הגיבוי נוצר.', importInvalid:'לא הצלחתי לקרוא את קובץ הגיבוי.', importComplete:'הייבוא הושלם בלי למחוק נתונים קיימים.'
     },
     en: {
       title:'My Thoughts', subtitle:'Remember, schedule, and return to what matters',
@@ -56,7 +61,9 @@
       archivedToast:'Moved to archive.', restoredToast:'Restored.',
       completed:'Marked done.', nextScheduled:'Next occurrence scheduled automatically.',
       speechUnsupported:'Voice dictation is not supported in this browser.',
-      allowNotif:'You can enable browser notifications to receive reminders while the app is active.', showReminders:'Show reminders', dueListTitle:'Reminders waiting for you', close:'Close', transferToSite:'Transfer to website', transferred:'Your thoughts are ready to transfer.'
+      allowNotif:'You can enable browser notifications to receive reminders while the app is active.', showReminders:'Show reminders', dueListTitle:'Reminders waiting for you', close:'Close', transferToSite:'Transfer to website', transferred:'Your thoughts are ready to transfer.',
+      exportBackup:'Export backup', importBackup:'Import backup', importTitle:'Review backup before import', confirmImport:'Merge data',
+      backupReady:'Backup file created.', importInvalid:'Could not read the backup file.', importComplete:'Import finished without deleting existing data.'
     }
   };
 
@@ -77,42 +84,158 @@
     render();
   }
 
-  function migrateLegacy(){
-    if (localStorage.getItem(STORAGE_KEY)) return;
-    for(const key of LEGACY_KEYS){
-      try{
-        const raw = localStorage.getItem(key);
-        if(!raw) continue;
-        const arr = JSON.parse(raw);
-        if(!Array.isArray(arr)) continue;
-        state.items = arr.map((x, idx) => ({
-          id: String(x.id || crypto.randomUUID?.() || Date.now() + '_' + idx),
-          text: x.text || x.title || x.content || '',
-          type: x.type === 'friend' ? 'friend' : 'thought',
-          createdAt: x.createdAt || new Date().toISOString(),
-          archived: !!x.archived,
-          done: !!x.done,
-          schedule: x.schedule || null,
-          random: x.random || null,
-          lastNotifiedAt: x.lastNotifiedAt || null
-        })).filter(x => x.text);
-        save();
-        return;
-      }catch(e){}
+  function hashString(value){
+    let hash = 2166136261;
+    for(let i=0;i<value.length;i++){
+      hash ^= value.charCodeAt(i);
+      hash = Math.imul(hash, 16777619);
     }
+    return (hash >>> 0).toString(36);
+  }
+
+  function extractItems(value){
+    if(Array.isArray(value)) return value;
+    if(value && Array.isArray(value.items)) return value.items;
+    if(value && Array.isArray(value.data)) return value.data;
+    return [];
+  }
+
+  function parseStoredItems(raw){
+    if(!raw) return [];
+    try{ return extractItems(JSON.parse(raw)); }
+    catch(e){ return []; }
+  }
+
+  function stableItemSignature(item){
+    const schedule = item?.schedule || null;
+    const random = item?.random || null;
+    return JSON.stringify({
+      text:item?.text || item?.title || item?.content || '',
+      type:item?.type || 'thought',
+      createdAt:item?.createdAt || null,
+      schedule,
+      random,
+      archived:!!item?.archived,
+      done:!!item?.done
+    });
+  }
+
+  function normalizeItem(item, sourceKey='unknown', index=0){
+    if(!item || typeof item !== 'object') return null;
+    const text = String(item.text || item.title || item.content || '').trim();
+    if(!text) return null;
+    const signature = stableItemSignature(item);
+    return {
+      ...item,
+      id:String(item.id || ('legacy_' + hashString(sourceKey + '|' + index + '|' + signature))),
+      text,
+      type:item.type === 'friend' ? 'friend' : 'thought',
+      createdAt:item.createdAt || null,
+      archived:!!item.archived,
+      done:!!item.done,
+      schedule:item.schedule || null,
+      random:item.random || null,
+      lastNotifiedAt:item.lastNotifiedAt || null
+    };
+  }
+
+  function mergeItems(groups){
+    const merged = [];
+    const seenIds = new Set();
+    const seenSignatures = new Set();
+
+    for(const group of groups){
+      const sourceKey = group.sourceKey || 'unknown';
+      const items = extractItems(group.items);
+      items.forEach((raw, index) => {
+        const item = normalizeItem(raw, sourceKey, index);
+        if(!item) return;
+        const signature = stableItemSignature(item);
+        const idKey = item.id ? String(item.id) : null;
+        if((idKey && seenIds.has(idKey)) || seenSignatures.has(signature)) return;
+        if(idKey) seenIds.add(idKey);
+        seenSignatures.add(signature);
+        merged.push(item);
+      });
+    }
+    return merged;
+  }
+
+  function readAllLocalSources(){
+    const groups = [];
+    for(const key of [STORAGE_KEY, ...LEGACY_KEYS]){
+      const raw = localStorage.getItem(key);
+      if(!raw) continue;
+      const items = parseStoredItems(raw);
+      if(items.length) groups.push({sourceKey:key, items});
+    }
+    return groups;
   }
 
   function load(){
-    migrateLegacy();
-    try{
-      state.items = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-      if(!Array.isArray(state.items)) state.items = [];
-      state.items = state.items.map(x => ({...x, type:x.type === 'friend' ? 'friend' : 'thought'}));
-    }catch(e){ state.items = []; }
+    state.items = mergeItems(readAllLocalSources());
   }
 
   function save(){
     localStorage.setItem(STORAGE_KEY, JSON.stringify(state.items));
+    localStorage.setItem(META_KEY, JSON.stringify({
+      schemaVersion:SCHEMA_VERSION,
+      updatedAt:new Date().toISOString()
+    }));
+  }
+
+  function createBackupPayload(){
+    const storageSnapshots = {};
+    for(const key of [STORAGE_KEY, ...LEGACY_KEYS, META_KEY]){
+      const raw = localStorage.getItem(key);
+      if(raw !== null) storageSnapshots[key] = raw;
+    }
+    return {
+      schemaVersion:SCHEMA_VERSION,
+      exportedAt:new Date().toISOString(),
+      app:'thoughts-assistant',
+      items:state.items,
+      storageSnapshots
+    };
+  }
+
+  function downloadBackup(){
+    const blob = new Blob([JSON.stringify(createBackupPayload(), null, 2)], {type:'application/json'});
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'thoughts-backup-' + new Date().toISOString().slice(0,10) + '.json';
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+    toast(t('backupReady'));
+  }
+
+  function extractImportGroups(payload){
+    const groups = [];
+    const topItems = extractItems(payload);
+    if(topItems.length) groups.push({sourceKey:'import', items:topItems});
+    if(payload && payload.storageSnapshots && typeof payload.storageSnapshots === 'object'){
+      for(const [key, raw] of Object.entries(payload.storageSnapshots)){
+        if(typeof raw !== 'string') continue;
+        const items = parseStoredItems(raw);
+        if(items.length) groups.push({sourceKey:'import:' + key, items});
+      }
+    }
+    return groups;
+  }
+
+  function previewImport(payload){
+    const incoming = mergeItems(extractImportGroups(payload));
+    const combined = mergeItems([
+      {sourceKey:'current', items:state.items},
+      {sourceKey:'incoming', items:incoming}
+    ]);
+    return {
+      incoming,
+      combined,
+      addedCount:Math.max(0, combined.length - state.items.length)
+    };
   }
 
   function importFromHash(){
@@ -121,11 +244,10 @@
     try{
       const incoming = JSON.parse(decodeURIComponent(escape(atob(m[1]))));
       if(Array.isArray(incoming)){
-        const seen = new Set(state.items.map(x => (x.text||'')+'|'+(x.createdAt||'')));
-        for(const item of incoming){
-          const key=(item.text||'')+'|'+(item.createdAt||'');
-          if(!seen.has(key)){ state.items.push(item); seen.add(key); }
-        }
+        state.items = mergeItems([
+          {sourceKey:'current', items:state.items},
+          {sourceKey:'hash-transfer', items:incoming}
+        ]);
         save();
       }
       history.replaceState(null,'',location.pathname+location.search);
@@ -350,7 +472,7 @@
     if(!text){ toast(t('noText')); return; }
     const pending = state.pendingSchedule || {schedule:null,random:null};
     state.items.push({
-      id:uid(), text, type:$('newType').value === 'friend' ? 'friend' : 'thought', createdAt:new Date().toISOString(), archived:false, done:false,
+      id:uid(), schemaVersion:SCHEMA_VERSION, text, type:$('newType').value === 'friend' ? 'friend' : 'thought', createdAt:new Date().toISOString(), archived:false, done:false,
       schedule:pending.schedule || null, random:normalizeRandom(pending.random), lastNotifiedAt:null
     });
     $('thoughtInput').value = '';
@@ -477,6 +599,47 @@
     document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('active',x.dataset.filter==='active'));
     render();
     setTimeout(()=>document.querySelector('.card[data-id="'+CSS.escape(b.dataset.id)+'"]')?.scrollIntoView({behavior:'smooth',block:'center'}),50);
+  });
+
+  $('exportBtn').addEventListener('click', downloadBackup);
+
+  $('importBtn').addEventListener('click', () => {
+    $('importFile').value = '';
+    $('importFile').click();
+  });
+
+  $('importFile').addEventListener('change', async e => {
+    const file = e.target.files?.[0];
+    if(!file) return;
+    try{
+      const payload = JSON.parse(await file.text());
+      const preview = previewImport(payload);
+      if(!preview.incoming.length) throw new Error('No items');
+      state.pendingImport = preview;
+      $('importSummary').textContent = state.lang === 'he'
+        ? `בגיבוי נמצאו ${preview.incoming.length} פריטים. ${preview.addedCount} מהם חדשים ויתווספו ל־${state.items.length} הפריטים הקיימים. שום מידע קיים לא יימחק.`
+        : `The backup contains ${preview.incoming.length} items. ${preview.addedCount} are new and will be merged into your ${state.items.length} existing items. Existing data will not be deleted.`;
+      $('importDialog').showModal();
+    }catch(err){
+      state.pendingImport = null;
+      toast(t('importInvalid'));
+    }
+  });
+
+  $('cancelImportBtn').addEventListener('click', () => {
+    state.pendingImport = null;
+    $('importDialog').close();
+  });
+
+  $('confirmImportBtn').addEventListener('click', () => {
+    if(state.pendingImport){
+      state.items = state.pendingImport.combined;
+      save();
+      render();
+      toast(t('importComplete'));
+    }
+    state.pendingImport = null;
+    $('importDialog').close();
   });
 
   $('transferBtn').addEventListener('click', () => {
