@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#6c4cff">
+  <meta name="description" content="גרסת הילדים למסלול המשפחתי בציריך, היער השחור ואלזס — סיכום קצר וברור לכל יום.">
+  <title>הטיול שלנו — גרסת הילדים</title>
+  <style>
+    :root{--purple:#6c4cff;--navy:#20254d;--pink:#ff5f8f;--yellow:#ffd84d;--mint:#68dfbd;--sky:#8ed8ff;--paper:#fffdf8;--ink:#20233f;--muted:#68708a;--line:#e8e5f3;--shadow:0 18px 48px rgba(54,44,112,.14)}
+    *{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:96px}body{margin:0;background:linear-gradient(180deg,#f3efff 0,#fff9e9 42%,#eefcff 100%);color:var(--ink);font-family:"Arial","Noto Sans Hebrew",sans-serif;line-height:1.55}
+    a{color:inherit}.top{position:relative;overflow:hidden;padding:22px 18px 36px;background:linear-gradient(135deg,#6847f5,#9b55ee 52%,#ff6f9c);color:white}.top:before,.top:after{position:absolute;border-radius:50%;content:"";filter:blur(1px);opacity:.22}.top:before{width:190px;height:190px;background:var(--yellow);top:-95px;left:-40px}.top:after{width:150px;height:150px;background:var(--sky);bottom:-80px;right:-35px}
+    .top-inner{position:relative;z-index:1;max-width:880px;margin:auto}.back{display:inline-flex;align-items:center;gap:7px;padding:9px 13px;border:1px solid rgba(255,255,255,.42);border-radius:999px;background:rgba(255,255,255,.14);text-decoration:none;font-weight:800;font-size:.88rem;backdrop-filter:blur(8px)}.eyebrow{margin:30px 0 5px;font-weight:900;color:#fff4b4}.top h1{max-width:650px;margin:0;font-size:clamp(2.35rem,10vw,5rem);line-height:.95;letter-spacing:-.04em}.top h1 span{color:var(--yellow)}.intro{max-width:620px;margin:17px 0 0;font-size:clamp(1rem,3.6vw,1.2rem);color:rgba(255,255,255,.92)}
+    .today-pill{display:none;margin-top:18px;width:max-content;max-width:100%;padding:9px 13px;border-radius:999px;background:white;color:var(--navy);font-weight:900;box-shadow:0 10px 28px rgba(26,20,75,.18)}.today-pill.show{display:block}
+    .day-strip{position:sticky;top:0;z-index:20;display:flex;gap:8px;overflow-x:auto;padding:10px 12px;background:rgba(255,253,248,.9);border-bottom:1px solid var(--line);backdrop-filter:blur(12px);scrollbar-width:none}.day-strip::-webkit-scrollbar{display:none}.day-chip{flex:0 0 auto;display:grid;place-items:center;min-width:58px;padding:7px 9px;border:0;border-radius:14px;background:white;box-shadow:0 4px 15px rgba(50,45,90,.08);text-decoration:none}.day-chip b{font-size:.9rem}.day-chip small{color:var(--muted);font-size:.68rem}.day-chip.today{background:var(--yellow);outline:3px solid white;box-shadow:0 5px 20px rgba(255,189,39,.34)}
+    main{max-width:880px;margin:auto;padding:24px 14px 70px}.sync{display:flex;gap:10px;align-items:flex-start;margin-bottom:22px;padding:13px 15px;border:1px solid #d8d2ff;border-radius:16px;background:#f7f4ff;color:#555b76;font-size:.84rem}.sync b{color:var(--purple)}
+    .loading{padding:50px 20px;text-align:center;font-weight:900;color:var(--purple)}
+    .day{scroll-margin-top:90px;margin:0 0 24px;border:1px solid rgba(70,63,120,.1);border-radius:25px;background:rgba(255,255,255,.94);box-shadow:var(--shadow);overflow:hidden}.day.today{outline:4px solid var(--yellow)}.photo{position:relative;aspect-ratio:16/8;overflow:hidden;background:#ddd}.photo img{width:100%;height:100%;object-fit:cover;display:block}.day-no{position:absolute;top:13px;right:13px;display:grid;place-items:center;width:58px;height:58px;border-radius:18px;background:var(--yellow);color:var(--navy);font-weight:950;box-shadow:0 8px 22px rgba(0,0,0,.18)}.day-no span{display:block;font-size:.7rem;line-height:1}.day-no b{font-size:1.5rem;line-height:1}
+    .content{padding:20px}.date{margin:0 0 5px;color:var(--purple);font-weight:900;font-size:.82rem}.content h2{margin:0;font-size:clamp(1.45rem,6vw,2rem);line-height:1.1}.summary{margin:12px 0 18px;font-size:1.04rem;color:#444a67}
+    .points{display:grid;gap:9px;margin:0;padding:0;list-style:none}.point{display:grid;grid-template-columns:38px 1fr;gap:10px;align-items:start;padding:11px 12px;border-radius:15px;background:#f7f8ff}.point-icon{display:grid;width:36px;height:36px;place-items:center;border-radius:12px;background:var(--sky);font-size:1.1rem}.point:nth-child(2) .point-icon{background:var(--mint)}.point:nth-child(3) .point-icon{background:#ffd5e3}.point b{display:block;font-size:.96rem}.point span{display:block;margin-top:1px;color:var(--muted);font-size:.84rem}
+    .fact{margin-top:14px;padding:13px 14px;border-radius:16px;background:#fff4bd;color:#5a4812}.fact b{display:block;margin-bottom:2px}.updated{margin-top:14px;padding:13px 14px;border-radius:16px;background:#ffe8ef;color:#75344c}.updated b{display:block}.footer-row{display:flex;flex-wrap:wrap;gap:9px;align-items:center;justify-content:space-between;margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}.full-link{color:var(--purple);font-size:.82rem;font-weight:900;text-decoration:none}.stamp{color:#8990a5;font-size:.72rem}
+    .bottom-back{display:flex;justify-content:center;margin-top:32px}.bottom-back a{display:inline-flex;padding:13px 18px;border-radius:16px;background:var(--navy);color:white;text-decoration:none;font-weight:900}
+    .error{padding:28px;border-radius:20px;background:#fff0f3;color:#73334a;text-align:center}.error a{font-weight:900}
+    @media(min-width:700px){main{padding-top:34px}.day{display:grid;grid-template-columns:38% 62%}.photo{aspect-ratio:auto;min-height:330px}.content{padding:28px}.day-no{right:16px}.day:nth-child(even){grid-template-columns:62% 38%}.day:nth-child(even) .photo{grid-column:2;grid-row:1}.day:nth-child(even) .content{grid-column:1;grid-row:1}}
+  </style>
+</head>
+<body>
+  <header class="top">
+    <div class="top-inner">
+      <a class="back" href="../">← חזרה למסלול המלא</a>
+      <p class="eyebrow">🎒 גרסת הילדים</p>
+      <h1>אז מה עושים <span>היום?</span></h1>
+      <p class="intro">בלי חפירות: מה עושים בכל יום, מה הכי מעניין, ועוד פרט אחד ששווה לדעת.</p>
+      <div class="today-pill" id="today-pill"></div>
+    </div>
+  </header>
+  <nav class="day-strip" id="day-strip" aria-label="בחירת יום"></nav>
+  <main>
+    <div class="sync"><span>🔄</span><div><b>מחובר למסלול הראשי:</b> העמוד בודק את התוכנית העדכנית בכל פתיחה. אם יום השתנה, הוא לא יציג את הסיכום הישן כאילו הוא עדיין בתוקף.</div></div>
+    <div id="kids-days" class="loading">טוענים את הטיול… ✨</div>
+    <div class="bottom-back"><a href="../">חזרה לגרסה המלאה</a></div>
+  </main>
+<script>
+(() => {
+  const curated = {
+    1:{title:"נוחתים ומתחילים!",summary:"נוחתים בציריך, לוקחים את הרכב ונוסעים למלון. הערב הזה מיועד רק להגיע, להתארגן ולנוח.",points:{"Zurich Airport":["✈️","נוחתים בציריך ומתחילים את הטיול."],"Hilton Garden Inn Zurich Limmattal":["🛏️","מגיעים למלון ולישון. מחר מתחילים באמת!"]},fact:null},
+    2:{title:"פרייבורג: עיר, תעלות ותצפית",summary:"מטיילים בפרייבורג בין הקתדרלה, העיר העתיקה ותעלות המים הקטנות. אם יש כוח עולים לתצפית, ואז ממשיכים ל-Offenburg ובערב אפשר לקפוץ ל-Gengenbach.",points:{"Freiburg Minster":["⛪","קתדרלה ענקית בלב העיר העתיקה."],"Freiburg Old Town":["💦","רחובות יפים ותעלות Bächle קטנות שזורמות ליד המדרכות."],"Schlossbergbahn Freiburg":["🚡","עלייה קצרה לכיוון תצפית מעל העיר."],"Gengenbach Old Town":["🌙","סיבוב ערב בעיירה עתיקה."]},fact:"הצריח של קתדרלת פרייבורג מתנשא לכ־116 מטר."},
+    3:{title:"יום המפלים 🌲💦",summary:"נוסעים ל-Triberg, נכנסים ליער ורואים את המפלים. אפשר לבחור כמה לעלות במסלול, ואחר כך מסתובבים קצת בעיירה.",points:{"Triberg Waterfalls":["💦","מפלים בתוך יער — אפשר לעצור בתצפיות הנמוכות או לטפס גבוה יותר."],"Triberg im Schwarzwald":["🕰️","עיירה שמפורסמת בשעוני קוקייה ובעוגת היער השחור."]},fact:"המפלים הם בעצם רצף של מדרגות מים בתוך יער תלול, ולא נפילה אחת בלבד."},
+    4:{title:"Europa-Park! 🎢",summary:"הילדים ומי שאוהב מתקנים יוצאים ליום מלא ב-Europa-Park. המבוגרים שמעדיפים יום רגוע נוסעים במקביל ל-Baden-Baden.",points:{"Europa-Park":["🎢","יום של מתקנים, רכבות הרים ואזורים שמעוצבים כמו מדינות באירופה."],"Caracalla Therme":["♨️","הקבוצה הרגועה הולכת למרחצאות חמים."],"Lichtentaler Allee":["🌳","הליכה רגועה בפארק של Baden-Baden."]},fact:"ב-Europa-Park יש יותר מ־100 מתקנים ומופעים, והפארק מחולק לאזורים בסגנון מדינות אירופה."},
+    5:{title:"שטרסבורג מהמים ומהרחובות",summary:"מתחילים בשיט בעיר, ואז ממשיכים לקתדרלה, ל-Petite France ולגשרים. הרבה דברים רואים היום בלי לרוץ.",points:{"Batorama":["🛥️","שיט של בערך 70 דקות דרך שטרסבורג."],"Strasbourg Cathedral":["⛪","קתדרלה ענקית מאבן ורודה בלב העיר."],"Petite France":["🏘️","תעלות, גשרים ובתים עתיקים באזור הכי ציורי בעיר."],"Ponts Couverts":["🌉","גשרים ונקודת תצפית ליד Petite France."]},fact:"הצריח של קתדרלת שטרסבורג מגיע לגובה של בערך 142 מטר."},
+    6:{title:"יום אקשן ב-Mehliskopf",summary:"נשארים כל היום באותו מתחם: מתחילים בפארק החבלים, אוכלים צהריים ואז עוברים למגלשת ההרים ולעוד פעילויות לפי גיל ומזג האוויר.",points:{"פארק החבלים":["🧗","שלוש שעות של מסלולי חבלים בגבהים שונים."],"מגלשת ההרים":["🛷","מסלול הרים ארוך ומהיר."],"בנג׳י טרמפולינה":["🤸","קפיצות לגובה למי שמתאים."],"Downhill Carts":["🏎️","קארטים בירידה — רק מגיל 16 ומגובה מתאים."]},fact:"מגלשת ההרים במקום היא באורך כ־1,300 מטר ויכולה להגיע עד כ־40 קמ״ש."},
+    7:{title:"עוברים לאלזס 🏘️",summary:"עוזבים את Offenburg, מגיעים לבית החדש ב-Guémar ואז יוצאים לטיול רגוע בשני כפרים יפים — Riquewihr ו-Ribeauvillé.",points:{"Guémar":["🏠","זה הבית שלנו לכמה לילות — קודם מתארגנים."],"Riquewihr":["🏘️","כפר אלזסי צבעוני לשיטוט רגוע."],"Ribeauvillé":["🏰","עוד כפר קרוב עם רחובות עתיקים ואווירת אלזס."]},fact:null},
+    8:{title:"טירה וקופים! 🏰🐒",summary:"מתחילים בטירת Haut-Koenigsbourg שעל ההר, ואז עוברים ליער של La Montagne des Singes לראות קופים שמסתובבים בשטח פתוח.",points:{"Château du Haut-Koenigsbourg":["🏰","טירה ענקית עם חומות, מגדלים וחדרים משוחזרים."],"La Montagne des Singes":["🐒","הליכה ביער שבו מקוקי ברברי מסתובבים בשטח פתוח."]},fact:"הטירה נמצאת על רכס בגובה של בערך 757 מטר — ולכן יש ממנה נוף ענק על האזור."},
+    9:{title:"קולמר וכפר מהאגדות",summary:"מטיילים ב-Colmar בין התעלות, השוק והעיר העתיקה. אחר הצהריים ממשיכים ל-Eguisheim; מקום נוסף נכנס רק אם נשאר כוח.",points:{"Little Venice":["🚤","תעלות, גשרים ובתים צבעוניים — החלק הכי מצולם של Colmar."],"Marché Couvert":["🥨","שוק מקורה שבו אפשר לעצור ולאכול."],"Eguisheim":["🏘️","כפר קטן עם רחובות שמסתובבים סביב המרכז העתיק."]},fact:"השוק המקורה של Colmar נמצא במבנה היסטורי משנת 1865."},
+    10:{title:"חוזרים לציריך",summary:"נוסעים בחזרה לשווייץ, מורידים את המזוודות ואז יוצאים לסיבוב אחרון בעיר העתיקה וליד האגם. מסיימים מוקדם כדי להתארגן לטיסה.",points:{"Zurich Old Town":["🏙️","סמטאות, כיכרות וכנסיות משני צדי נהר Limmat."],"Bürkliplatz / Lake Zurich":["🌊","מסיימים ליד אגם ציריך והטיילת."],"Hilton Garden Inn":["🛏️","לילה אחרון במלון לפני הטיסה."]},fact:null},
+    11:{title:"הביתה ✈️",summary:"קמים מוקדם, מחזירים את הרכב בשדה התעופה ונכנסים לטיסה הביתה. זהו — הטיול נגמר!",points:{"Zurich Airport / SIXT return":["🚗","מחזירים את הרכב ב־08:00 ואז עוברים לשדה לטיסה."]},fact:"הטיסה מתוכננת לצאת ב־10:55 ולנחות בתל אביב ב־15:50."}
+  };
+
+  const expected = {
+    1:["Zurich Airport","Hilton Garden Inn Zurich Limmattal"],
+    2:["Freiburg Minster","Freiburg Old Town","Schlossbergbahn Freiburg","Gengenbach Old Town"],
+    3:["Triberg Waterfalls","Triberg im Schwarzwald"],
+    4:["Europa-Park","Caracalla Therme","Lichtentaler Allee"],
+    5:["Batorama","Strasbourg Cathedral","Petite France","Ponts Couverts"],
+    6:["פארק החבלים","מגלשת ההרים","בנג׳י טרמפולינה","Downhill Carts"],
+    7:["Guémar","Riquewihr","Ribeauvillé"],
+    8:["Château du Haut-Koenigsbourg","La Montagne des Singes"],
+    9:["Little Venice","Marché Couvert","Eguisheim"],
+    10:["Zurich Old Town","Bürkliplatz / Lake Zurich","Hilton Garden Inn"],
+    11:["Zurich Airport / SIXT return"]
+  };
+  const dayDates=["2026-09-22","2026-09-23","2026-09-24","2026-09-25","2026-09-26","2026-09-27","2026-09-28","2026-09-29","2026-09-30","2026-10-01","2026-10-02"];
+  const hebDays=["יום ראשון","יום שני","יום שלישי","יום רביעי","יום חמישי","יום שישי","שבת"];
+  const esc=s=>String(s||"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
+  const textOf=(el)=>el?.textContent?.replace(/\s+/g," ").trim()||"";
+  const zurichDate=()=>{
+    try {
+      const p=new Intl.DateTimeFormat("en-CA",{timeZone:"Europe/Zurich",year:"numeric",month:"2-digit",day:"2-digit"}).formatToParts(new Date());
+      const v=Object.fromEntries(p.filter(x=>x.type!=="literal").map(x=>[x.type,x.value]));
+      return `${v.year}-${v.month}-${v.day}`;
+    } catch(_){ return new Date().toISOString().slice(0,10); }
+  };
+  const currentDate=zurichDate();
+  const currentDay=dayDates.indexOf(currentDate)+1;
+
+  function shortFallback(desc){
+    const parts=desc.split(/(?<=[.!?])\s+/).filter(Boolean);
+    return parts.slice(0,2).join(" ").slice(0,260);
+  }
+  function samePoints(actual, planned){
+    return actual.length===planned.length && actual.every((x,i)=>x===planned[i]);
+  }
+  function renderPoint(name, item){
+    const icon=item?.[0]||"📍";
+    const desc=item?.[1]||"עוצרים כאן כחלק מהתוכנית המעודכנת.";
+    return `<li class="point"><span class="point-icon">${icon}</span><div><b>${esc(name)}</b><span>${esc(desc)}</span></div></li>`;
+  }
+
+  fetch("../index.html?kids-source=20260923", {cache:"no-store"})
+    .then(r=>{if(!r.ok) throw new Error("source"); return r.text();})
+    .then(source=>{
+      const doc=new DOMParser().parseFromString(source,"text/html");
+      const root=document.getElementById("kids-days");
+      const strip=document.getElementById("day-strip");
+      root.className="";
+      root.innerHTML="";
+      strip.innerHTML="";
+      for(let n=1;n<=11;n++){
+        const src=doc.getElementById(`day-${n}`);
+        if(!src) continue;
+        const srcTitle=textOf(src.querySelector(".day-body h3"));
+        const srcDesc=textOf(src.querySelector(".day-description"));
+        const srcPoints=[...src.querySelectorAll(".day-points li > a")].map(textOf);
+        const img=src.querySelector(".day-photo img")?.getAttribute("src")||"";
+        const date=dayDates[n-1];
+        const d=new Date(date+"T12:00:00Z");
+        const dayName=hebDays[d.getUTCDay()];
+        const dd=date.slice(8,10)+"/"+date.slice(5,7);
+        const data=curated[n];
+        const changed=!samePoints(srcPoints,expected[n]||[]);
+        const isToday=n===currentDay;
+
+        const chip=document.createElement("a");
+        chip.className="day-chip"+(isToday?" today":"");
+        chip.href=`#kids-day-${n}`;
+        chip.innerHTML=`<b>יום ${n}</b><small>${dd}</small>`;
+        strip.append(chip);
+
+        const card=document.createElement("article");
+        card.className="day"+(isToday?" today":"");
+        card.id=`kids-day-${n}`;
+        const summary=changed ? shortFallback(srcDesc) : data.summary;
+        const title=changed ? srcTitle : data.title;
+        const shownPoints=srcPoints.slice(0,3);
+        const pointHtml=shownPoints.map(name=>renderPoint(name,changed?null:data.points[name])).join("");
+        const fact=(!changed && data.fact)?`<div class="fact"><b>🤯 ידעת?</b>${esc(data.fact)}</div>`:"";
+        const update=changed?`<div class="updated"><b>🔔 התוכנית של היום עודכנה</b>הסיכום הישן הוסר אוטומטית. מה שמופיע כאן נלקח עכשיו מהמסלול הראשי.</div>`:"";
+        card.innerHTML=`
+          <div class="photo">${img?`<img src="${esc(img)}" alt="" loading="lazy">`:""}<div class="day-no"><span>יום</span><b>${n}</b></div></div>
+          <div class="content">
+            <p class="date">${dayName} · ${dd}${isToday?" · היום ⭐":""}</p>
+            <h2>${esc(title)}</h2>
+            <p class="summary"><b>מה עושים?</b> ${esc(summary)}</p>
+            <ul class="points">${pointHtml}</ul>
+            ${fact}${update}
+            <div class="footer-row"><a class="full-link" href="../#day-${n}">רוצים את כל הפרטים? לגרסה המלאה ←</a><span class="stamp">מסונכרן מהמסלול הראשי</span></div>
+          </div>`;
+        root.append(card);
+      }
+      if(currentDay>0){
+        const pill=document.getElementById("today-pill");
+        pill.textContent=`⭐ היום אנחנו ביום ${currentDay}`;
+        pill.classList.add("show");
+        history.scrollRestoration="manual";
+        const jump=()=>document.getElementById(`kids-day-${currentDay}`)?.scrollIntoView({block:"start",behavior:"auto"});
+        setTimeout(jump,80);
+        window.addEventListener("load",()=>setTimeout(jump,120),{once:true});
+      }
+    })
+    .catch(()=>{
+      document.getElementById("kids-days").className="error";
+      document.getElementById("kids-days").innerHTML='לא הצלחנו לקרוא עכשיו את המסלול המעודכן, ולכן לא נציג מידע ישן. <br><a href="../">עברו לגרסה המלאה ←</a>';
+    });
+})();
+</script>
+</body>
+</html>
