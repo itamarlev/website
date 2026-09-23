@@ -247,16 +247,33 @@ document.documentElement.classList.add("js");
       document.getElementById(`day-${todayDay}`)?.classList.add("is-today");
     }
 
-    window.addEventListener("load", () => {
-      if (!todayDay || window.location.hash) return;
+    const jumpToToday = () => {
+      if (!todayDay) return;
       const target = document.getElementById(`day-${todayDay}`);
       if (!target) return;
+
+      // Respect an explicit link to another section/day, but make a normal trip-page
+      // entry always open at today's itinerary instead of Safari's restored scroll position.
+      const hash = window.location.hash;
+      const explicitDifferentHash = hash && hash !== `#day-${todayDay}`;
+      if (explicitDifferentHash) return;
+
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
       history.replaceState(null, "", `#day-${todayDay}`);
-      requestAnimationFrame(() => {
+      target.scrollIntoView({ block: "start", behavior: "auto" });
+      setActiveDay(todayDay);
+
+      // iOS Safari can restore an old scroll position after initial layout/images.
+      // Re-apply once after layout settles so entry reliably lands on the current day.
+      window.setTimeout(() => {
         target.scrollIntoView({ block: "start", behavior: "auto" });
         setActiveDay(todayDay);
-      });
-    }, { once: true });
+      }, 180);
+    };
+
+    jumpToToday();
+    window.addEventListener("load", jumpToToday, { once: true });
+    window.addEventListener("pageshow", jumpToToday, { once: true });
   }
 })();
 
