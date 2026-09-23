@@ -92,6 +92,40 @@ document.documentElement.classList.add("js");
   if (isZurichTrip) {
     document.documentElement.style.scrollPaddingTop = "142px";
 
+    // Wikimedia's full-resolution originals can be very large and occasionally fail on mobile.
+    // Keep the requested resized rendition, retry a stalled/failed image, then switch to the
+    // equivalent Special:Redirect endpoint as a second fallback.
+    const makeTripImageReliable = (img) => {
+      let attempt = 0;
+      let timer;
+      const retry = () => {
+        if (attempt >= 2) return;
+        attempt += 1;
+        try {
+          const url = new URL(img.currentSrc || img.src, window.location.href);
+          if (url.hostname !== "commons.wikimedia.org") return;
+          if (attempt === 2) url.pathname = url.pathname.replace("/wiki/Special:FilePath/", "/wiki/Special:Redirect/file/");
+          url.searchParams.set("width", attempt === 1 ? "1280" : "960");
+          url.searchParams.set("retry", String(attempt));
+          img.src = url.toString();
+        } catch (_) {}
+      };
+      const arm = () => {
+        window.clearTimeout(timer);
+        timer = window.setTimeout(() => {
+          if (!img.complete || !img.naturalWidth) retry();
+        }, 9000);
+      };
+      img.addEventListener("load", () => window.clearTimeout(timer));
+      img.addEventListener("error", () => {
+        window.clearTimeout(timer);
+        retry();
+        arm();
+      });
+      arm();
+    };
+    document.querySelectorAll(".trip-page img").forEach(makeTripImageReliable);
+
     const style = document.createElement("style");
     style.textContent = `
       .day-nav__sections {
@@ -256,7 +290,13 @@ document.documentElement.classList.add("js");
     const todayDay = tripDates[dateInZurich()];
     if (todayDay) {
       document.querySelector(`[data-day-link="${todayDay}"]`)?.classList.add("is-today");
-      document.getElementById(`day-${todayDay}`)?.classList.add("is-today");
+      const todayCard = document.getElementById(`day-${todayDay}`);
+      todayCard?.classList.add("is-today");
+      const todayImage = todayCard?.querySelector(".day-photo img");
+      if (todayImage) {
+        todayImage.loading = "eager";
+        todayImage.fetchPriority = "high";
+      }
     }
 
     const jumpToToday = () => {

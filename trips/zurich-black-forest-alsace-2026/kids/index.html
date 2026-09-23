@@ -43,17 +43,17 @@
 <script>
 (() => {
   const curated = {
-    1:{title:"נוחתים ומתחילים!",summary:"נוחתים בציריך, לוקחים את הרכב ונוסעים למלון. הערב הזה מיועד רק להגיע, להתארגן ולנוח.",points:{"Zurich Airport":["✈️","נוחתים בציריך ומתחילים את הטיול."],"Hilton Garden Inn Zurich Limmattal":["🛏️","מגיעים למלון ולישון. מחר מתחילים באמת!"]},fact:null},
-    2:{title:"פרייבורג: עיר, תעלות ותצפית",summary:"מטיילים בפרייבורג בין הקתדרלה, העיר העתיקה ותעלות המים הקטנות. אם יש כוח עולים לתצפית, ואז ממשיכים ל-Offenburg ובערב אפשר לקפוץ ל-Gengenbach.",points:{"Freiburg Minster":["⛪","קתדרלה ענקית בלב העיר העתיקה."],"Freiburg Old Town":["💦","רחובות יפים ותעלות Bächle קטנות שזורמות ליד המדרכות."],"Schlossbergbahn Freiburg":["🚡","עלייה קצרה לכיוון תצפית מעל העיר."],"Gengenbach Old Town":["🌙","סיבוב ערב בעיירה עתיקה."]},fact:"הצריח של קתדרלת פרייבורג מתנשא לכ־116 מטר."},
-    3:{title:"יום המפלים 🌲💦",summary:"נוסעים ל-Triberg, נכנסים ליער ורואים את המפלים. אפשר לבחור כמה לעלות במסלול, ואחר כך מסתובבים קצת בעיירה.",points:{"Triberg Waterfalls":["💦","מפלים בתוך יער — אפשר לעצור בתצפיות הנמוכות או לטפס גבוה יותר."],"Triberg im Schwarzwald":["🕰️","עיירה שמפורסמת בשעוני קוקייה ובעוגת היער השחור."]},fact:"המפלים הם בעצם רצף של מדרגות מים בתוך יער תלול, ולא נפילה אחת בלבד."},
-    4:{title:"Europa-Park! 🎢",summary:"הילדים ומי שאוהב מתקנים יוצאים ליום מלא ב-Europa-Park. המבוגרים שמעדיפים יום רגוע נוסעים במקביל ל-Baden-Baden.",points:{"Europa-Park":["🎢","יום של מתקנים, רכבות הרים ואזורים שמעוצבים כמו מדינות באירופה."],"Caracalla Therme":["♨️","הקבוצה הרגועה הולכת למרחצאות חמים."],"Lichtentaler Allee":["🌳","הליכה רגועה בפארק של Baden-Baden."]},fact:"ב-Europa-Park יש יותר מ־100 מתקנים ומופעים, והפארק מחולק לאזורים בסגנון מדינות אירופה."},
-    5:{title:"שטרסבורג מהמים ומהרחובות",summary:"מתחילים בשיט בעיר, ואז ממשיכים לקתדרלה, ל-Petite France ולגשרים. הרבה דברים רואים היום בלי לרוץ.",points:{"Batorama":["🛥️","שיט של בערך 70 דקות דרך שטרסבורג."],"Strasbourg Cathedral":["⛪","קתדרלה ענקית מאבן ורודה בלב העיר."],"Petite France":["🏘️","תעלות, גשרים ובתים עתיקים באזור הכי ציורי בעיר."],"Ponts Couverts":["🌉","גשרים ונקודת תצפית ליד Petite France."]},fact:"הצריח של קתדרלת שטרסבורג מגיע לגובה של בערך 142 מטר."},
-    6:{title:"יום אקשן ב-Mehliskopf",summary:"נשארים כל היום באותו מתחם: מתחילים בפארק החבלים, אוכלים צהריים ואז עוברים למגלשת ההרים ולעוד פעילויות לפי גיל ומזג האוויר.",points:{"פארק החבלים":["🧗","שלוש שעות של מסלולי חבלים בגבהים שונים."],"מגלשת ההרים":["🛷","מסלול הרים ארוך ומהיר."],"בנג׳י טרמפולינה":["🤸","קפיצות לגובה למי שמתאים."],"Downhill Carts":["🏎️","קארטים בירידה — רק מגיל 16 ומגובה מתאים."]},fact:"מגלשת ההרים במקום היא באורך כ־1,300 מטר ויכולה להגיע עד כ־40 קמ״ש."},
-    7:{title:"עוברים לאלזס 🏘️",summary:"עוזבים את Offenburg, מגיעים לבית החדש ב-Guémar ואז יוצאים לטיול רגוע בשני כפרים יפים — Riquewihr ו-Ribeauvillé.",points:{"Guémar":["🏠","זה הבית שלנו לכמה לילות — קודם מתארגנים."],"Riquewihr":["🏘️","כפר אלזסי צבעוני לשיטוט רגוע."],"Ribeauvillé":["🏰","עוד כפר קרוב עם רחובות עתיקים ואווירת אלזס."]},fact:null},
-    8:{title:"טירה וקופים! 🏰🐒",summary:"מתחילים בטירת Haut-Koenigsbourg שעל ההר, ואז עוברים ליער של La Montagne des Singes לראות קופים שמסתובבים בשטח פתוח.",points:{"Château du Haut-Koenigsbourg":["🏰","טירה ענקית עם חומות, מגדלים וחדרים משוחזרים."],"La Montagne des Singes":["🐒","הליכה ביער שבו מקוקי ברברי מסתובבים בשטח פתוח."]},fact:"הטירה נמצאת על רכס בגובה של בערך 757 מטר — ולכן יש ממנה נוף ענק על האזור."},
-    9:{title:"קולמר וכפר מהאגדות",summary:"מטיילים ב-Colmar בין התעלות, השוק והעיר העתיקה. אחר הצהריים ממשיכים ל-Eguisheim; מקום נוסף נכנס רק אם נשאר כוח.",points:{"Little Venice":["🚤","תעלות, גשרים ובתים צבעוניים — החלק הכי מצולם של Colmar."],"Marché Couvert":["🥨","שוק מקורה שבו אפשר לעצור ולאכול."],"Eguisheim":["🏘️","כפר קטן עם רחובות שמסתובבים סביב המרכז העתיק."]},fact:"השוק המקורה של Colmar נמצא במבנה היסטורי משנת 1865."},
-    10:{title:"חוזרים לציריך",summary:"נוסעים בחזרה לשווייץ, מורידים את המזוודות ואז יוצאים לסיבוב אחרון בעיר העתיקה וליד האגם. מסיימים מוקדם כדי להתארגן לטיסה.",points:{"Zurich Old Town":["🏙️","סמטאות, כיכרות וכנסיות משני צדי נהר Limmat."],"Bürkliplatz / Lake Zurich":["🌊","מסיימים ליד אגם ציריך והטיילת."],"Hilton Garden Inn":["🛏️","לילה אחרון במלון לפני הטיסה."]},fact:null},
-    11:{title:"הביתה ✈️",summary:"קמים מוקדם, מחזירים את הרכב בשדה התעופה ונכנסים לטיסה הביתה. זהו — הטיול נגמר!",points:{"Zurich Airport / SIXT return":["🚗","מחזירים את הרכב ב־08:00 ואז עוברים לשדה לטיסה."]},fact:"הטיסה מתוכננת לצאת ב־10:55 ולנחות בתל אביב ב־15:50."}
+    1:{title:"נוחתים ומתחילים!",summary:"נוחתים בציריך, לוקחים את הרכב ונוסעים למלון. הערב הזה מיועד רק להגיע, להתארגן ולנוח.",points:{"Zurich Airport":["✈️","משימת פתיחה: מי הראשון שמזהה מהחלון מטוס עם ציור או צבע ממש מוזר? מכאן מתחיל הטיול."],"Hilton Garden Inn Zurich Limmattal":["🛏️","הבסיס הראשון שלנו. תבחרו כבר עכשיו: מי אחראי מחר להזכיר לכולם לא לשכוח כלום בחדר?"]},fact:null},
+    2:{title:"פרייבורג: עיר, תעלות ותצפית",summary:"מטיילים בפרייבורג בין הקתדרלה, העיר העתיקה ותעלות המים הקטנות. אם יש כוח עולים לתצפית, ואז ממשיכים ל-Offenburg ובערב אפשר לקפוץ ל-Gengenbach.",points:{"Freiburg Minster":["⛪","הגעתם לסמל של פרייבורג. הסתכלו טוב על הפסלים והמפלצות שעל הקתדרלה: בצד הדרומי מסתתר אפילו גרגויל שמפנה אליכם את הטוסיק! מי מוצא אותו ראשון?"],"Freiburg Old Town":["💦","שימו לב לתעלות ה-Bächle הקטנות שזורמות ממש לצד הרחוב. אתגר: מי מצליח לעקוב אחרי אחת מהן הכי הרבה זמן בלי לאבד אותה?"],"Schlossbergbahn Freiburg":["🚡","עולים לכיוון התצפית. מלמעלה נסו לזהות שוב את הצריח הענק של הקתדרלה — הוא בולט מעל העיר."],"Gengenbach Old Town":["🌙","עיירה שנראית נהדר בערב. תחרות צילום: מי מוצא את הבית הכי צבעוני או הכי עקום?"]},fact:"בקתדרלת פרייבורג יש 91 גרגוילים ויצורים שמרחיקים מי גשם מהקירות — ואחד מהם מפורסם במיוחד בזכות הישבן החשוף שלו."},
+    3:{title:"יום המפלים 🌲💦",summary:"נוסעים ל-Triberg, נכנסים ליער ורואים את המפלים. אפשר לבחור כמה לעלות במסלול, ואחר כך מסתובבים קצת בעיירה.",points:{"Triberg Waterfalls":["💦","המים נופלים כאן בשבע מדרגות גדולות לאורך 163 מטר. תוך כדי הליכה תפקחו עיניים גם על העצים — יש סיכוי טוב לראות סנאים לאורך השבילים."],"Triberg im Schwarzwald":["🕰️","ברוכים הבאים לארץ שעוני הקוקייה. משימה: מי מוצא בחלון ראווה את שעון הקוקייה הכי מצחיק או מוגזם?"]},fact:"ה-Gutach יורד כאן 163 מטר בשבע מדרגות מים גדולות — ובערב המפלים אפילו מוארים."},
+    4:{title:"Europa-Park! 🎢",summary:"הילדים ומי שאוהב מתקנים יוצאים ליום מלא ב-Europa-Park. המבוגרים שמעדיפים יום רגוע נוסעים במקביל ל-Baden-Baden.",points:{"Europa-Park":["🎢","יותר מ־100 מתקנים ומופעים ו־14 רכבות הרים. משימת היום: כל אחד בוחר מתקן אחד שהוא חייב לנסות — ובסוף מדרגים את המנצח."],"Caracalla Therme":["♨️","מי שבקבוצה הרגועה מקבל משימה הפוכה לגמרי: למצוא את הבריכה הכי נעימה ולבדוק מי מצליח באמת לא למהר לשום מקום."],"Lichtentaler Allee":["🌳","שדרה ירוקה ורגועה ב-Baden-Baden. נסו למצוא בדרך את העץ הכי ענק או הכי מוזר."]},fact:"Europa-Park מחולק ל־21 אזורים מעוצבים; 18 מהם מייצגים מדינות ואזורים באירופה."},
+    5:{title:"שטרסבורג מהמים ומהרחובות",summary:"מתחילים בשיט בעיר, ואז ממשיכים לקתדרלה, ל-Petite France ולגשרים. הרבה דברים רואים היום בלי לרוץ.",points:{"Batorama":["🛥️","עולים לסירה ורואים את העיר מגובה המים. נסו לזהות בדרך בית שנראה כאילו הוא יצא מסיפור — ולצלם אותו מהסירה."],"Strasbourg Cathedral":["⛪","הקתדרלה הוורודה עצומה. בפנים מסתתר שעון אסטרונומי עם דמויות זזות, שליחים ומוות. אם אתם לידו — נסו למצוא את התרנגול שבמנגנון."],"Petite France":["🏘️","תעלות, גשרים ובתי עץ צפופים. אתגר: מצאו את הבית עם הכי הרבה קורות עץ על החזית."],"Ponts Couverts":["🌉","מהגשרים נסו לזהות את המגדלים העתיקים ולבחור מי מהם נראה הכי מתאים לטירה בסרט."]},fact:"בשעון האסטרונומי של הקתדרלה יש דמויות מכניות, ובמופע היומי אפילו תרנגול גדול משמיע קריאה."},
+    6:{title:"יום אקשן ב-Mehliskopf",summary:"נשארים כל היום באותו מתחם: מתחילים בפארק החבלים, אוכלים צהריים ואז עוברים למגלשת ההרים ולעוד פעילויות לפי גיל ומזג האוויר.",points:{"פארק החבלים":["🧗","מטפסים בין עצים בגובה שמגיע עד 14 מטר. בחרו לעצמכם 'שלב בוס' — המכשול שנראה הכי מפחיד — ותראו מי כובש אותו."],"מגלשת ההרים":["🛷","1,300 מטר, 13 פניות תלולות ועד 40 קמ״ש. אחרי הירידה כל אחד נותן ציון לצרחה של עצמו מ־1 עד 10."],"בנג׳י טרמפולינה":["🤸","כאן המטרה היא לעלות גבוה. מי מצליח להגיע לרגע שבו הוא מרגיש כמעט בלי משקל?"],"Downhill Carts":["🏎️","ירידה של כ־500 מטר בקארט שטח. הפעילות הזו תלויה בגיל, בתנאים ובפתיחה במקום."]},fact:"במגלשת ההרים עוברים גם חמש מנהרות ושמונה חציות מים — והקרונית נשארת מחוברת למסילה כל הדרך."},
+    7:{title:"עוברים לאלזס 🏘️",summary:"עוזבים את Offenburg, מגיעים לבית החדש ב-Guémar ואז יוצאים לטיול רגוע בשני כפרים יפים — Riquewihr ו-Ribeauvillé.",points:{"Guémar":["🏠","בית חדש לכמה לילות. אתגר ההתמקמות: מי מוצא ראשון את המקום הכי טוב בבית לשבת בו בסוף יום טיול?"],"Riquewihr":["🏘️","כפר אלזסי צבעוני עם בתי עץ צפופים. תחרות: מצאו את הבית שנראה לכם הכי פחות אמיתי — כאילו בנו אותו מסוכריות."],"Ribeauvillé":["🏰","הרימו את הראש לכיוון ההרים: מעל האזור יש שרידי טירות. מי מצליח לזהות ראשון משהו שנראה כמו מגדל או חומה?"]},fact:null},
+    8:{title:"טירה וקופים! 🏰🐒",summary:"מתחילים בטירת Haut-Koenigsbourg שעל ההר, ואז עוברים ליער של La Montagne des Singes לראות קופים שמסתובבים בשטח פתוח.",points:{"Château du Haut-Koenigsbourg":["🏰","זה הזמן לשחק 'מגיני הטירה': חפשו חומה, מגדל, חרך ירי וגשר — ארבעה דברים שהיו עוזרים לכם להגן על המקום."],"La Montagne des Singes":["🐒","כאן אתם האורחים והמקוקים הברבריים הם המקומיים. נסו לזהות מי מנקה למי את הפרווה ומי פשוט יושב ומסתכל על כולם."]},fact:"הטירה יושבת בגובה של בערך 757 מטר — מיקום מצוין למי שרצה לראות אויבים מתקרבים מרחוק."},
+    9:{title:"קולמר וכפר מהאגדות",summary:"מטיילים ב-Colmar בין התעלות, השוק והעיר העתיקה. אחר הצהריים ממשיכים ל-Eguisheim; מקום נוסף נכנס רק אם נשאר כוח.",points:{"Little Venice":["🚤","זה החלק של קולמר עם התעלות והבתים הצבעוניים. משימת צילום: מצאו השתקפות מושלמת של בית בתוך המים."],"Marché Couvert":["🥨","השוק המקורה פועל במבנה משנת 1865. כל אחד בוחר משהו אחד שהיה מוכן לטעום — גם אם הוא נראה קצת מוזר."],"Eguisheim":["🏘️","הכפר בנוי במעגלים סביב הטירה שבמרכז. נסו ללכת ברחוב המעגלי ולגלות: האם אתם חוזרים כמעט לאותה נקודה בלי להסתכל במפה?"]},fact:"Eguisheim בנויה כמו טבעות סביב המרכז — כמעט כמו מבוך עגול קטן של רחובות צבעוניים."},
+    10:{title:"חוזרים לציריך",summary:"נוסעים בחזרה לשווייץ, מורידים את המזוודות ואז יוצאים לסיבוב אחרון בעיר העתיקה וליד האגם. מסיימים מוקדם כדי להתארגן לטיסה.",points:{"Zurich Old Town":["🏙️","בעיר העתיקה חפשו את שני המגדלים התאומים של Grossmünster. אם נכנסים לאזור הכנסייה, יש שם גם דמויות ויצורים מוזרים באבן."],"Bürkliplatz / Lake Zurich":["🌊","עומדים ליד האגם ומחפשים את הנוף הכי רחוק שאפשר לראות. בונוס: מי מוצא ראשון ברבור או סירה?"],"Hilton Garden Inn":["🛏️","הלילה האחרון. משימת סיום: כל אחד בוחר את הרגע הכי מצחיק, הכי מפחיד והכי טעים של הטיול."]},fact:"באחד ממגדלי Grossmünster אפשר לעלות 187 מדרגות לתצפית על העיר והאגם."},
+    11:{title:"הביתה ✈️",summary:"קמים מוקדם, מחזירים את הרכב בשדה התעופה ונכנסים לטיסה הביתה. זהו — הטיול נגמר!",points:{"Zurich Airport / SIXT return":["🚗","מחזירים את הרכב ב־08:00. משימת הדרך האחרונה: לפני שיוצאים מהרכב, כל אחד בודק כיסים, מושב ורצפה — שלא נשאיר מזכרת לשווייץ."]},fact:"הטיסה מתוכננת לצאת ב־10:55 ולנחות בתל אביב ב־15:50."}
   };
 
   // Fingerprints of the adult itinerary at the time these child-friendly summaries were written.
@@ -86,13 +86,35 @@
     for(let i=0;i<value.length;i++){h^=value.charCodeAt(i);h=Math.imul(h,16777619);}
     return (h>>>0).toString(36);
   }
-  function renderPoint(name, item){
-    const icon=item?.[0]||"📍";
-    const desc=item?.[1]||"עוצרים כאן כחלק מהתוכנית המעודכנת.";
+  function renderPoint(name, item, liveDescription){
+    const icon=item?.[0]||"🔎";
+    const desc=item?.[1]||liveDescription||"זה מקום חדש שנוסף למסלול. פתחו את הגרסה המלאה כדי לראות מה מחכה לנו כאן.";
     return `<li class="point"><span class="point-icon">${icon}</span><div><b>${esc(name)}</b><span>${esc(desc)}</span></div></li>`;
   }
 
-  fetch("../index.html?kids-source=20260923", {cache:"no-store"})
+  function makeImageReliable(img){
+    let attempt=0;
+    let timer;
+    const retry=()=>{
+      if(attempt>=2) return;
+      attempt+=1;
+      try{
+        const url=new URL(img.currentSrc||img.src,location.href);
+        if(url.hostname==="commons.wikimedia.org"){
+          if(attempt===2) url.pathname=url.pathname.replace("/wiki/Special:FilePath/","/wiki/Special:Redirect/file/");
+          url.searchParams.set("width",attempt===1?"1280":"960");
+          url.searchParams.set("retry",String(attempt));
+          img.src=url.toString();
+        }
+      }catch(_){}
+    };
+    const arm=()=>{clearTimeout(timer);timer=setTimeout(()=>{if(!img.complete||!img.naturalWidth) retry();},9000);};
+    img.addEventListener("load",()=>clearTimeout(timer),{once:false});
+    img.addEventListener("error",()=>{clearTimeout(timer);retry();arm();});
+    arm();
+  }
+
+  fetch("../index.html?kids-source=20260923-2", {cache:"no-store"})
     .then(r=>{if(!r.ok) throw new Error("source"); return r.text();})
     .then(source=>{
       const doc=new DOMParser().parseFromString(source,"text/html");
@@ -106,7 +128,13 @@
         if(!src) continue;
         const srcTitle=textOf(src.querySelector(".day-body h3"));
         const srcDesc=textOf(src.querySelector(".day-description"));
-        const srcPoints=[...src.querySelectorAll(".day-points li > a")].map(textOf);
+        const pointRows=[...src.querySelectorAll(".day-points li")];
+        const srcPoints=pointRows.map((row)=>textOf(row.querySelector(":scope > a"))).filter(Boolean);
+        const livePointDescriptions=Object.fromEntries(pointRows.map((row)=>{
+          const name=textOf(row.querySelector(":scope > a"));
+          const detail=textOf(row.querySelector(":scope > span"));
+          return [name,detail];
+        }).filter(([name])=>name));
         const img=src.querySelector(".day-photo img")?.getAttribute("src")||"";
         const date=dayDates[n-1];
         const d=new Date(date+"T12:00:00Z");
@@ -131,11 +159,11 @@
         const summary=changed ? shortFallback(srcDesc) : data.summary;
         const title=changed ? srcTitle : data.title;
         const shownPoints=srcPoints.slice(0,3);
-        const pointHtml=shownPoints.map(name=>renderPoint(name,changed?null:data.points[name])).join("");
+        const pointHtml=shownPoints.map(name=>renderPoint(name,data.points[name],livePointDescriptions[name])).join("");
         const fact=(!changed && data.fact)?`<div class="fact"><b>🤯 ידעת?</b>${esc(data.fact)}</div>`:"";
         const update=changed?`<div class="updated"><b>🔔 התוכנית של היום עודכנה</b>הסיכום הישן הוסר אוטומטית. מה שמופיע כאן נלקח עכשיו מהמסלול הראשי.</div>`:"";
         card.innerHTML=`
-          <div class="photo">${img?`<img src="${esc(img)}" alt="" loading="lazy">`:""}<div class="day-no"><span>יום</span><b>${n}</b></div></div>
+          <div class="photo">${img?`<img src="${esc(img)}" alt="" loading="${isToday?"eager":"lazy"}" decoding="async"${isToday?' fetchpriority="high"':""}>`:""}<div class="day-no"><span>יום</span><b>${n}</b></div></div>
           <div class="content">
             <p class="date">${dayName} · ${dd}${isToday?" · היום ⭐":""}</p>
             <h2>${esc(title)}</h2>
@@ -145,6 +173,7 @@
             <div class="footer-row"><a class="full-link" href="../#day-${n}">רוצים את כל הפרטים? לגרסה המלאה ←</a><span class="stamp">מסונכרן מהמסלול הראשי</span></div>
           </div>`;
         root.append(card);
+        card.querySelectorAll("img").forEach(makeImageReliable);
       }
       if(currentDay>0){
         const pill=document.getElementById("today-pill");
