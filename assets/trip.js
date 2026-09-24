@@ -311,7 +311,9 @@ document.documentElement.classList.add("js");
       if (explicitDifferentHash) return;
 
       if ("scrollRestoration" in history) history.scrollRestoration = "manual";
-      history.replaceState(null, "", `#day-${todayDay}`);
+      // Do not write the automatic day jump into the URL. Writing #day-N here made
+      // yesterday's automatically generated hash look like an intentional deep link
+      // when the page was reopened on the following day.
       target.scrollIntoView({ block: "start", behavior: "auto" });
       setActiveDay(todayDay);
 
