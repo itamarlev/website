@@ -307,8 +307,17 @@ document.documentElement.classList.add("js");
       // Respect an explicit link to another section/day, but make a normal trip-page
       // entry always open at today's itinerary instead of Safari's restored scroll position.
       const hash = window.location.hash;
-      const explicitDifferentHash = hash && hash !== `#day-${todayDay}`;
-      if (explicitDifferentHash) return;
+      const isDayHash = /^#day-\d+$/.test(hash);
+      const explicitNonDayHash = hash && !isDayHash;
+      if (explicitNonDayHash) return;
+
+      // A day hash can survive in Safari/browser history from a previous visit.
+      // On a normal page reopen it must not pin the adult itinerary to yesterday.
+      // Always prefer today's day for day-to-day entry; non-day section deep links
+      // (maps, preparation, etc.) are still respected.
+      if (isDayHash && hash !== `#day-${todayDay}`) {
+        history.replaceState(null, "", window.location.pathname + window.location.search);
+      }
 
       if ("scrollRestoration" in history) history.scrollRestoration = "manual";
       // Do not write the automatic day jump into the URL. Writing #day-N here made
