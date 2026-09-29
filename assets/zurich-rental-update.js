@@ -25,9 +25,9 @@
   ];
 
   replaceText(document.getElementById("bookings"), replacements);
-  replaceText(document.getElementById("day-1"), [["20:30", "20:00"]]);
-  replaceText(document.getElementById("day-11"), [["12:00", "08:00"]]);
-  replaceText(document.body, [["האיסוף מתוכנן ל-20:30", "האיסוף מתוכנן ל-20:00"]]);
+  replaceText(document.getElementById("day-1"), [["20:30", "21:18"], ["20:00", "21:18"]]);
+  replaceText(document.getElementById("day-11"), [["החזרת רכב וטיסה", "מהמלון ישר לשדה"]]);
+  replaceText(document.body, [["האיסוף מתוכנן ל-20:30", "האיסוף בפועל היה ב-21:18"], ["האיסוף מתוכנן ל-20:00", "האיסוף בפועל היה ב-21:18"]]);
 
   const style = document.createElement("style");
   style.textContent = `
@@ -68,16 +68,16 @@
         <span class="rental-latest__status">מאושר ב-SIXT</span>
       </div>
       <div class="rental-latest__grid">
-        <div class="rental-latest__item"><small>איסוף</small><strong>22.09 · 20:00 · Zurich Airport</strong><p>Car Rental Center, קומה 1</p></div>
-        <div class="rental-latest__item"><small>החזרה</small><strong>02.10 · 08:00 · Zurich Airport</strong><p>Parking 3, קומה 2</p></div>
+        <div class="rental-latest__item"><small>איסוף</small><strong>22.09 · 21:18 · Zurich Airport</strong><p>שעת האיסוף בפועל לפי Rental Agreement</p></div>
+        <div class="rental-latest__item"><small>החזרה</small><strong>01.10 · 21:18 · Zurich Airport</strong><p>Parking 3, קומה 2 · עודכן ב-Rental Agreement</p></div>
         <div class="rental-latest__item"><small>קטגוריה</small><strong>Premium Elite SUV</strong><p>BMW X3, Mercedes-Benz GLC או רכב דומה · אוטומטי</p></div>
         <div class="rental-latest__item"><small>כיסוי</small><strong>All Inclusive Protection · ללא השתתפות עצמית</strong><p>כולל סיוע 24/7, ביטוח צד ג', קילומטרים ללא הגבלה ו-Apple CarPlay / Android Auto</p></div>
-        <div class="rental-latest__item"><small>מחיר כולל</small><strong>CHF 1’310.99</strong><p>ייתכן שינוי רק אם יתווספו תוספות באיסוף</p></div>
-        <div class="rental-latest__item"><small>פיקדון</small><strong>CHF 500</strong><p>חסימה זמנית בכרטיס, מוחזרת לאחר החזרת הרכב</p></div>
+        <div class="rental-latest__item"><small>מחיר כולל</small><strong>CHF 2’001.71</strong><p>לפי Rental Agreement המעודכן מ־24.09</p></div>
+        <div class="rental-latest__item"><small>פיקדון</small><strong>CHF 512.39</strong><p>חסימה זמנית בכרטיס, משתחררת לאחר החזרת הרכב</p></div>
       </div>
       <div class="rental-latest__warn">
-        <strong>⚠️ דבר אחד שעדיין צריך לוודא לפני האיסוף</strong>
-        לפי מייל ההכנה האחרון של SIXT, <b>נסיעה חוצת גבולות כבר כלולה</b> בהזמנה והכיסוי תקף למדינות המאושרות. לעומת זאת, <b>נהג נוסף</b> עדיין מוצג כאפשרות להוספה, ולכן צריך לוודא שכל מי שינהג רשום בהזמנה ומגיע עם רישיון פיזי. בנוסף, שעת האיסוף היא 20:00 — בדיוק שעת הנחיתה המתוכננת של LY343 — לכן חשוב לוודא שמספר הטיסה שמור בהזמנת SIXT.
+        <strong>העדכון החשוב להמשך הטיול</strong>
+        לפי Rental Agreement המעודכן מ־24.09, <b>החזרת הרכב היא ב־1 באוקטובר בשעה 21:18</b> ב-Zurich Airport, Parking 3, קומה 2. לכן אין יותר החזרת רכב בבוקר הטיסה.
       </div>
       <p class="rental-latest__foot">מדיניות דלק: להחזיר באותה רמת דלק שבה התקבל הרכב, אלא אם מוסיפים תדלוק מראש. ההזמנה הקודמת בוטלה ללא חיוב.</p>`;
 
@@ -92,12 +92,13 @@
     const prep = document.createElement("article");
     prep.className = "prep-card prep-card--priority rental-prep-card";
     prep.innerHTML = `
-      <span class="prep-status prep-status--now">לטיפול עכשיו</span>
-      <h3>עדכון SIXT לפני הנסיעה</h3>
-      <p>מייל ההכנה האחרון של SIXT מבהיר שהנסיעה חוצת הגבולות כבר כלולה. נשאר לוודא רק את הנהג הנוסף:</p>
+      <span class="prep-status prep-status--now">מעודכן ל־1/10</span>
+      <h3>החזרת SIXT בערב האחרון</h3>
+      <p>ה-Rental Agreement האחרון משנה את לוח הזמנים:</p>
       <ul>
-        <li><b>Cross-border driving</b> — כלול בהזמנה לפי מייל SIXT האחרון.</li>
-        <li><b>Additional driver</b> — כל מי שינהג צריך להיות רשום ולהגיע לאיסוף עם רישיון פיזי ותעודה מזהה.</li>\n        <li><b>Flight number LY343</b> — לוודא שמספר הטיסה שמור בהזמנה; לפי SIXT זה מאפשר להם לעקוב אחרי העיכוב ולהחזיק את ההזמנה גם אם מגיעים אחרי 20:00.</li>
+        <li><b>Return</b> — 1/10 בשעה 21:18.</li>
+        <li><b>Location</b> — Zurich Airport, Parking 3, קומה 2.</li>
+        <li><b>Fuel</b> — להחזיר באותה רמת דלק שבה התקבל הרכב, אלא אם נרכש תדלוק מראש.</li>
       </ul>`;
     prepGrid.prepend(prep);
   }
