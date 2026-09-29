@@ -224,7 +224,11 @@
     if (item.querySelector(".place-title-row")) return;
     const googleLink = item.querySelector(":scope > a[href*='google.com/maps']");
     if (!googleLink) return;
-    const destination = googleLink.textContent.trim();
+    let destination = googleLink.textContent.trim();
+    try {
+      const url = new URL(googleLink.href);
+      destination = url.searchParams.get("query") || url.searchParams.get("destination") || destination;
+    } catch (_) {}
     if (!destination) return;
 
     const titleRow = document.createElement("div");
