@@ -9,10 +9,10 @@
     { day: 5, date: "2026-09-26", place: "Strasbourg", lat: 48.5734, lon: 7.7521, high: 25, low: 7, code: 3, rain: 0, pack: "שכבה קלה לבוקר; כובע ובקבוק מים לשיטוט בצהריים." },
     { day: 6, date: "2026-09-27", place: "Mehliskopf", lat: 48.6486, lon: 8.2368, high: 20, low: 8, code: 61, rain: 7, pack: "פליז ומעיל גשם דק, מכנס נוח ונעליים סגורות לפארק החבלים." },
     { day: 7, date: "2026-09-28", place: "Guémar / כפרי היין", lat: 48.1888, lon: 7.3964, high: 29, low: 14, code: 3, rain: 6, pack: "יום חם: בגדים קלים, כובע וקרם הגנה; שכבה דקה לערב." },
-    { day: 8, date: "2026-09-29", place: "Kintzheim", lat: 48.254, lon: 7.373, high: 27, low: 15, code: 2, rain: 6, pack: "בגדים קלים ונעלי הליכה; שכבה דקה לטירה ולרוח בגובה." },
-    { day: 9, date: "2026-09-30", place: "Colmar", lat: 48.0794, lon: 7.3585, high: 27, low: 16, code: 1, rain: 4, pack: "קיצי בצהריים: חולצה קצרה, כובע ונעליים נוחות לעיר העתיקה." },
-    { day: 10, date: "2026-10-01", place: "ציריך", lat: 47.3769, lon: 8.5417, high: 27, low: 13, code: 3, rain: 8, pack: "בגדים קלים לצהריים ושכבה ארוכה לטיול ערב ליד האגם." },
-    { day: 11, date: "2026-10-02", place: "Zurich Airport", lat: 47.3769, lon: 8.5417, high: 24, low: 12, code: 0, rain: 19, pack: "לבוש נוח לטיסה ושכבה קלה ליציאה המוקדמת מהמלון." },
+    { day: 8, date: "2026-09-29", place: "Kintzheim", lat: 48.254, lon: 7.373, high: 26, low: 16, code: 3, rain: 5, pack: "חם ונעים יחסית: בגדים קלים ונעלי הליכה. קחו שכבה דקה לטירה ולשעות הבוקר." },
+    { day: 9, date: "2026-09-30", place: "Colmar", lat: 48.0794, lon: 7.3585, high: 28, low: 13, code: 3, rain: 20, pack: "יום חם: חולצה קצרה, כובע ומים. שכבה דקה לבוקר; מטרייה קטנה בתיק ליתר ביטחון." },
+    { day: 10, date: "2026-10-01", place: "ציריך", lat: 47.3769, lon: 8.5417, high: 24, low: 15, code: 80, rain: 65, pack: "יש סיכוי ממשי לממטרים: מעיל גשם קל או מטרייה, נעליים סגורות ושכבה ארוכה לערב." },
+    { day: 11, date: "2026-10-02", place: "Zurich Airport", lat: 47.3769, lon: 8.5417, high: 21, low: 15, code: 3, rain: 60, pack: "לבוש נוח לטיסה, שכבה קלה ומטרייה נגישה עד הכניסה לטרמינל." },
   ];
 
   const weatherLabel = (code) => {
@@ -71,7 +71,12 @@
     endpoint.searchParams.set("longitude", days.map((day) => day.lon).join(","));
     endpoint.searchParams.set("daily", "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max");
     endpoint.searchParams.set("timezone", "Europe/Berlin");
-    endpoint.searchParams.set("start_date", days[0].date);
+    const berlinToday = new Intl.DateTimeFormat("en-CA", { timeZone: "Europe/Berlin", year: "numeric", month: "2-digit", day: "2-digit" })
+      .formatToParts(new Date())
+      .filter((part) => part.type !== "literal")
+      .reduce((acc, part) => ({ ...acc, [part.type]: part.value }), {});
+    const todayDate = `${berlinToday.year}-${berlinToday.month}-${berlinToday.day}`;
+    endpoint.searchParams.set("start_date", todayDate > days[0].date ? todayDate : days[0].date);
     endpoint.searchParams.set("end_date", days.at(-1).date);
 
     const controller = new AbortController();
@@ -99,7 +104,7 @@
       if (status) status.textContent = "התחזית עודכנה אוטומטית כעת. מומלץ לבדוק שוב ערב לפני כל יום.";
     } catch (_) {
       const status = document.querySelector("[data-weather-status]");
-      if (status) status.textContent = "מוצגת התחזית שנבדקה ב־21.09.2026. מומלץ לבדוק שוב ערב לפני כל יום.";
+      if (status) status.textContent = "מוצגת תחזית הגיבוי שנבדקה ב־29.09.2026. מומלץ לבדוק שוב ערב לפני כל יום.";
     } finally {
       window.clearTimeout(timeout);
     }
