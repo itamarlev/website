@@ -105,7 +105,7 @@
   const loadMapOptions = () => {
     if (document.querySelector('script[data-zurich-map-options]')) return;
     const mapOptionsScript = document.createElement("script");
-    mapOptionsScript.src = "../../assets/zurich-map-options.js?v=20260821-3";
+    mapOptionsScript.src = "../../assets/zurich-map-options.js?v=20260929-1";
     mapOptionsScript.dataset.zurichMapOptions = "true";
     document.head.append(mapOptionsScript);
   };
