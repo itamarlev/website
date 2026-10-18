@@ -1,5 +1,5 @@
 {
   "version": 1,
-  "include": ["/api/trip-memories/*"],
+  "include": ["/api/trip-memories/*", "/api/trips/*", "/trips/w/*"],
   "exclude": []
 }
