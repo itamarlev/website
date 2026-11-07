@@ -14,6 +14,8 @@ Private personal website for pages, trip journals, and section catalogues. Most 
   /health/
     /fmd-5-day-guide/
       index.html        # Vegan 5-day FMD guide (Hebrew)
+  /radio/
+    index.html          # Israeli radio stations directory, ad-free (Hebrew)
   /interviews/
     index.html
     /pagaya-ai-lead/
