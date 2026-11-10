@@ -24,6 +24,8 @@ Private personal website for pages, trip journals, and section catalogues. Most 
         index.html        # Management presentation (English)
         /he/
           index.html      # Management presentation (Hebrew)
+  /indiandance/
+    index.html          # Staging copy of Ayala's Kathak site (source: itamarlev/indiandance, noindex)
   /assets/
     styles.css
 ```
