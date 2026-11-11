@@ -72,6 +72,14 @@ npx wrangler d1 execute TRIP_MEMORIES_DB --remote --file ./migrations/0001_trip_
 
 The root `_routes.json` limits Function invocations to `/api/trip-memories/*`. Keep that API path inside the same Cloudflare Access application as the trip page so only invited family members can read or change memories.
 
+### Generated trip pages (Wanderkind)
+
+The Wanderkind trip planner worker posts freshly generated itineraries to `POST /api/trips`, which stores them in the `generated_trips` table (D1, same `TRIP_MEMORIES_DB` binding) and returns a shareable URL under `/trips/w/<id>`. `GET /api/trips/:id` returns the stored JSON; `GET /trips/w/:id` renders it as a static-style HTML page.
+
+Apply `migrations/0002_generated_trips.sql` the same way as migration 0001.
+
+Set the Pages project secret `TRIPS_INGEST_KEY` (Settings → Environment variables, Production) to a long random value, and configure the same value as `WEBSITE_TRIPS_API_KEY` on the `wanderkind-trip-planner` Worker so its requests authenticate. `/api/trips/*` and `/trips/w/*` are intentionally public for `GET`; only `POST /api/trips` requires the bearer token.
+
 ## Authentication
 
 Do not implement authentication in the static HTML, CSS, or JavaScript. This repository must not include hardcoded passwords, fake login pages, client-side password checks, shared secrets, or private access tokens.
