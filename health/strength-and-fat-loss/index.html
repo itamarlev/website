@@ -10,8 +10,8 @@
 <section class="hero"><div><span class="pill">תוכנית אישית · טבעונית · 2026</span><h1>פחות שומן.<br><em>יותר כוח.</em></h1><p>תוכנית מעשית לשיפור הרכב הגוף: ירידה הדרגתית בשומן, שמירה על שריר והתחזקות. צום גמיש סביב אימוני בוקר, חלבון טבעוני וכלים להפחתת נשנושים מול הטלוויזיה.</p></div><div class="heroVisual"><span>המטרה שלך</span><strong>STRONGER<br>& LEANER</strong><span>עקביות לפני שלמות</span></div></section>
 <nav class="nav" aria-label="ניווט"><a href="#today">היום שלי</a><a href="#schedule">צום ואימונים</a><a href="#food">תזונה</a><a href="#evening">ערב</a><a href="#track">מעקב</a><a href="#supplements">תוספים</a></nav>
 <section class="section" id="today"><div class="sectionHead"><h2>תמונת מצב</h2><span class="badge">הנתונים נשמרים במכשיר שלך</span></div><div class="grid">
-<div class="card"><h3>משקל התחלתי</h3><div class="metric">84 <small>ק״ג</small></div><p>לעקוב אחר מגמה, לא אחרי יום בודד.</p></div>
-<div class="card"><h3>חלבון יומי</h3><div class="metric">140–160 <small>גרם</small></div><p>כ־1.7–1.9 גרם לק״ג. יעד התחלתי, לא חובה מוחלטת.</p></div>
+<div class="card"><h3>משקל התחלתי</h3><div class="metric">88 <small>ק״ג</small></div><p>לעקוב אחר מגמה, לא אחרי יום בודד.</p></div>
+<div class="card"><h3>חלבון יומי</h3><div class="metric">140–175 <small>גרם</small></div><p>כ־1.6–2.0 גרם לק״ג. יעד מעשי: 150 גרם ביום.</p></div>
 <div class="card"><h3>גירעון קלורי</h3><div class="metric">200–300</div><p>קק״ל מתחת לתחזוקה, כהתחלה אם נדרשת ירידה בשומן.</p></div></div></section>
 <section class="section" id="schedule"><div class="sectionHead"><h2>צום שמתאים לאימון</h2></div><div class="card"><div class="inputs">
 <label class="field">יום מסוג<select id="dayType"><option value="strength">אימון כוח</option><option value="cardio">אירובי קל</option><option value="rest">מנוחה</option></select></label>
@@ -21,7 +21,14 @@
 <section class="section" id="food"><div class="sectionHead"><h2>ארוחות טבעוניות שמשרתות את המטרה</h2></div><div class="grid">
 <div class="card"><span class="badge">אחרי אימון</span><h3>שייק חלבון + פרי</h3><div class="metric">~30g</div><p>שייק סויה או תערובת חלבון מלאה. הקריאטין יכול להילקח גם כאן.</p></div>
 <div class="card"><span class="badge">צהריים</span><h3>טופו / טמפה + קטניות</h3><div class="metric">~40–45g</div><p>עם דגן מלא וירקות. הכמויות תלויות בגודל המנה.</p></div>
-<div class="card"><span class="badge">ערב</span><h3>סייטן / טופו + תפוח אדמה</h3><div class="metric">~35–45g</div><p>ארוחה משביעה עם פחמימה, ירקות ומעט שומן.</p></div></div><div class="card" style="margin-top:14px"><div class="row spaced"><div><h3>בדיקת חלבון יומית</h3><p class="muted">הזן את סך החלבון שאכלת היום כדי לראות את ההתקדמות.</p></div><span id="proteinLabel" class="badge">0 / 140 גרם</span></div><div class="inputs"><label class="field">גרם חלבון היום<input id="protein" type="number" min="0" max="400" step="1" placeholder="למשל 125"></label><label class="field">משקל נוכחי (ק״ג)<input id="bodyWeight" type="number" min="35" max="250" step=".1" value="84"></label><label class="field">יעד חלבון (גרם)<input id="proteinTarget" type="number" min="40" max="300" step="1" value="140"></label></div><div style="height:12px;background:#2c3f4a;border-radius:99px;overflow:hidden;margin-top:15px"><div id="proteinFill" style="height:100%;width:0%;background:var(--lime);transition:width .2s"></div></div></div></section>
+<div class="card"><span class="badge">ערב</span><h3>סייטן / טופו + תפוח אדמה</h3><div class="metric">~35–45g</div><p>ארוחה משביעה עם פחמימה, ירקות ומעט שומן.</p></div></div><div class="card" style="margin-top:14px"><div class="row spaced"><div><h3>בדיקת חלבון יומית</h3><p class="muted">רשום מה אכלת. האפליקציה תעריך עבורך את החלבון ותסכם את היום.</p></div><span id="proteinLabel" class="badge">0 / 140 גרם</span></div><div class="inputs"><label class="field">חלבון מחושב היום<input id="protein" type="number" readonly value="0" aria-label="סך חלבון מחושב להיום"></label><label class="field">משקל נוכחי (ק״ג)<input id="bodyWeight" type="number" min="35" max="250" step=".1" value="88"></label><label class="field">יעד חלבון (גרם)<input id="proteinTarget" type="number" min="40" max="300" step="1" value="150"></label></div><div style="height:12px;background:#2c3f4a;border-radius:99px;overflow:hidden;margin-top:15px"><div id="proteinFill" style="height:100%;width:0%;background:var(--lime);transition:width .2s"></div></div><div class="card" style="margin-top:14px"><h3>מה אכלתי היום?</h3><p class="muted">כתוב כל מאכל בשורה נפרדת. אפשר לציין גרמים, כוסות, כפות או יחידות. לדוגמה: 200 גרם טופו, כוס עדשים מבושלות, 2 פרוסות לחם, יוגורט סויה. החישוב מקורב וניתן לתיקון.</p>
+<label class="field" for="foodText">רשימת מאכלים וכמויות</label>
+<textarea id="foodText" rows="5" style="width:100%;border:1px solid #506575;border-radius:10px;background:#0e1b28;color:#fff;padding:12px;resize:vertical" placeholder="200 גרם טופו&#10;כוס עדשים מבושלות&#10;יוגורט סויה 150 גרם"></textarea>
+<div class="row" style="margin-top:12px"><button class="btn" id="estimateFood">חשב חלבון</button><button class="btn secondary" id="saveFood" disabled>הוסף ליומן</button><label class="field">תאריך היומן<input id="foodDate" type="date"></label></div>
+<p class="muted">הערכה לפי ערכים ממוצעים ל־100 גרם. ערכי מותגים, אבקות חלבון ומנות מבושלות משתנים. למאכל לא מזוהה יש להוסיף חלבון ידנית.</p>
+<div id="foodResults" aria-live="polite"></div><p id="foodMessage" class="status" role="status"></p>
+<h3>יומן מזון <span id="foodTotal" class="badge"></span></h3><div id="foodDiary"></div>
+</div></section>
 <section class="section" id="evening"><div class="sectionHead"><h2>תוכנית נגד נשנושים בלילה</h2></div><div class="grid two"><div class="card"><h3>טקס ערב במקום אכילה אוטומטית</h3><label class="check"><input type="checkbox" data-check="dinner"><span>אכלתי ארוחת ערב עם חלבון ופחמימה משביעה</span></label><label class="check"><input type="checkbox" data-check="dessert"><span>בחרתי מראש קינוח בגודל מוגדר, בתוך חלון האכילה</span></label><label class="check"><input type="checkbox" data-check="portion"><span>לא לקחתי שקית בייגלה או מתוקים לספה</span></label><label class="check"><input type="checkbox" data-check="pause"><span>כשעלה חשק לנשנש, בדקתי אם זה רעב או הרגל</span></label><p id="checkStatus" class="status" role="status"></p></div><div class="card"><h3>מה עושים כשהחשק מגיע?</h3><ol class="tips"><li>שאל את עצמך: האם הייתי אוכל עכשיו גם ארוחה רגילה?</li><li>אם אתה רעב באמת, עדיף לאכול ארוחה קטנה ומזינה מאשר להילחם ברעב.</li><li>אם זה הרגל מול המסך, נסה שתייה חמה או מעבר לפעילות אחרת ל־10 דקות.</li><li>רוצה מתוק? תכנן יוגורט סויה עם פרי או מנה קטנה של שוקולד לפני סיום חלון האכילה.</li></ol><p class="notice">אם החשק חוזר מדי ערב, שקול לסיים לאכול מאוחר יותר או לקצר את הצום — לא רק להגביר כוח רצון.</p></div></div></section>
 <section class="section" id="track"><div class="sectionHead"><h2>מעקב התקדמות</h2><span class="muted">היקף מותניים + כוח חשובים לא פחות מהמשקל</span></div><div class="card"><div class="inputs">
 <label class="field">תאריך<input id="logDate" type="date"></label><label class="field">משקל (ק״ג)<input id="logWeight" type="number" min="35" max="250" step=".1" placeholder="84.0"></label><label class="field">היקף מותניים (ס״מ)<input id="logWaist" type="number" min="40" max="200" step=".1" placeholder="למשל 94"></label>
@@ -37,14 +44,14 @@
 (function(){
 'use strict';
 var key='itamar-health-recomp-v1', today=new Date(),dateKey=today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0');
-var defaults={settings:{dayType:'strength',lastMeal:'19:30',workoutTime:'07:00',protein:'',bodyWeight:'84',proteinTarget:'140'},checks:{},logs:[]};
+var defaults={settings:{dayType:'strength',lastMeal:'19:30',workoutTime:'07:00',protein:'',bodyWeight:'88',proteinTarget:'150'},checks:{},logs:[],foods:[]};
 var state;try{state=Object.assign({},defaults,JSON.parse(localStorage.getItem(key)||'{}'));}catch(e){state=JSON.parse(JSON.stringify(defaults));}
-state.settings=Object.assign({},defaults.settings,state.settings||{});state.checks=state.checks||{};state.logs=Array.isArray(state.logs)?state.logs:[];
+state.settings=Object.assign({},defaults.settings,state.settings||{});state.checks=state.checks||{};state.logs=Array.isArray(state.logs)?state.logs:[];state.foods=Array.isArray(state.foods)?state.foods:[];if(state.settings.bodyWeight==='84'&&state.logs.length===0)state.settings.bodyWeight='88';if(state.settings.proteinTarget==='140')state.settings.proteinTarget='150';
 function id(x){return document.getElementById(x)}function save(){try{localStorage.setItem(key,JSON.stringify(state));}catch(e){id('logMessage').textContent='לא ניתן לשמור בדפדפן הזה';}}
 function hh(mm){var t=mm.split(':').map(Number);return t[0]*60+t[1]}function fmt(x){x=(x+2880)%1440;return String(Math.floor(x/60)).padStart(2,'0')+':'+String(x%60).padStart(2,'0')}
 function schedule(){var type=id('dayType').value, ranges={strength:[12,14],cardio:[14,16],rest:[16,16]},r=ranges[type],start=hh(id('lastMeal').value||'19:30');id('fastHours').textContent=r[0]===r[1]?r[0]+' שעות':r[0]+'–'+r[1]+' שעות';id('firstMeal').textContent=fmt(start+r[0]*60)+(r[0]===r[1]?'':'–'+fmt(start+r[1]*60));var a={strength:'אחרי אימון כוח כדאי לקבל 25–40 גרם חלבון בארוחה הקרובה. אם אתה רעב, אפשר לשבור צום מוקדם. אין חובה להמתין 16 שעות.',cardio:'באירובי קל אפשר להמשיך בצום אם אתה מרגיש טוב. רעב משמעותי או חולשה הם סיבה לאכול.',rest:'ביום מנוחה 16 שעות יכולות להתאים אם נוח לך. אין יתרון בלהאריך צום תוך רעב קבוע.'};id('workoutAdvice').textContent=a[type]+' שעת האימון שהגדרת: '+id('workoutTime').value;protein()}
-function protein(){var p=Number(id('protein').value)||0,t=Math.max(1,Number(id('proteinTarget').value)||140);id('proteinLabel').textContent=p+' / '+t+' גרם';id('proteinFill').style.width=Math.min(100,p/t*100)+'%'}
-['dayType','lastMeal','workoutTime','protein','bodyWeight','proteinTarget'].forEach(function(k){id(k).value=state.settings[k];id(k).addEventListener('change',function(){state.settings[k]=id(k).value;save();schedule()});id(k).addEventListener('input',function(){state.settings[k]=id(k).value;save();schedule()})});
+function protein(){var p=state.foods.filter(function(f){return f.date===(id('foodDate')?id('foodDate').value:dateKey)}).reduce(function(a,f){return a+Number(f.protein||0)},0);id('protein').value=Math.round(p*10)/10;var t=Math.max(1,Number(id('proteinTarget').value)||150);id('proteinLabel').textContent=p+' / '+t+' גרם';id('proteinFill').style.width=Math.min(100,p/t*100)+'%'}
+['dayType','lastMeal','workoutTime','bodyWeight','proteinTarget'].forEach(function(k){id(k).value=state.settings[k];id(k).addEventListener('change',function(){state.settings[k]=id(k).value;save();schedule()});id(k).addEventListener('input',function(){state.settings[k]=id(k).value;save();schedule()})});
 document.querySelectorAll('[data-check]').forEach(function(el){var k=dateKey+':'+el.dataset.check;el.checked=!!state.checks[k];el.addEventListener('change',function(){state.checks[k]=el.checked;save();checks()})});
 function checks(){var a=Array.from(document.querySelectorAll('[data-check]')),num=a.filter(function(x){return x.checked}).length;id('checkStatus').textContent='השלמת '+num+' מתוך '+a.length+' הרגלים היום'}checks();schedule();
 id('logDate').value=dateKey;
@@ -52,6 +59,83 @@ function valid(n,min,max){return n===''||Number.isFinite(Number(n))&&Number(n)>=
 id('addLog').addEventListener('click',function(){var date=id('logDate').value,w=id('logWeight').value,wa=id('logWaist').value,ex=id('exercise').value.trim(),lift=id('liftWeight').value,reps=id('reps').value;if(!date||!valid(w,35,250)||!valid(wa,40,200)||!valid(lift,0,800)||!valid(reps,1,100)||(!w&&!wa&&!ex)){id('logMessage').textContent='יש להזין תאריך ומדידה תקינה אחת לפחות';return}if(ex&&(!lift||!reps)){id('logMessage').textContent='למדד כוח יש להזין גם משקל עבודה וחזרות';return}state.logs.push({id:Date.now()+'-'+Math.random().toString(36).slice(2),date:date,weight:w===''?null:Number(w),waist:wa===''?null:Number(wa),exercise:ex,lift:lift===''?null:Number(lift),reps:reps===''?null:Number(reps)});save();render();id('logMessage').textContent='המדידה נשמרה';});
 function render(){var list=id('logs');list.replaceChildren();var arr=state.logs.slice().sort(function(a,b){return b.date.localeCompare(a.date)});if(!arr.length){var t=document.createElement('p');t.className='muted';t.textContent='עדיין אין מדידות. שמור מדידה ראשונה כדי להתחיל.';list.appendChild(t)}arr.forEach(function(l){var line=document.createElement('div');line.className='logItem';var summary=document.createElement('span');summary.textContent=l.date+' · '+[l.weight!=null?l.weight+' ק״ג':'',l.waist!=null?l.waist+' ס״מ מותניים':'',l.exercise?l.exercise+' '+l.lift+' ק״ג × '+l.reps:''].filter(Boolean).join(' · ');var btn=document.createElement('button');btn.type='button';btn.textContent='מחק';btn.setAttribute('aria-label','מחק מדידה '+l.date);btn.addEventListener('click',function(){state.logs=state.logs.filter(function(x){return x.id!==l.id});save();render()});line.append(summary,btn);list.append(line)});
 var chart=id('waistChart');chart.replaceChildren();var vals=state.logs.filter(function(x){return x.waist!=null}).sort(function(a,b){return a.date.localeCompare(b.date)}).slice(-10);if(!vals.length){chart.textContent='הוסף מדידות מותניים כדי לראות מגמה';return}var lo=Math.min.apply(null,vals.map(function(x){return x.waist})),hi=Math.max.apply(null,vals.map(function(x){return x.waist}));vals.forEach(function(x){var box=document.createElement('div');box.className='barGroup';var v=document.createElement('div');v.className='bar';v.style.height=(16+(x.waist-lo)/Math.max(1,hi-lo)*105)+'px';v.title=x.date+': '+x.waist+' ס״מ';var number=document.createElement('strong');number.textContent=x.waist;number.style.display='block';var date=document.createElement('small');date.textContent=x.date.slice(5);box.append(v,number,date);chart.append(box)})}render();
+
+// Food lookup contains approximate vegan food protein density in grams per 100 grams.
+var foodDb=[
+ {keys:['טופו','tofu'],name:'טופו',p:13,portion:150},
+ {keys:['טמפה','tempeh'],name:'טמפה',p:19,portion:100},
+ {keys:['סייטן','seitan'],name:'סייטן',p:24,portion:100},
+ {keys:['עדשים','lentil'],name:'עדשים מבושלות',p:9,portion:180},
+ {keys:['חומוס מבושל','גרגרי חומוס','chickpea'],name:'גרגרי חומוס מבושלים',p:8.9,portion:160},
+ {keys:['ממרח חומוס','חומוס','hummus'],name:'ממרח חומוס',p:7,portion:100},
+ {keys:['שעועית','beans'],name:'שעועית מבושלת',p:8,portion:170},
+ {keys:['אפונה','peas'],name:'אפונה מבושלת',p:5.4,portion:160},
+ {keys:['אדממה','edamame'],name:'אדממה',p:12,portion:150},
+ {keys:['קינואה','quinoa'],name:'קינואה מבושלת',p:4.4,portion:180},
+ {keys:['אורז','rice'],name:'אורז מבושל',p:2.7,portion:180},
+ {keys:['פסטה','pasta'],name:'פסטה מבושלת',p:5.5,portion:180},
+ {keys:['שיבולת שועל','קוואקר','oats'],name:'שיבולת שועל יבשה',p:13,portion:50},
+ {keys:['לחם','פרוסות','bread'],name:'לחם',p:9,portion:35},
+ {keys:['פיתה','pita'],name:'פיתה',p:9,portion:90},
+ {keys:['יוגורט סויה','יוגורט','yogurt'],name:'יוגורט סויה',p:4,portion:150},
+ {keys:['חלב סויה','soy milk'],name:'חלב סויה',p:3.3,portion:240},
+ {keys:['משקה שקדים','חלב שקדים'],name:'משקה שקדים',p:0.5,portion:240},
+ {keys:['אבקת חלבון','שייק חלבון','protein shake','protein powder'],name:'אבקת חלבון',p:75,portion:30},
+ {keys:['חמאת בוטנים','peanut butter'],name:'חמאת בוטנים',p:25,portion:20},
+ {keys:['טחינה','tahini'],name:'טחינה גולמית',p:17,portion:20},
+ {keys:['שקדים','almonds'],name:'שקדים',p:21,portion:30},
+ {keys:['אגוזי מלך','walnuts'],name:'אגוזי מלך',p:15,portion:30},
+ {keys:['בוטנים','peanuts'],name:'בוטנים',p:26,portion:30},
+ {keys:['בייגלה','pretzel'],name:'בייגלה',p:10,portion:40},
+ {keys:['שוקולד','chocolate'],name:'שוקולד',p:6,portion:25},
+ {keys:['בננה','banana'],name:'בננה',p:1.1,portion:120},
+ {keys:['תפוח','apple'],name:'תפוח',p:0.3,portion:160},
+ {keys:['תפוח אדמה','תפוחי אדמה','potato'],name:'תפוח אדמה',p:2,portion:200},
+ {keys:['ברוקולי','broccoli'],name:'ברוקולי',p:2.8,portion:150},
+ {keys:['סלט','ירקות'],name:'סלט ירקות',p:1.2,portion:200}
+];
+var pending=[];
+function estimateLine(raw){
+ var q=raw.trim().toLowerCase();if(!q)return null;
+ var matched=foodDb.filter(function(f){return f.keys.some(function(k){return q.includes(k)})}).sort(function(a,b){return Math.max.apply(null,b.keys.map(function(k){return q.includes(k)?k.length:0}))-Math.max.apply(null,a.keys.map(function(k){return q.includes(k)?k.length:0}))})[0];
+ if(!matched)return{raw:raw,name:'לא זוהה',grams:null,protein:0,unknown:true,assumption:'יש להזין חלבון ידנית'};
+ var grams=matched.portion,assumption='כמות ברירת מחדל: '+grams+' גרם';
+ var metric=q.match(/(\d+(?:[.,]\d+)?)\s*(?:גרם|גר׳|ג\b|g\b|מ"ל|מל\b|ml\b)/);
+ var quantity=q.match(/(\d+(?:[.,]\d+)?)\s*(כוסות|כוס|כפות|כף|פרוסות|פרוסה|יחידות|יחידה|מנות|מנה|קופסאות|קופסה)/);
+ var prefix=q.match(/^(\d+(?:[.,]\d+)?)(?:\s|$)/);
+ var cup=matched.name.includes('שיבולת שועל')?80:matched.name.includes('משקה')||matched.name.includes('חלב סויה')?240:matched.name.includes('טחינה')?230:180;
+ if(metric){grams=Number(metric[1].replace(',','.'));assumption='כמות מפורשת';}
+ else if(quantity){var count=Number(quantity[1].replace(',','.')),u=quantity[2],unit=(u.includes('כוס')?cup:u.includes('כפ')?15:u.includes('פרוס')?35:u.includes('קופס')?matched.portion:matched.portion);grams=count*unit;assumption=count+' × '+unit+' גרם (הערכה)';}
+ else if(prefix){grams=Number(prefix[1].replace(',','.'))*matched.portion;assumption='הונחו '+prefix[1]+' מנות';}
+ if(!Number.isFinite(grams)||grams<=0||grams>3000)return{raw:raw,name:matched.name,grams:null,protein:0,unknown:true,assumption:'כמות לא תקינה'};
+ return{raw:raw,name:matched.name,grams:grams,protein:Math.round(matched.p*grams/10)/10,unknown:false,assumption:assumption};
+}
+function escapeText(el,value){el.textContent=String(value==null?'':value)}
+id('foodDate').value=dateKey;
+function showEstimate(){
+ pending=id('foodText').value.split(/[\n,;]+/).map(estimateLine).filter(Boolean);
+ var root=id('foodResults');root.replaceChildren();id('saveFood').disabled=!pending.length;
+ if(!pending.length){id('foodMessage').textContent='כתוב לפחות מאכל אחד';return}
+ pending.forEach(function(item,i){var row=document.createElement('div');row.className='logItem';row.style.alignItems='center';var name=document.createElement('div');var b=document.createElement('strong');escapeText(b,item.name);var more=document.createElement('div');more.className='muted';escapeText(more,item.raw+' · '+item.assumption);name.append(b,more);var input=document.createElement('input');input.type='number';input.min='0';input.max='300';input.step='.1';input.value=item.protein;input.setAttribute('aria-label','גרם חלבון עבור '+item.raw);input.style.cssText='max-width:100px;width:90px;background:#0e1b28;border:1px solid #506575;border-radius:8px;color:white;padding:8px';input.addEventListener('input',function(){pending[i].protein=Number(input.value)});var unit=document.createElement('span');unit.textContent='גרם';row.append(name,input,unit);root.append(row)});
+ id('foodMessage').textContent=pending.some(function(x){return x.unknown})?'חלק מהמאכלים לא זוהו. תקן את הערכים לפני שמירה.':'אפשר לתקן ערכי חלבון לפני הוספה ליומן.';
+}
+id('estimateFood').addEventListener('click',showEstimate);
+id('saveFood').addEventListener('click',function(){
+ if(!pending.length||!id('foodDate').value)return;
+ if(pending.some(function(x){return !Number.isFinite(x.protein)||x.protein<0||x.protein>300})){id('foodMessage').textContent='יש לתקן ערכי חלבון לא תקינים';return}
+ pending.forEach(function(x){state.foods.push({id:Date.now()+'-'+Math.random().toString(36).slice(2),date:id('foodDate').value,raw:x.raw,name:x.name,grams:x.grams,protein:x.protein})});
+ pending=[];id('foodText').value='';id('foodResults').replaceChildren();id('saveFood').disabled=true;id('foodMessage').textContent='המאכלים נוספו ליומן';save();renderFoods();
+});
+id('foodDate').addEventListener('change',renderFoods);
+function renderFoods(){
+ var target=id('foodDiary');target.replaceChildren();var date=id('foodDate').value;
+ var day=state.foods.filter(function(f){return f.date===date});var total=day.reduce(function(a,f){return a+Number(f.protein||0)},0);
+ id('foodTotal').textContent=(Math.round(total*10)/10)+' גרם חלבון';
+ if(!day.length){var p=document.createElement('p');p.className='muted';p.textContent='עדיין לא נרשמו מאכלים ליום זה';target.append(p)}
+ day.forEach(function(f){var row=document.createElement('div');row.className='logItem';var label=document.createElement('span');label.textContent=f.raw+' · '+f.protein+' גרם חלבון';var btn=document.createElement('button');btn.type='button';btn.textContent='מחק';btn.addEventListener('click',function(){state.foods=state.foods.filter(function(x){return x.id!==f.id});save();renderFoods()});row.append(label,btn);target.append(row)});protein();
+}
+renderFoods();
+
 id('exportData').addEventListener('click',function(){var b=new Blob([JSON.stringify(state,null,2)],{type:'application/json'}),url=URL.createObjectURL(b),a=document.createElement('a');a.href=url;a.download='health-progress-'+dateKey+'.json';a.click();setTimeout(function(){URL.revokeObjectURL(url)},1000)});
 id('clearAll').addEventListener('click',function(){if(!confirm('למחוק את כל המדידות וההגדרות שנשמרו במכשיר?'))return;localStorage.removeItem(key);location.reload()});
 })();
