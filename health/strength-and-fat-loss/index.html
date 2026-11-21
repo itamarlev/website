@@ -24,8 +24,8 @@
 <div class="card"><span class="badge">ערב</span><h3>סייטן / טופו + תפוח אדמה</h3><div class="metric">~35–45g</div><p>ארוחה משביעה עם פחמימה, ירקות ומעט שומן.</p></div></div><div class="card" style="margin-top:14px"><div class="row spaced"><div><h3>בדיקת חלבון יומית</h3><p class="muted">רשום מה אכלת. האפליקציה תעריך עבורך את החלבון ותסכם את היום.</p></div><span id="proteinLabel" class="badge">0 / 140 גרם</span></div><div class="inputs"><label class="field">חלבון מחושב היום<input id="protein" type="number" readonly value="0" aria-label="סך חלבון מחושב להיום"></label><label class="field">משקל נוכחי (ק״ג)<input id="bodyWeight" type="number" min="35" max="250" step=".1" value="88"></label><label class="field">יעד חלבון (גרם)<input id="proteinTarget" type="number" min="40" max="300" step="1" value="150"></label></div><div style="height:12px;background:#2c3f4a;border-radius:99px;overflow:hidden;margin-top:15px"><div id="proteinFill" style="height:100%;width:0%;background:var(--lime);transition:width .2s"></div></div></div><div class="card" style="margin-top:14px"><h3>מה אכלתי היום?</h3><p class="muted">כתוב כל מאכל בשורה נפרדת. אפשר לציין גרמים, כוסות, כפות או יחידות. לדוגמה: 200 גרם טופו, כוס עדשים מבושלות, 2 פרוסות לחם, יוגורט סויה. החישוב מקורב וניתן לתיקון.</p>
 <label class="field" for="foodText">רשימת מאכלים וכמויות</label>
 <textarea id="foodText" rows="5" style="width:100%;border:1px solid #506575;border-radius:10px;background:#0e1b28;color:#fff;padding:12px;resize:vertical" placeholder="200 גרם טופו&#10;כוס עדשים מבושלות&#10;יוגורט סויה 150 גרם"></textarea>
-<div class="row" style="margin-top:12px"><button class="btn" id="estimateFood">חשב חלבון</button><button class="btn secondary" id="saveFood" disabled>הוסף ליומן</button><label class="field">תאריך היומן<input id="foodDate" type="date"></label></div>
-<p class="muted">הערכה לפי ערכים ממוצעים ל־100 גרם. ערכי מותגים, אבקות חלבון ומנות מבושלות משתנים. למאכל לא מזוהה יש להוסיף חלבון ידנית.</p>
+<div class="row" style="margin-top:12px"><button class="btn" id="estimateFood">חשב חלבון עם AI</button><button class="btn secondary" id="estimateLocal">חישוב מקומי ללא AI</button><button class="btn secondary" id="saveFood" disabled>הוסף ליומן</button><label class="field">תאריך היומן<input id="foodDate" type="date"></label></div>
+<p class="muted">חישוב ה־AI שולח רק את תיאור המזון להזנת חלבון, לא את שאר הנתונים האישיים. התוצאה משוערת וניתנת לתיקון. החישוב המקומי עובד גם בלי מפתח API.</p>
 <div id="foodResults" aria-live="polite"></div><p id="foodMessage" class="status" role="status"></p>
 <h3>יומן מזון <span id="foodTotal" class="badge"></span></h3><div id="foodDiary"></div>
 </div></section>
@@ -119,7 +119,26 @@ function showEstimate(){
  pending.forEach(function(item,i){var row=document.createElement('div');row.className='logItem';row.style.alignItems='center';var name=document.createElement('div');var b=document.createElement('strong');escapeText(b,item.name);var more=document.createElement('div');more.className='muted';escapeText(more,item.raw+' · '+item.assumption);name.append(b,more);var input=document.createElement('input');input.type='number';input.min='0';input.max='300';input.step='.1';input.value=item.protein;input.setAttribute('aria-label','גרם חלבון עבור '+item.raw);input.style.cssText='max-width:100px;width:90px;background:#0e1b28;border:1px solid #506575;border-radius:8px;color:white;padding:8px';input.addEventListener('input',function(){pending[i].protein=Number(input.value)});var unit=document.createElement('span');unit.textContent='גרם';row.append(name,input,unit);root.append(row)});
  id('foodMessage').textContent=pending.some(function(x){return x.unknown})?'חלק מהמאכלים לא זוהו. תקן את הערכים לפני שמירה.':'אפשר לתקן ערכי חלבון לפני הוספה ליומן.';
 }
-id('estimateFood').addEventListener('click',showEstimate);
+id('estimateLocal').addEventListener('click',showEstimate);
+id('estimateFood').addEventListener('click',async function(){
+ var food=id('foodText').value.trim();
+ if(!food){id('foodMessage').textContent='כתוב לפחות מאכל אחד';return}
+ if(food.length>1500||food.split(/\\n/).length>20){id('foodMessage').textContent='עד 20 שורות ו־1500 תווים בכל חישוב';return}
+ var button=id('estimateFood');button.disabled=true;button.textContent='מחשב חלבון…';
+ id('saveFood').disabled=true;id('foodMessage').textContent='מנתח את המזון לצורך חישוב חלבון בלבד…';
+ try{
+   var res=await fetch('/api/protein-estimate',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({food:food})});
+   var data=await res.json();
+   if(!res.ok)throw new Error(data.error||'הבקשה נכשלה');
+   if(!Array.isArray(data.items)||!data.items.length)throw new Error('לא התקבלו פריטי מזון');
+   pending=data.items.map(function(item){return{raw:item.name+' ('+item.amount+')',name:item.name,grams:null,protein:Number(item.protein)||0,unknown:item.confidence==='low',assumption:item.assumption+(item.confidence==='low'?' · רמת ודאות נמוכה':'')}});
+   var root=id('foodResults');root.replaceChildren();
+   pending.forEach(function(item,i){var row=document.createElement('div');row.className='logItem';row.style.alignItems='center';var name=document.createElement('div');var b=document.createElement('strong');b.textContent=item.name;var more=document.createElement('div');more.className='muted';more.textContent=item.raw+' · '+item.assumption;name.append(b,more);var input=document.createElement('input');input.type='number';input.min='0';input.max='300';input.step='.1';input.value=item.protein;input.setAttribute('aria-label','חלבון בגרמים עבור '+item.name);input.style.cssText='max-width:100px;width:90px;background:#0e1b28;border:1px solid #506575;border-radius:8px;color:white;padding:8px';input.addEventListener('input',function(){pending[i].protein=Number(input.value)});var unit=document.createElement('span');unit.textContent='גרם';row.append(name,input,unit);root.append(row)});
+   id('saveFood').disabled=false;
+   id('foodMessage').textContent='ה־AI העריך את החלבון. בדוק את הכמויות וההנחות, תקן במידת הצורך ושמור ביומן.';
+ }catch(err){id('foodMessage').textContent='חישוב AI אינו זמין כרגע. '+(String(err.message).includes('configured')?'יש להגדיר מפתח API ב־Cloudflare. ':'')+'אפשר להשתמש בכפתור חישוב מקומי.';}
+ finally{button.disabled=false;button.textContent='חשב חלבון עם AI'}
+});
 id('saveFood').addEventListener('click',function(){
  if(!pending.length||!id('foodDate').value)return;
  if(pending.some(function(x){return !Number.isFinite(x.protein)||x.protein<0||x.protein>300})){id('foodMessage').textContent='יש לתקן ערכי חלבון לא תקינים';return}
