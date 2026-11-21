@@ -123,7 +123,7 @@ id('estimateLocal').addEventListener('click',showEstimate);
 id('estimateFood').addEventListener('click',async function(){
  var food=id('foodText').value.trim();
  if(!food){id('foodMessage').textContent='כתוב לפחות מאכל אחד';return}
- if(food.length>1500||food.split(/\\n/).length>20){id('foodMessage').textContent='עד 20 שורות ו־1500 תווים בכל חישוב';return}
+ if(food.length>1500||food.split(/\n/).length>20){id('foodMessage').textContent='עד 20 שורות ו־1500 תווים בכל חישוב';return}
  var button=id('estimateFood');button.disabled=true;button.textContent='מחשב חלבון…';
  id('saveFood').disabled=true;id('foodMessage').textContent='מנתח את המזון לצורך חישוב חלבון בלבד…';
  try{
